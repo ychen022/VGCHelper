@@ -1,0 +1,12 @@
+{
+  "priorityThreats": ["Charizard-Mega-Y", "Floette-Mega"],
+  "roles": [
+    {"pokemon": "Sneasler", "move": "Rock Slide", "purpose": "Immediate Charizard Y pressure", "target": "Charizard-Mega-Y"},
+    {"pokemon": "Scizor", "move": "Bullet Punch", "purpose": "Fairy cleanup", "target": "Floette-Mega"},
+    {"pokemon": "Banette", "move": "Poltergeist", "purpose": "Neutral damage in the alternate Fairy matchup mode", "target": "Floette-Mega"}
+  ],
+  "modes": [
+    {"id": "fairy-example", "bringFour": ["Banette", "Scizor", "Milotic", "Sneasler"], "mega": "Banette", "targets": ["Floette-Mega"]},
+    {"id": "tailwind-example", "bringFour": ["Staraptor", "Sneasler", "Scizor", "Milotic"], "mega": "Staraptor"}
+  ]
+}

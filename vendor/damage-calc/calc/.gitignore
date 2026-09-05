@@ -1,0 +1,11 @@
+# Include the precompiled package required by VGCHelper's local file dependency.
+!dist/
+!dist/**
+node_modules/
+eslint-cache/
+coverage/
+.eslintcache
+.DS_Store
+Thumbs.db
+npm-debug.log
+.tsbuildinfo

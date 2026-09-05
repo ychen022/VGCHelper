@@ -1,0 +1,39 @@
+{
+  "name": "vgc-helper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local MCP tools for Pokemon Champions VGC replay coaching and team evaluation",
+  "type": "module",
+  "bin": {
+    "vgc-helper": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "smoke": "node scripts/smoke-mcp.mjs",
+    "validate:live": "node scripts/validate-live.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@pkmn/protocol": "0.7.3",
+    "@pkmn/sets": "5.2.0",
+    "@smogon/calc": "file:vendor/damage-calc/calc",
+    "better-sqlite3": "13.0.3",
+    "csv-parse": "6.1.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "22.19.15",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

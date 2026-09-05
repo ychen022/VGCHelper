@@ -1,0 +1,35 @@
+|player|p1|Alice|
+|player|p2|Bob|
+|teamsize|p1|6
+|teamsize|p2|6
+|gametype|doubles
+|gen|9
+|tier|[Gen 9 Champions] VGC 2026 Reg M-B
+|poke|p1|Garchomp|
+|poke|p1|Whimsicott|
+|poke|p1|Kingambit|
+|poke|p1|Sneasler|
+|poke|p1|Basculegion|
+|poke|p1|Dragonite|
+|poke|p2|Charizard-Mega-Y|
+|poke|p2|Floette-Eternal-Mega|
+|poke|p2|Basculegion|
+|poke|p2|Whimsicott|
+|poke|p2|Kingambit|
+|poke|p2|Sneasler|
+|start
+|switch|p1a: Chomp|Garchomp|100/100
+|switch|p1b: Cotton|Whimsicott|100/100
+|switch|p2a: Zard|Charizard-Mega-Y|100/100
+|switch|p2b: Flower|Floette-Eternal-Mega|100/100
+|turn|1
+|move|p1b: Cotton|Tailwind|p1b: Cotton
+|-sidestart|p1: Alice|move: Tailwind
+|move|p2b: Flower|Moonblast|p1a: Chomp
+|-supereffective|p1a: Chomp
+|-damage|p1a: Chomp|0 fnt
+|faint|p1a: Chomp
+|move|p2a: Zard|Heat Wave|p1b: Cotton|[spread] p1a,p1b
+|-damage|p1b: Cotton|1/100
+|-enditem|p1b: Cotton|Focus Sash
+|win|Bob

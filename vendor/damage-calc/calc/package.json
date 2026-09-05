@@ -1,0 +1,20 @@
+{
+  "name": "@smogon/calc",
+  "version": "0.11.0-champions.2c50a89",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "unpkg": "dist/production.min.js",
+  "description": "Pokémon battle calculator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smogon/damage-calc.git",
+    "commit": "2c50a89d9e369289965b1448a6f5c1b7d41520c7"
+  },
+  "contributors": [
+    "Austin Couturier <austincouturier@icloud.com>"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "compile": "tsc -p ."
+  }
+}

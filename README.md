@@ -1,0 +1,174 @@
+# VGCHelper
+
+VGCHelper is a local MCP server for Pokemon Champions VGC doubles. It gives an MCP-capable chat host deterministic replay evidence, metagame snapshots, and Champions damage calculations while the host handles the conversational coaching.
+
+V0 targets **Pokemon Champions VGC 2026 Regulation M-B** through an explicit versioned profile.
+
+## Requirements
+
+- Node.js 22 or newer
+- An MCP client such as GitHub Copilot
+- Network access when refreshing metagame data
+
+## Setup
+
+```powershell
+npm install
+npm run build
+```
+
+For GitHub Copilot, add this server entry to `%USERPROFILE%\.copilot\mcp-config.json`, preserving any other registered servers:
+
+```json
+{
+  "mcpServers": {
+    "vgc-helper": {
+      "type": "local",
+      "command": "node",
+      "args": ["dist\\index.js"],
+      "cwd": "<absolute-path-to-VGCHelper>",
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+Replace `<absolute-path-to-VGCHelper>` with your checkout's absolute path, escaping Windows backslashes as `\\` in JSON. The entry point is resolved relative to `cwd`.
+
+Run `vgc_status`. Replay analysis works immediately offline with your replay and team export; opponent calculations become available from open team sheets or cached metagame sets. Run `vgc_refresh_meta` before team evaluation. The initial refresh can take several minutes because it validates the tournament sheet, linked pastes, and battle-data files. Later calls use a local cache unless `force` is set.
+
+Local state is written to `.vgc-helper\vgc-helper.sqlite`. Override the location with `VGC_HELPER_DATA_DIR`.
+
+### Loading updates in Copilot conversations
+
+Copilot launches `dist\index.js`, not the TypeScript source. After an agent changes the server, run this from the project directory:
+
+```powershell
+npm run build
+copilot mcp get vgc-helper
+```
+
+The registration should show **Enabled**, the compiled entry point above, and **Tools: * (all)**. The wildcard includes newly added tools without changing the registration.
+
+Start a new Copilot conversation after rebuilding so it launches the updated server and discovers its current tool schemas. An already-running MCP connection retains its loaded code; rebuilding alone does not refresh it. No separately running server is needed.
+
+Ask naturally, for example, "Use VGCHelper to show its status" or "Use `vgc_meta_query` to show cached Garchomp sets." Copilot may ask permission before calling a tool. Saved replays and the normal metagame cache remain in the same local database across rebuilds and new conversations.
+
+## MCP tools
+
+| Tool | Purpose |
+|---|---|
+| `vgc_status` | Show the regulation, calculator pin, database, and source freshness. |
+| `vgc_refresh_meta` | Validate and atomically activate VGC Pastes and Champions Battle Data snapshots. |
+| `vgc_replay_analyze` | Analyze a replay file/content with the user's exact Showdown team export. |
+| `vgc_replay_get` | Retrieve a persisted replay coaching report. |
+| `vgc_replay_turn` | Inspect the state before/after a turn and its battle events. |
+| `vgc_replay_trends` | Aggregate recurring coaching findings across local history. |
+| `vgc_meta_query` | Inspect cached published sets and usage with source provenance. |
+| `vgc_team_evaluate` | Evaluate all 15 user leads against representative opposing leads. |
+| `vgc_matchup_detail` | Inspect bounded positions from a saved lead matrix. |
+| `vgc_damage_calculate` | Run an auditable standalone Champions doubles damage calculation. |
+
+The server also exposes the `replay-coach` and `team-builder` prompts plus regulation, methodology, and source-status resources.
+
+## Replay workflow
+
+Provide:
+
+1. A Pokemon Showdown replay as `.json`, `.log`, downloaded replay HTML, raw protocol text, or a local path to one of those files.
+2. The exact six-Pokemon Showdown team export used in that battle.
+3. The player name only if the team cannot uniquely identify the replay side.
+
+Replay logs do not reveal full private sets. The user's team is authoritative; opponent moves, items, abilities, and skill points remain confidence-ranked hypotheses until revealed.
+
+The importer accepts explicit `[Gen 9 Champions] VGC 2026 Reg M-B` and its Bo3 variant. The older broad `Champions VGC 2026` label is rejected as ambiguous; dataset category membership alone does not establish M-B. Each report records its team fingerprint, regulation fingerprint and calculator version. Open team sheets are read when present; they do not disclose skill points.
+
+The initial report prioritizes up to five findings. A faint or failed move is a review prompt, not proof of a mistake. Alternatives cite pre-turn state and include a partner objective, plausible opposing responses and conditional damage. Inspect `vgc_replay_turn` for full evidence and use only `beforeEvents` when judging the decision. Switching alternatives use previously revealed bench Pokémon, not arbitrary members of the six. Filter trends with `team_version` to compare the same team; repeated analyses of one game count once.
+
+Raw replays, normalized events, turn states, and reports stay in local SQLite. Spectator/chat messages are not included in coaching output.
+
+Fabricated inputs for a quick smoke test are available at `examples\sample-team.txt` and `examples\sample-replay.log`.
+
+## Team workflow
+
+`vgc_team_evaluate` parses a complete Showdown export and selects a bounded cohort (12 by default, controlled by the regulation profile). Selection combines user-prioritized threats, recent results, weather/control diversity, and distinct published sets. The `coverage` report identifies tested and omitted priorities, source reasons, and sampling limits. This is tournament-source coverage, not ladder usage.
+
+The evaluator enumerates all 15-by-15 lead pairs and explicit legal Mega choices on both sides, including holding Mega. Initial entry Intimidate and weather resolve before selected Mega abilities; damage and effective Speed use explicit positions. A stone holder that does not Mega evolve stays in its base form. Unknown pre-Mega abilities and unresolved ties remain conditional assumptions. The screen measures:
+
+- speed-adjusted immediate damage pressure
+- incoming knockout pressure resolved in priority and Speed order
+- raw and post-preemption pressure for auditing the score
+- speed control, Fake Out, redirection, protection, and related turn-one control
+
+The full matrix is persisted, while the initial tool response remains bounded. Use `vgc_matchup_detail` to inspect a specific archetype or pair of leads. Its `user_mega` and `opponent_mega` filters accept a roster species or `null` for holding Mega. `opening_offset` pages conditional openings and returns `nextOpeningOffset`; `comparison_offset` pages comparison benchmarks and returns `comparison.nextOffset`.
+
+Optional `evaluation_context` accepts:
+
+```json
+{
+  "priorityThreats": ["Charizard-Mega-Y", "Floette-Mega"],
+  "roles": [{"pokemon": "Sneasler", "move": "Rock Slide", "purpose": "Immediate Charizard Y pressure", "target": "Charizard-Mega-Y"}],
+  "modes": [{"id": "fairy-plan", "bringFour": ["Banette", "Scizor", "Milotic", "Sneasler"], "mega": "Banette", "targets": ["Floette-Mega"]}]
+}
+```
+
+Modes may optionally specify a two-member `lead`. Each reported plan fixes its four, lead and Mega allocation before testing opposing responses. Roles and modes are hypotheses, never positive score bonuses. User modes are reported alongside inferred alternatives; bench utility remains a conditional coverage heuristic rather than a switching simulation. The supplied roster, moves and Mega eligibility are validated against mode declarations.
+
+Supply `comparison_team_export` to compare a proposed edit before recommending it. Both versions use the same selected opponent teams and published sets. The comparison includes opening-score deltas, declared-mode deltas, lost role/mode hypotheses, and bounded damage benchmarks with gains and losses. Scenarios include published bulk or explicitly unknown physical/special bulk, neutral/sun sensitivity, Attack drops, and Helping Hand. Accuracy-adjusted KO probabilities are separate from KO rolls conditional on hitting, and neither establishes that the attacker gets to act. Alternate teammate attacks report Mega and support requirements. Scenario and result caps disclose omissions, including evaluated gains/losses omitted from presentation. Detail retrieval preserves both exact team versions and scenario sources.
+
+`examples/contextual-team.txt` reproduces the discussed six-Pokemon team. `examples/contextual-evaluation.json` supplies illustrative fixed fours for its two modes, not assertions of optimal selections. After building, `node scripts/validate-contextual.mjs` tests it against the active offline cache and writes a compact report to `examples/reports/contextual-validation.json`.
+
+Scores are **not win probabilities**. V0 does not simulate switching trees, simultaneous move combinations beyond its bounded heuristics, adaptation across games, or a full best-of-three.
+
+The report adds per-opponent fixed mode plans, opening menus with both partners' actions, and three practice experiments with tradeoffs. Selected openings compare unknown spreads against a labeled bulk sensitivity scenario. Helping Hand modifies partner damage; earlier Haze conditionally clears both sides' stages; Destiny Bond is described as contingent on action timing and a direct KO. Spread moves show side-labeled ally damage where applicable. Only two opening scenarios are returned initially; the complete set is persisted and available through `vgc_matchup_detail` (up to six per page).
+
+Control effects in those menus are conditional. Fake Out action denial, redirection, same-turn speed-control resolution, competing weather ties, residual damage, and many other interactions are not a complete turn simulation. The screen still uses a static control bonus. Multi-hit damage uses a weighted total-damage distribution conditional on the calculator's selected hit count. Supplied teams receive structural/stat validation; a full Showdown learnset/format legality validator is not bundled.
+
+## Source integrity
+
+Published team fields retain field-level provenance; an absent spread is unknown. Champions Battle Data's `Current` label does not establish M-B membership. Unverified usage remains queryable as context but is excluded from set hydration and matchup scoring. An optional `sources.championsBattleData.binding` with `regulationId`, `season`, `validFrom`, and `validTo` can admit explicitly verified dated snapshots. Do not infer a regulation window from download time.
+
+Provider failures preserve the previously active snapshot. Missing usage coverage is reported explicitly. Dates, hashes and source versions make saved reports reproducible; featured-team representation is not a ladder usage estimate.
+
+## Regulation changes
+
+Profiles live in `config\regulations`. `config\active-regulation.json` selects the default profile.
+
+When a season changes:
+
+1. Add a new immutable profile with accepted Showdown formats, rules, source mappings, and evaluation bounds.
+2. Change the active profile pointer.
+3. Run `vgc_refresh_meta` for the new profile.
+
+Historical analyses retain their original regulation and source versions.
+
+## Data sources
+
+- [Pokemon Showdown replay protocol and API](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
+- [Pokemon Showdown battle event protocol](https://github.com/smogon/pokemon-showdown/blob/master/sim/SIM-PROTOCOL.md)
+- [HolidayOugi Pokemon Showdown replays](https://huggingface.co/datasets/HolidayOugi/pokemon-showdown-replays), used as an optional parser-compatibility corpus rather than a runtime dependency
+- [VGC Pastes Regulation M-B repository](https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit?gid=1774271567#gid=1774271567)
+- [Smogon damage calculator](https://github.com/smogon/damage-calc), pinned to Champions-capable commit `2c50a89d9e369289965b1448a6f5c1b7d41520c7`
+
+Battle data provided by [Pokemon Champions Battle Data](https://championsbattledata.com/).
+
+Cached source data is for analysis, not redistribution as a standalone mirror or data service.
+
+## Development
+
+```powershell
+npm run typecheck
+npm test
+npm run build
+npm run smoke
+```
+
+`npm run smoke` tests the compiled stdio MCP workflow against a separate `.vgc-helper/smoke` database. `node scripts/smoke-mcp.mjs --refresh` also refreshes public data and evaluates the example team. `npm run validate:live` downloads up to ten public M-B replay JSON files and writes an import summary under `examples/public-replays`. These two network checks are manual, not part of ordinary tests.
+
+After a successful smoke refresh, `node scripts/smoke-mcp.mjs --team` repeats the team evaluation using that cached snapshot without network access. It writes the example output locally to `examples/reports/team-smoke.json`. Connect your MCP client using the setup above; the smoke database is separate from your normal coaching history.
+
+Local databases, machine-specific agent settings, analysis output, downloaded replay samples, and generated reports are excluded from Git. The fabricated sample inputs, one pinned public replay regression fixture, and the pinned calculator's compiled package are included so a fresh checkout can run the offline workflow and tests.
+
+See [validation notes](docs/validation.md) for the evidence and limits of the current checks.
+
+The calculator source and compiled package are vendored under `vendor\damage-calc` because the current npm release does not yet include the repository's Pokemon Champions mechanics. Its upstream MIT license is preserved in `vendor\damage-calc\LICENSE`.
