@@ -1,6 +1,6 @@
 # V0 validation
 
-Paths under `examples/reports` and `examples/public-replays` below refer to locally generated artifacts. Only the pinned public replay `gen9championsvgc2026regmb-2675724766.json` needed by the regression tests is committed; use the reproduction commands to generate the remaining artifacts.
+Paths under `examples/reports` and `examples/public-replays` below refer to locally generated artifacts. Only the pinned public replays `gen9championsvgc2026regmb-2675724766.json` and `gen9championsvgc2026regmb-2675725887.json` needed by the regression tests are committed; use the reproduction commands to generate the remaining artifacts.
 
 ## Contextual-v1 evaluation update — 2026-09-04
 

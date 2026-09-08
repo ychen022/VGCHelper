@@ -404,6 +404,7 @@ export function applyEvent(state: BattleState, event: NormalizedEvent): void {
     case '-heal':
       if (pokemon) {
         Object.assign(pokemon, health(second));
+        if (pokemon.fainted && pokemon.hp) pokemon.hp = {...pokemon.hp, current: 0, percentRange: [0, 0]};
         const owner = typeof event.tags['of'] === 'string' ? parseIdent(event.tags['of']) : undefined;
         revealFromTag(owner ? getPokemon(state, owner)! : pokemon, event.tags['from']);
       }
@@ -483,6 +484,7 @@ export function applyEvent(state: BattleState, event: NormalizedEvent): void {
     case 'faint':
       if (pokemon) {
         pokemon.hpPercent = 0;
+        if (pokemon.hp) pokemon.hp = {...pokemon.hp, current: 0, percentRange: [0, 0]};
         pokemon.fainted = true;
         pokemon.active = false;
         syncActiveSlots(state.sides[pokemon.side]);

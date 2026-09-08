@@ -7,6 +7,7 @@ coverage/
 
 # Machine-local configuration, credentials, and analysis artifacts.
 .codex/
+/docs/superpowers/
 .env
 .env.*
 !.env.example
@@ -21,4 +22,5 @@ coverage/
 /analysis-output/
 /examples/public-replays/*
 !/examples/public-replays/gen9championsvgc2026regmb-2675724766.json
+!/examples/public-replays/gen9championsvgc2026regmb-2675725887.json
 /examples/reports/
