@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {calculateChampionsDamage} from '../src/calc/champions.js';
+import {calculateChampionsDamage,pokemonMaxHp} from '../src/calc/champions.js';
 import {parsePartialShowdownTeam} from '../src/teams/parser.js';
 import {loadRegulationProfile} from '../src/regulation/profile.js';
 const profile = loadRegulationProfile();
@@ -41,5 +41,13 @@ describe('state-aware damage', () => {
     expect(Math.max(...result.damage)).toBe(result.range[1]);
     expect(result.damageDistribution?.reduce((sum,r)=>sum+r.probability,0)).toBeCloseTo(1);
     expect(result.damage.length).toBeLessThan(1000);
+  });
+  it('does not lose an HP point when converting an exact percentage back to HP', () => {
+    const pikachu = parsePartialShowdownTeam('Pikachu\nAbility: Static\nEVs: 32 Atk\nAdamant Nature\n- Reversal', profile).pokemon[0]!;
+    const maximum = pokemonMaxHp(pikachu);
+    expect(maximum).toBe(110);
+    const damage = (hp: number) => calculateChampionsDamage({attacker:pikachu,defender,move:'Reversal',attackerPosition:{hpPercent:hp/maximum*100}});
+    expect(damage(23).damage).toEqual(damage(23.25).damage);
+    expect(damage(22).range[1]).toBeGreaterThan(damage(23).range[1]);
   });
 });

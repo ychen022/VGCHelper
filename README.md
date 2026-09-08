@@ -4,6 +4,8 @@ VGCHelper is a local MCP server for Pokemon Champions VGC doubles. It gives an M
 
 V0 targets **Pokemon Champions VGC 2026 Regulation M-B** through an explicit versioned profile.
 
+The probabilistic simulator adds full-game outcome sampling, player-specific hidden-information beliefs, information-set search, Featured Teams cohort experiments and replay counterfactuals. See [simulation usage and limits](docs/simulation.md) and the [stages 4–6 evaluation](docs/simulation-stages-4-6-evaluation.md). Rebuild and reconnect the MCP client to discover the six simulation tools.
+
 ## Requirements
 
 - Node.js 22 or newer
@@ -63,10 +65,24 @@ Ask naturally, for example, "Use VGCHelper to show its status" or "Use `vgc_meta
 | `vgc_replay_analyze` | Analyze a replay file/content with the user's exact Showdown team export. |
 | `vgc_replay_get` | Retrieve a persisted replay coaching report. |
 | `vgc_replay_turn` | Inspect the state before/after a turn and its battle events. |
+| `vgc_replay_export_html` | Convert protocol text/lines, a battleLog object, or a saved simulation trace into a local replay HTML file. |
 | `vgc_replay_trends` | Aggregate recurring coaching findings across local history. |
 | `vgc_meta_query` | Inspect cached published sets and usage with source provenance. |
 | `vgc_team_evaluate` | Evaluate all 15 user leads against representative opposing leads. |
 | `vgc_matchup_detail` | Inspect bounded positions from a saved lead matrix. |
+| `vgc_simulate_battle` | Start full-game sampling from exact or partial teams, with optional paired p1 team edits. |
+| `vgc_simulate_cohort` | Run a bounded Featured Teams cohort, compare opponent policies and fixed/reselected plans. |
+| `vgc_replay_counterfactual` | Compare root actions from a saved checkpoint or supported public replay prefix. |
+| `vgc_simulation_get` | Poll persisted progress, outcome counts and conditional estimates. |
+| `vgc_simulation_cancel` | Cancel queued/running work and retain completed progress. |
+| `vgc_simulation_trace` | Inspect one player's observations, beliefs and sampled decisions. |
+| `vgc_reasoning_battle_start` | Create an externally played battle with separate coordinator and player credentials. |
+| `vgc_reasoning_battle_continue` | Start external players from a saved checkpoint or supported replay prefix. |
+| `vgc_reasoning_battle_get` | Inspect coordinator progress and completed battle results. |
+| `vgc_reasoning_battle_cancel` | Cancel an externally played battle without filling missing choices. |
+| `vgc_player_view` | Read a player's own request and public battle evidence. |
+| `vgc_player_evaluate` | Compare bounded joint plans using only actor-accessible hypotheses. |
+| `vgc_player_submit` | Commit a player's legal command and concise private plan. |
 | `vgc_damage_calculate` | Run an auditable standalone Champions doubles damage calculation. |
 
 The server also exposes the `replay-coach` and `team-builder` prompts plus regulation, methodology, and source-status resources.
@@ -122,7 +138,7 @@ Scores are **not win probabilities**. V0 does not simulate switching trees, simu
 
 The report adds per-opponent fixed mode plans, opening menus with both partners' actions, and three practice experiments with tradeoffs. Selected openings compare unknown spreads against a labeled bulk sensitivity scenario. Helping Hand modifies partner damage; earlier Haze conditionally clears both sides' stages; Destiny Bond is described as contingent on action timing and a direct KO. Spread moves show side-labeled ally damage where applicable. Only two opening scenarios are returned initially; the complete set is persisted and available through `vgc_matchup_detail` (up to six per page).
 
-Control effects in those menus are conditional. Fake Out action denial, redirection, same-turn speed-control resolution, competing weather ties, residual damage, and many other interactions are not a complete turn simulation. The screen still uses a static control bonus. Multi-hit damage uses a weighted total-damage distribution conditional on the calculator's selected hit count. Supplied teams receive structural/stat validation; a full Showdown learnset/format legality validator is not bundled.
+Control effects in those V0 menus are conditional. Fake Out action denial, redirection, same-turn speed-control resolution, competing weather ties, residual damage, and many other interactions are not a complete turn simulation. The screen still uses a static control bonus. Multi-hit damage uses a weighted total-damage distribution conditional on the calculator's selected hit count. Those heuristic reports apply structural/stat validation; the separate simulation tools use the bundled Showdown learnset/format validator and full battle engine.
 
 ## Source integrity
 
@@ -156,6 +172,10 @@ Cached source data is for analysis, not redistribution as a standalone mirror or
 
 ## Development
 
+For battles played by separate Codex or GitHub Copilot agents, use `vgc_reasoning_battle_start` and the [external reasoning player guide](docs/reasoning-players.md). Each player receives a private MCP view, can compare bounded joint-action scenarios, and submits its own action. The server persists the match and resolves simultaneous choices; it does not invoke a model API or replace missing agent choices with heuristic moves. Saved checkpoints and supported replay prefixes can start at a particular turn through `vgc_reasoning_battle_continue`.
+
+After building, `node scripts/smoke-reasoning.mjs` verifies separate player MCP processes, credential scope, scenario evaluation, final logs and the bridge. This scripted protocol check does not measure LLM playing strength.
+
 ```powershell
 npm run typecheck
 npm test
@@ -167,7 +187,7 @@ npm run smoke
 
 After a successful smoke refresh, `node scripts/smoke-mcp.mjs --team` repeats the team evaluation using that cached snapshot without network access. It writes the example output locally to `examples/reports/team-smoke.json`. Connect your MCP client using the setup above; the smoke database is separate from your normal coaching history.
 
-Local databases, machine-specific agent settings, analysis output, downloaded replay samples, and generated reports are excluded from Git. The fabricated sample inputs, one pinned public replay regression fixture, and the pinned calculator's compiled package are included so a fresh checkout can run the offline workflow and tests.
+Local databases, machine-specific agent settings, analysis output, downloaded replay samples, and generated reports are excluded from Git. The fabricated sample inputs, two pinned public replay regression fixtures, and the pinned calculator's compiled package are included so a fresh checkout can run the offline workflow and tests.
 
 See [validation notes](docs/validation.md) for the evidence and limits of the current checks.
 

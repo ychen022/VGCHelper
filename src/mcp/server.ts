@@ -21,6 +21,9 @@ import {loadRegulationProfile} from '../regulation/profile.js';
 import {parsePartialShowdownTeam, parseShowdownTeam} from '../teams/parser.js';
 import {executeTool} from './results.js';
 import {sha256} from '../util/hash.js';
+import {registerSimulationTools} from './simulation.js';
+import {registerReplayExportTool} from './replay-export.js';
+import {registerReasoningTools,registerPlayerTools} from './reasoning.js';
 
 const outputSchema = {result: z.unknown()};
 const boost = z.number().int().min(-6).max(6);
@@ -81,11 +84,19 @@ function boundedReplayAnalysis(
   };
 }
 
-export function createMcpServer(context: AppContext): McpServer {
+export function createMcpServer(context: AppContext,options:{playerToken?:string}={}): McpServer {
   const server = new McpServer({
     name: 'vgc-helper',
     version: '0.1.0',
   });
+  const playerToken=options.playerToken??process.env['VGC_PLAYER_TOKEN'];
+  if(playerToken!==undefined){
+    if(!playerToken.trim())throw new VgcError('INVALID_INPUT','VGC_PLAYER_TOKEN must not be empty');
+    registerPlayerTools(server,context,playerToken);return server;
+  }
+  registerReasoningTools(server,context);
+  registerSimulationTools(server,context);
+  registerReplayExportTool(server,context);
 
   server.registerTool(
     'vgc_status',
@@ -655,8 +666,9 @@ export function createMcpServer(context: AppContext): McpServer {
   return server;
 }
 
-export async function startMcpServer(context: AppContext): Promise<McpServer> {
+export async function startMcpServer(context: AppContext,onclose?:()=>void): Promise<McpServer> {
   const server = createMcpServer(context);
+  if(onclose) server.server.onclose=onclose;
   await server.connect(new StdioServerTransport());
   return server;
 }

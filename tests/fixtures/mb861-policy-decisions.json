@@ -1,0 +1,2002 @@
+[
+  {
+    "name": "damage-win",
+    "turn": 3,
+    "command": "pass, move 3 -1",
+    "view": {
+      "side": "p2",
+      "turn": 3,
+      "ownTeam": {
+        "pokemon": [
+          {
+            "species": "Dragonite",
+            "item": "Dragoninite",
+            "ability": "Multiscale",
+            "nature": "Modest",
+            "moves": [
+              "Dragon Pulse",
+              "Heat Wave",
+              "Extreme Speed",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 0,
+              "def": 0,
+              "spa": 32,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Sneasler",
+            "item": "Focus Sash",
+            "ability": "Poison Touch",
+            "nature": "Jolly",
+            "moves": [
+              "Close Combat",
+              "Dire Claw",
+              "Fake Out",
+              "Feint"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 32,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Basculegion",
+            "item": "Life Orb",
+            "ability": "Adaptability",
+            "nature": "Adamant",
+            "moves": [
+              "Wave Crash",
+              "Last Respects",
+              "Aqua Jet",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 18,
+              "def": 4,
+              "spa": 0,
+              "spd": 15,
+              "spe": 25
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Kingambit",
+            "item": "Chople Berry",
+            "ability": "Defiant",
+            "nature": "Adamant",
+            "moves": [
+              "Sucker Punch",
+              "Kowtow Cleave",
+              "Low Kick",
+              "Iron Head"
+            ],
+            "skillPoints": {
+              "hp": 32,
+              "atk": 15,
+              "def": 0,
+              "spa": 0,
+              "spd": 19,
+              "spe": 0
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Garchomp",
+            "item": "Choice Scarf",
+            "ability": "Rough Skin",
+            "nature": "Adamant",
+            "moves": [
+              "Dragon Claw",
+              "Stomping Tantrum",
+              "Earthquake",
+              "Rock Slide"
+            ],
+            "skillPoints": {
+              "hp": 10,
+              "atk": 20,
+              "def": 9,
+              "spa": 0,
+              "spd": 0,
+              "spe": 27
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Floette-Eternal",
+            "item": "Floettite",
+            "ability": "Flower Veil",
+            "nature": "Timid",
+            "moves": [
+              "Moonblast",
+              "Dazzling Gleam",
+              "Light of Ruin",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 0,
+              "def": 8,
+              "spa": 32,
+              "spd": 0,
+              "spe": 22
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          }
+        ]
+      },
+      "request": {
+        "active": [
+          {
+            "moves": [
+              {
+                "move": "Wave Crash",
+                "id": "wavecrash",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Last Respects",
+                "id": "lastrespects",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Aqua Jet",
+                "id": "aquajet",
+                "pp": 20,
+                "maxpp": 20,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Protect",
+                "id": "protect",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "self",
+                "disabled": false
+              }
+            ]
+          },
+          {
+            "moves": [
+              {
+                "move": "Dragon Pulse",
+                "id": "dragonpulse",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "any",
+                "disabled": false
+              },
+              {
+                "move": "Heat Wave",
+                "id": "heatwave",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "allAdjacentFoes",
+                "disabled": false
+              },
+              {
+                "move": "Extreme Speed",
+                "id": "extremespeed",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Protect",
+                "id": "protect",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "self",
+                "disabled": false
+              }
+            ],
+            "canMegaEvo": true
+          }
+        ],
+        "side": {
+          "name": "p2",
+          "id": "p2",
+          "pokemon": [
+            {
+              "ident": "p2: Basculegion",
+              "details": "Basculegion, L50, M",
+              "condition": "0 fnt",
+              "active": true,
+              "stats": {
+                "atk": 165,
+                "def": 89,
+                "spa": 90,
+                "spd": 110,
+                "spe": 123
+              },
+              "moves": [
+                "wavecrash",
+                "lastrespects",
+                "aquajet",
+                "protect"
+              ],
+              "baseAbility": "adaptability",
+              "item": "lifeorb",
+              "pokeball": "pokeball",
+              "ability": "adaptability",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Dragonite",
+              "details": "Dragonite, L50, F",
+              "condition": "168/168",
+              "active": true,
+              "stats": {
+                "atk": 138,
+                "def": 115,
+                "spa": 167,
+                "spd": 120,
+                "spe": 132
+              },
+              "moves": [
+                "dragonpulse",
+                "heatwave",
+                "extremespeed",
+                "protect"
+              ],
+              "baseAbility": "multiscale",
+              "item": "dragoninite",
+              "pokeball": "pokeball",
+              "ability": "multiscale",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Kingambit",
+              "details": "Kingambit, L50, M",
+              "condition": "0 fnt",
+              "active": false,
+              "stats": {
+                "atk": 187,
+                "def": 140,
+                "spa": 72,
+                "spd": 124,
+                "spe": 70
+              },
+              "moves": [
+                "suckerpunch",
+                "kowtowcleave",
+                "lowkick",
+                "ironhead"
+              ],
+              "baseAbility": "defiant",
+              "item": "",
+              "pokeball": "pokeball",
+              "ability": "defiant",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Sneasler",
+              "details": "Sneasler, L50, M",
+              "condition": "0 fnt",
+              "active": false,
+              "stats": {
+                "atk": 182,
+                "def": 80,
+                "spa": 54,
+                "spd": 100,
+                "spe": 189
+              },
+              "moves": [
+                "closecombat",
+                "direclaw",
+                "fakeout",
+                "feint"
+              ],
+              "baseAbility": "poisontouch",
+              "item": "",
+              "pokeball": "pokeball",
+              "ability": "poisontouch",
+              "commanding": false,
+              "reviving": false
+            }
+          ]
+        }
+      },
+      "observations": [
+        "|gametype|doubles",
+        "|player|p1|p1||",
+        "|player|p2|p2||",
+        "|gen|9",
+        "|tier|[Gen 9 Champions] VGC 2026 Reg M-B",
+        "|rule|Species Clause: Limit one of each Pokémon",
+        "|rule|Item Clause: Limit 1 of each item",
+        "|clearpoke",
+        "|poke|p1|Staraptor, L50, M|",
+        "|poke|p1|Scizor, L50, M|",
+        "|poke|p1|Torkoal, L50, M|",
+        "|poke|p1|Banette, L50, F|",
+        "|poke|p1|Milotic, L50, F|",
+        "|poke|p1|Sneasler, L50, F|",
+        "|poke|p2|Dragonite, L50, F|",
+        "|poke|p2|Sneasler, L50, M|",
+        "|poke|p2|Basculegion, L50, M|",
+        "|poke|p2|Kingambit, L50, M|",
+        "|poke|p2|Garchomp, L50, F|",
+        "|poke|p2|Floette-Eternal, L50, F|",
+        "|teampreview|4",
+        "|uhtml|otsrequest|<button name=\"send\" value=\"/acceptopenteamsheets\" class=\"button\" style=\"margin-right: 10px;\"><strong>Accept Open Team Sheets</strong></button><button name=\"send\" value=\"/rejectopenteamsheets\" class=\"button\" style=\"margin-top: 10px\"><strong>Deny Open Team Sheets</strong></button>",
+        "|",
+        "|teamsize|p1|4",
+        "|teamsize|p2|4",
+        "|start",
+        "|uhtmlchange|otsrequest|",
+        "|switch|p1a: Staraptor|Staraptor, L50, M|100/100",
+        "|switch|p1b: Sneasler|Sneasler, L50, F|100/100",
+        "|switch|p2a: Kingambit|Kingambit, L50, M|207/207",
+        "|switch|p2b: Basculegion|Basculegion, L50, M|199/199",
+        "|-ability|p1a: Staraptor|Intimidate|boost",
+        "|-unboost|p2a: Kingambit|atk|1",
+        "|-ability|p2a: Kingambit|Defiant|boost",
+        "|-boost|p2a: Kingambit|atk|2",
+        "|-unboost|p2b: Basculegion|atk|1",
+        "|turn|1",
+        "|",
+        "|switch|p2b: Sneasler|Sneasler, L50, M|157/157",
+        "|detailschange|p1a: Staraptor|Staraptor-Mega, L50, M",
+        "|-mega|p1a: Staraptor|Staraptor|Staraptite",
+        "|move|p1b: Sneasler|Close Combat|p2a: Kingambit",
+        "|-supereffective|p2a: Kingambit|2",
+        "|-enditem|p2a: Kingambit|Chople Berry|[eat]",
+        "|-enditem|p2a: Kingambit|Chople Berry|[weaken]",
+        "|-damage|p2a: Kingambit|0 fnt",
+        "|-unboost|p1b: Sneasler|def|1",
+        "|-unboost|p1b: Sneasler|spd|1",
+        "|faint|p2a: Kingambit",
+        "|-damage|p1b: Sneasler|90/100|[from] item: Life Orb",
+        "|move|p1a: Staraptor|Brave Bird|p2b: Sneasler",
+        "|-supereffective|p2b: Sneasler|1",
+        "|-enditem|p2b: Sneasler|Focus Sash",
+        "|-damage|p2b: Sneasler|1/157",
+        "|-damage|p1a: Staraptor|72/100|[from] Recoil",
+        "|",
+        "|upkeep",
+        "|",
+        "|switch|p2a: Basculegion|Basculegion, L50, M|199/199",
+        "|turn|2",
+        "|",
+        "|move|p2b: Sneasler|Close Combat|p1b: Sneasler",
+        "|-resisted|p1b: Sneasler|1",
+        "|-damage|p1b: Sneasler|12/100",
+        "|-unboost|p2b: Sneasler|def|1",
+        "|-unboost|p2b: Sneasler|spd|1",
+        "|move|p1b: Sneasler|Rock Slide|p2a: Basculegion|[spread] p2a,p2b",
+        "|-resisted|p2b: Sneasler|1",
+        "|-damage|p2a: Basculegion|133/199",
+        "|-damage|p2b: Sneasler|0 fnt",
+        "|faint|p2b: Sneasler",
+        "|-damage|p1b: Sneasler|3/100|[from] item: Life Orb",
+        "|move|p1a: Staraptor|Brave Bird|p2a: Basculegion",
+        "|-crit|p2a: Basculegion",
+        "|-damage|p2a: Basculegion|0 fnt",
+        "|faint|p2a: Basculegion",
+        "|-damage|p1a: Staraptor|49/100|[from] Recoil",
+        "|",
+        "|upkeep",
+        "|",
+        "|switch|p2b: Dragonite|Dragonite, L50, F|168/168",
+        "|turn|3"
+      ],
+      "legalCommands": [
+        "pass, move 1 1",
+        "pass, move 1 1 mega",
+        "pass, move 1 2",
+        "pass, move 1 2 mega",
+        "pass, move 1 -1",
+        "pass, move 1 -1 mega",
+        "pass, move 2",
+        "pass, move 2 mega",
+        "pass, move 3 1",
+        "pass, move 3 1 mega",
+        "pass, move 3 2",
+        "pass, move 3 2 mega",
+        "pass, move 3 -1",
+        "pass, move 3 -1 mega",
+        "pass, move 4",
+        "pass, move 4 mega"
+      ],
+      "ended": false,
+      "informationMode": "closed"
+    },
+    "belief": {
+      "version": "team-particles-v2",
+      "regulationId": "champions-vgc-2026-m-b",
+      "preview": [
+        "Staraptor",
+        "Scizor",
+        "Torkoal",
+        "Banette",
+        "Milotic",
+        "Sneasler"
+      ],
+      "known": [
+        {
+          "species": "Staraptor",
+          "ability": "Intimidate",
+          "item": "Staraptite",
+          "moves": [
+            "Brave Bird"
+          ]
+        },
+        {
+          "species": "Sneasler",
+          "moves": [
+            "Close Combat",
+            "Rock Slide"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "id": "7dc6169406d02e503002e3ffc1ef244704ad0307f11767965c73ca596d490e54",
+          "team": {
+            "pokemon": [
+              {
+                "species": "Staraptor",
+                "ability": "Intimidate",
+                "nature": "Adamant",
+                "moves": [
+                  "Brave Bird",
+                  "Double-Edge",
+                  "Sky Attack",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50,
+                "item": "Staraptite"
+              },
+              {
+                "species": "Scizor",
+                "ability": "Swarm",
+                "nature": "Adamant",
+                "moves": [
+                  "Iron Head",
+                  "Lunge",
+                  "X-Scissor",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Torkoal",
+                "ability": "White Smoke",
+                "nature": "Adamant",
+                "moves": [
+                  "Flare Blitz",
+                  "Temper Flare",
+                  "Double-Edge",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Banette",
+                "ability": "Insomnia",
+                "nature": "Adamant",
+                "moves": [
+                  "Phantom Force",
+                  "Poltergeist",
+                  "Shadow Claw",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Milotic",
+                "ability": "Marvel Scale",
+                "nature": "Modest",
+                "moves": [
+                  "Surf",
+                  "Hydro Pump",
+                  "Scald",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "spa": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Sneasler",
+                "ability": "Pressure",
+                "nature": "Adamant",
+                "moves": [
+                  "Close Combat",
+                  "Rock Slide",
+                  "Focus Punch",
+                  "Dire Claw"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              }
+            ]
+          },
+          "source": {
+            "provider": "explicit-completion-library",
+            "retrievedAt": "input",
+            "regulationId": "champions-vgc-2026-m-b"
+          },
+          "assumptions": [
+            "Explicit completion prior; uniform conditional prior."
+          ],
+          "weight": 1,
+          "sourceTeamIds": [],
+          "sources": [
+            {
+              "provider": "explicit-completion-library",
+              "retrievedAt": "input",
+              "regulationId": "champions-vgc-2026-m-b"
+            }
+          ]
+        }
+      ],
+      "observations": [],
+      "status": "covered",
+      "effectiveSampleSize": 1,
+      "warnings": [
+        "Ignored usage rows without explicit verified matching regulation.",
+        "Public reveals required legal prior expansion; expanded sets preserve sampled unknown investments. Historical damage/order likelihoods were not recomputed for new candidates; posterior coverage is approximate.",
+        "Skipped ambiguous direct damage evidence (critical, multi-hit, item/ability change or field/state context)."
+      ],
+      "observedPrefix": {
+        "count": 82,
+        "hash": "a5e6101b9cc0b6ded03dd15389fca8ace9189a1bf5405d9b10385c845bf538d0"
+      }
+    }
+  },
+  {
+    "name": "tactical-loss",
+    "turn": 4,
+    "command": "move 3 -2, switch 3",
+    "view": {
+      "side": "p2",
+      "turn": 4,
+      "ownTeam": {
+        "pokemon": [
+          {
+            "species": "Dragonite",
+            "item": "Dragoninite",
+            "ability": "Multiscale",
+            "nature": "Modest",
+            "moves": [
+              "Dragon Pulse",
+              "Heat Wave",
+              "Extreme Speed",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 0,
+              "def": 0,
+              "spa": 32,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Sneasler",
+            "item": "Focus Sash",
+            "ability": "Poison Touch",
+            "nature": "Jolly",
+            "moves": [
+              "Close Combat",
+              "Dire Claw",
+              "Fake Out",
+              "Feint"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 32,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Basculegion",
+            "item": "Life Orb",
+            "ability": "Adaptability",
+            "nature": "Adamant",
+            "moves": [
+              "Wave Crash",
+              "Last Respects",
+              "Aqua Jet",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 18,
+              "def": 4,
+              "spa": 0,
+              "spd": 15,
+              "spe": 25
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Kingambit",
+            "item": "Chople Berry",
+            "ability": "Defiant",
+            "nature": "Adamant",
+            "moves": [
+              "Sucker Punch",
+              "Kowtow Cleave",
+              "Low Kick",
+              "Iron Head"
+            ],
+            "skillPoints": {
+              "hp": 32,
+              "atk": 15,
+              "def": 0,
+              "spa": 0,
+              "spd": 19,
+              "spe": 0
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Garchomp",
+            "item": "Choice Scarf",
+            "ability": "Rough Skin",
+            "nature": "Adamant",
+            "moves": [
+              "Dragon Claw",
+              "Stomping Tantrum",
+              "Earthquake",
+              "Rock Slide"
+            ],
+            "skillPoints": {
+              "hp": 10,
+              "atk": 20,
+              "def": 9,
+              "spa": 0,
+              "spd": 0,
+              "spe": 27
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Floette-Eternal",
+            "item": "Floettite",
+            "ability": "Flower Veil",
+            "nature": "Timid",
+            "moves": [
+              "Moonblast",
+              "Dazzling Gleam",
+              "Light of Ruin",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 0,
+              "def": 8,
+              "spa": 32,
+              "spd": 0,
+              "spe": 22
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          }
+        ]
+      },
+      "request": {
+        "active": [
+          {
+            "moves": [
+              {
+                "move": "Sucker Punch",
+                "id": "suckerpunch",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Kowtow Cleave",
+                "id": "kowtowcleave",
+                "pp": 11,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Low Kick",
+                "id": "lowkick",
+                "pp": 20,
+                "maxpp": 20,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Iron Head",
+                "id": "ironhead",
+                "pp": 16,
+                "maxpp": 16,
+                "target": "normal",
+                "disabled": false
+              }
+            ]
+          },
+          {
+            "moves": [
+              {
+                "move": "Dragon Claw",
+                "id": "dragonclaw",
+                "pp": 16,
+                "maxpp": 16,
+                "target": "normal",
+                "disabled": true
+              },
+              {
+                "move": "Stomping Tantrum",
+                "id": "stompingtantrum",
+                "pp": 10,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Earthquake",
+                "id": "earthquake",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "allAdjacent",
+                "disabled": true
+              },
+              {
+                "move": "Rock Slide",
+                "id": "rockslide",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "allAdjacentFoes",
+                "disabled": true
+              }
+            ]
+          }
+        ],
+        "side": {
+          "name": "p2",
+          "id": "p2",
+          "pokemon": [
+            {
+              "ident": "p2: Kingambit",
+              "details": "Kingambit, L50, M",
+              "condition": "45/207",
+              "active": true,
+              "stats": {
+                "atk": 187,
+                "def": 140,
+                "spa": 72,
+                "spd": 124,
+                "spe": 70
+              },
+              "moves": [
+                "suckerpunch",
+                "kowtowcleave",
+                "lowkick",
+                "ironhead"
+              ],
+              "baseAbility": "defiant",
+              "item": "",
+              "pokeball": "pokeball",
+              "ability": "defiant",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Garchomp",
+              "details": "Garchomp, L50, F",
+              "condition": "53/193",
+              "active": true,
+              "stats": {
+                "atk": 187,
+                "def": 124,
+                "spa": 90,
+                "spd": 105,
+                "spe": 149
+              },
+              "moves": [
+                "dragonclaw",
+                "stompingtantrum",
+                "earthquake",
+                "rockslide"
+              ],
+              "baseAbility": "roughskin",
+              "item": "choicescarf",
+              "pokeball": "pokeball",
+              "ability": "roughskin",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Basculegion",
+              "details": "Basculegion, L50, M",
+              "condition": "199/199",
+              "active": false,
+              "stats": {
+                "atk": 165,
+                "def": 89,
+                "spa": 90,
+                "spd": 110,
+                "spe": 123
+              },
+              "moves": [
+                "wavecrash",
+                "lastrespects",
+                "aquajet",
+                "protect"
+              ],
+              "baseAbility": "adaptability",
+              "item": "lifeorb",
+              "pokeball": "pokeball",
+              "ability": "adaptability",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Sneasler",
+              "details": "Sneasler, L50, M",
+              "condition": "0 fnt",
+              "active": false,
+              "stats": {
+                "atk": 182,
+                "def": 80,
+                "spa": 54,
+                "spd": 100,
+                "spe": 189
+              },
+              "moves": [
+                "closecombat",
+                "direclaw",
+                "fakeout",
+                "feint"
+              ],
+              "baseAbility": "poisontouch",
+              "item": "",
+              "pokeball": "pokeball",
+              "ability": "poisontouch",
+              "commanding": false,
+              "reviving": false
+            }
+          ]
+        }
+      },
+      "observations": [
+        "|gametype|doubles",
+        "|player|p1|p1||",
+        "|player|p2|p2||",
+        "|gen|9",
+        "|tier|[Gen 9 Champions] VGC 2026 Reg M-B",
+        "|rule|Species Clause: Limit one of each Pokémon",
+        "|rule|Item Clause: Limit 1 of each item",
+        "|clearpoke",
+        "|poke|p1|Staraptor, L50, M|",
+        "|poke|p1|Scizor, L50, M|",
+        "|poke|p1|Torkoal, L50, M|",
+        "|poke|p1|Banette, L50, F|",
+        "|poke|p1|Milotic, L50, F|",
+        "|poke|p1|Sneasler, L50, F|",
+        "|poke|p2|Dragonite, L50, F|",
+        "|poke|p2|Sneasler, L50, M|",
+        "|poke|p2|Basculegion, L50, M|",
+        "|poke|p2|Kingambit, L50, M|",
+        "|poke|p2|Garchomp, L50, F|",
+        "|poke|p2|Floette-Eternal, L50, F|",
+        "|teampreview|4",
+        "|uhtml|otsrequest|<button name=\"send\" value=\"/acceptopenteamsheets\" class=\"button\" style=\"margin-right: 10px;\"><strong>Accept Open Team Sheets</strong></button><button name=\"send\" value=\"/rejectopenteamsheets\" class=\"button\" style=\"margin-top: 10px\"><strong>Deny Open Team Sheets</strong></button>",
+        "|",
+        "|teamsize|p1|4",
+        "|teamsize|p2|4",
+        "|start",
+        "|uhtmlchange|otsrequest|",
+        "|switch|p1a: Staraptor|Staraptor, L50, M|100/100",
+        "|switch|p1b: Sneasler|Sneasler, L50, F|100/100",
+        "|switch|p2a: Sneasler|Sneasler, L50, M|157/157",
+        "|switch|p2b: Basculegion|Basculegion, L50, M|199/199",
+        "|-ability|p1a: Staraptor|Intimidate|boost",
+        "|-unboost|p2a: Sneasler|atk|1",
+        "|-unboost|p2b: Basculegion|atk|1",
+        "|turn|1",
+        "|",
+        "|switch|p2b: Garchomp|Garchomp, L50, F|193/193",
+        "|move|p2a: Sneasler|Dire Claw|p1a: Staraptor",
+        "|-damage|p1a: Staraptor|63/100",
+        "|-status|p1a: Staraptor|psn|[from] ability: Poison Touch|[of] p2a: Sneasler",
+        "|move|p1b: Sneasler|Throat Chop|p2b: Garchomp",
+        "|-damage|p2b: Garchomp|125/193",
+        "|-start|p2b: Garchomp|Throat Chop|[silent]",
+        "|-damage|p1b: Sneasler|88/100|[from] ability: Rough Skin|[of] p2b: Garchomp",
+        "|-damage|p1b: Sneasler|78/100|[from] item: Life Orb",
+        "|move|p1a: Staraptor|Brave Bird|p2a: Sneasler",
+        "|-supereffective|p2a: Sneasler|1",
+        "|-enditem|p2a: Sneasler|Focus Sash",
+        "|-damage|p2a: Sneasler|1/157",
+        "|-damage|p1a: Staraptor|35/100 psn|[from] Recoil",
+        "|",
+        "|-damage|p1a: Staraptor|23/100 psn|[from] psn",
+        "|upkeep",
+        "|turn|2",
+        "|",
+        "|detailschange|p1a: Staraptor|Staraptor-Mega, L50, M",
+        "|-mega|p1a: Staraptor|Staraptor|Staraptite",
+        "|move|p2b: Garchomp|Stomping Tantrum|p1b: Sneasler",
+        "|-supereffective|p1b: Sneasler|1",
+        "|-damage|p1b: Sneasler|0 fnt",
+        "|faint|p1b: Sneasler",
+        "|move|p2a: Sneasler|Close Combat|p1a: Staraptor",
+        "|-resisted|p1a: Staraptor|1",
+        "|-damage|p1a: Staraptor|4/100 psn",
+        "|-unboost|p2a: Sneasler|def|1",
+        "|-unboost|p2a: Sneasler|spd|1",
+        "|move|p1a: Staraptor|Brave Bird|p2a: Sneasler",
+        "|-supereffective|p2a: Sneasler|1",
+        "|-damage|p2a: Sneasler|0 fnt",
+        "|faint|p2a: Sneasler",
+        "|-damage|p1a: Staraptor|3/100 psn|[from] Recoil",
+        "|",
+        "|-damage|p1a: Staraptor|0 fnt|[from] psn",
+        "|faint|p1a: Staraptor",
+        "|-end|p2b: Garchomp|Throat Chop|[silent]",
+        "|upkeep",
+        "|",
+        "|switch|p2a: Kingambit|Kingambit, L50, M|207/207",
+        "|switch|p1a: Scizor|Scizor, L50, M|100/100",
+        "|switch|p1b: Milotic|Milotic, L50, F|100/100",
+        "|turn|3",
+        "|",
+        "|move|p2b: Garchomp|Stomping Tantrum|p1a: Scizor",
+        "|-damage|p1a: Scizor|60/100",
+        "|move|p1b: Milotic|Icy Wind|p2a: Kingambit|[spread] p2a,p2b",
+        "|-resisted|p2a: Kingambit|1",
+        "|-supereffective|p2b: Garchomp|2",
+        "|-damage|p2a: Kingambit|199/207",
+        "|-damage|p2b: Garchomp|53/193",
+        "|-unboost|p2a: Kingambit|spe|1",
+        "|-ability|p2a: Kingambit|Defiant|boost",
+        "|-boost|p2a: Kingambit|atk|2",
+        "|-unboost|p2b: Garchomp|spe|1",
+        "|move|p1a: Scizor|Close Combat|p2a: Kingambit",
+        "|-supereffective|p2a: Kingambit|2",
+        "|-enditem|p2a: Kingambit|Chople Berry|[eat]",
+        "|-enditem|p2a: Kingambit|Chople Berry|[weaken]",
+        "|-damage|p2a: Kingambit|45/207",
+        "|-unboost|p1a: Scizor|def|1",
+        "|-unboost|p1a: Scizor|spd|1",
+        "|move|p2a: Kingambit|Kowtow Cleave|p1a: Scizor",
+        "|-damage|p1a: Scizor|0 fnt",
+        "|faint|p1a: Scizor",
+        "|",
+        "|upkeep",
+        "|turn|4"
+      ],
+      "legalCommands": [
+        "move 1 1, move 2 1",
+        "move 1 1, move 2 2",
+        "move 1 1, move 2 -1",
+        "move 1 1, switch 3",
+        "move 1 2, move 2 1",
+        "move 1 2, move 2 2",
+        "move 1 2, move 2 -1",
+        "move 1 2, switch 3",
+        "move 1 -2, move 2 1",
+        "move 1 -2, move 2 2",
+        "move 1 -2, move 2 -1",
+        "move 1 -2, switch 3",
+        "move 2 1, move 2 1",
+        "move 2 1, move 2 2",
+        "move 2 1, move 2 -1",
+        "move 2 1, switch 3",
+        "move 2 2, move 2 1",
+        "move 2 2, move 2 2",
+        "move 2 2, move 2 -1",
+        "move 2 2, switch 3",
+        "move 2 -2, move 2 1",
+        "move 2 -2, move 2 2",
+        "move 2 -2, move 2 -1",
+        "move 2 -2, switch 3",
+        "move 3 1, move 2 1",
+        "move 3 1, move 2 2",
+        "move 3 1, move 2 -1",
+        "move 3 1, switch 3",
+        "move 3 2, move 2 1",
+        "move 3 2, move 2 2",
+        "move 3 2, move 2 -1",
+        "move 3 2, switch 3",
+        "move 3 -2, move 2 1",
+        "move 3 -2, move 2 2",
+        "move 3 -2, move 2 -1",
+        "move 3 -2, switch 3",
+        "move 4 1, move 2 1",
+        "move 4 1, move 2 2",
+        "move 4 1, move 2 -1",
+        "move 4 1, switch 3",
+        "move 4 2, move 2 1",
+        "move 4 2, move 2 2",
+        "move 4 2, move 2 -1",
+        "move 4 2, switch 3",
+        "move 4 -2, move 2 1",
+        "move 4 -2, move 2 2",
+        "move 4 -2, move 2 -1",
+        "move 4 -2, switch 3",
+        "switch 3, move 2 1",
+        "switch 3, move 2 2",
+        "switch 3, move 2 -1"
+      ],
+      "ended": false,
+      "informationMode": "closed"
+    },
+    "belief": {
+      "version": "team-particles-v2",
+      "regulationId": "champions-vgc-2026-m-b",
+      "preview": [
+        "Staraptor",
+        "Scizor",
+        "Torkoal",
+        "Banette",
+        "Milotic",
+        "Sneasler"
+      ],
+      "known": [
+        {
+          "species": "Staraptor",
+          "ability": "Intimidate",
+          "moves": [
+            "Brave Bird"
+          ],
+          "item": "Staraptite"
+        },
+        {
+          "species": "Sneasler",
+          "moves": [
+            "Throat Chop"
+          ]
+        },
+        {
+          "species": "Milotic",
+          "moves": [
+            "Icy Wind"
+          ]
+        },
+        {
+          "species": "Scizor",
+          "moves": [
+            "Close Combat"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "id": "3f388a3258e73c836be1e3fdc1b8bf1013aba1e6ea5a4a4a78cbfe5c1eb99024",
+          "team": {
+            "pokemon": [
+              {
+                "species": "Staraptor",
+                "ability": "Intimidate",
+                "nature": "Adamant",
+                "moves": [
+                  "Brave Bird",
+                  "Double-Edge",
+                  "Sky Attack",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50,
+                "item": "Staraptite"
+              },
+              {
+                "species": "Scizor",
+                "ability": "Swarm",
+                "nature": "Adamant",
+                "moves": [
+                  "Close Combat",
+                  "Iron Head",
+                  "Lunge",
+                  "X-Scissor"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Torkoal",
+                "ability": "White Smoke",
+                "nature": "Adamant",
+                "moves": [
+                  "Flare Blitz",
+                  "Temper Flare",
+                  "Double-Edge",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Banette",
+                "ability": "Insomnia",
+                "nature": "Adamant",
+                "moves": [
+                  "Phantom Force",
+                  "Poltergeist",
+                  "Shadow Claw",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Milotic",
+                "ability": "Marvel Scale",
+                "nature": "Modest",
+                "moves": [
+                  "Icy Wind",
+                  "Surf",
+                  "Hydro Pump",
+                  "Scald"
+                ],
+                "skillPoints": {
+                  "spa": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Sneasler",
+                "ability": "Pressure",
+                "nature": "Adamant",
+                "moves": [
+                  "Throat Chop",
+                  "Close Combat",
+                  "Focus Punch",
+                  "Dire Claw"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              }
+            ]
+          },
+          "source": {
+            "provider": "explicit-completion-library",
+            "retrievedAt": "input",
+            "regulationId": "champions-vgc-2026-m-b"
+          },
+          "assumptions": [
+            "Explicit completion prior; uniform conditional prior."
+          ],
+          "weight": 1,
+          "sourceTeamIds": [],
+          "sources": [
+            {
+              "provider": "explicit-completion-library",
+              "retrievedAt": "input",
+              "regulationId": "champions-vgc-2026-m-b"
+            }
+          ]
+        }
+      ],
+      "observations": [],
+      "status": "covered",
+      "effectiveSampleSize": 1,
+      "warnings": [
+        "Ignored usage rows without explicit verified matching regulation.",
+        "Skipped ambiguous direct damage evidence (critical, multi-hit, item/ability change or field/state context).",
+        "Public reveals required legal prior expansion; expanded sets preserve sampled unknown investments. Historical damage/order likelihoods were not recomputed for new candidates; posterior coverage is approximate.",
+        "Skipped speed evidence: public status, field, boosts or order-changing mechanics make effective order ambiguous."
+      ],
+      "observedPrefix": {
+        "count": 106,
+        "hash": "948575edd7f85f8858caf29e885a7af08480c442ac9c0b5fb3f7bb39b58fc102"
+      }
+    }
+  },
+  {
+    "name": "tactical-loss",
+    "turn": 1,
+    "command": "move 2 1, switch 3",
+    "view": {
+      "side": "p2",
+      "turn": 1,
+      "ownTeam": {
+        "pokemon": [
+          {
+            "species": "Dragonite",
+            "item": "Dragoninite",
+            "ability": "Multiscale",
+            "nature": "Modest",
+            "moves": [
+              "Dragon Pulse",
+              "Heat Wave",
+              "Extreme Speed",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 0,
+              "def": 0,
+              "spa": 32,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Sneasler",
+            "item": "Focus Sash",
+            "ability": "Poison Touch",
+            "nature": "Jolly",
+            "moves": [
+              "Close Combat",
+              "Dire Claw",
+              "Fake Out",
+              "Feint"
+            ],
+            "skillPoints": {
+              "hp": 2,
+              "atk": 32,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 32
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Basculegion",
+            "item": "Life Orb",
+            "ability": "Adaptability",
+            "nature": "Adamant",
+            "moves": [
+              "Wave Crash",
+              "Last Respects",
+              "Aqua Jet",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 18,
+              "def": 4,
+              "spa": 0,
+              "spd": 15,
+              "spe": 25
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Kingambit",
+            "item": "Chople Berry",
+            "ability": "Defiant",
+            "nature": "Adamant",
+            "moves": [
+              "Sucker Punch",
+              "Kowtow Cleave",
+              "Low Kick",
+              "Iron Head"
+            ],
+            "skillPoints": {
+              "hp": 32,
+              "atk": 15,
+              "def": 0,
+              "spa": 0,
+              "spd": 19,
+              "spe": 0
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "M"
+          },
+          {
+            "species": "Garchomp",
+            "item": "Choice Scarf",
+            "ability": "Rough Skin",
+            "nature": "Adamant",
+            "moves": [
+              "Dragon Claw",
+              "Stomping Tantrum",
+              "Earthquake",
+              "Rock Slide"
+            ],
+            "skillPoints": {
+              "hp": 10,
+              "atk": 20,
+              "def": 9,
+              "spa": 0,
+              "spd": 0,
+              "spe": 27
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          },
+          {
+            "species": "Floette-Eternal",
+            "item": "Floettite",
+            "ability": "Flower Veil",
+            "nature": "Timid",
+            "moves": [
+              "Moonblast",
+              "Dazzling Gleam",
+              "Light of Ruin",
+              "Protect"
+            ],
+            "skillPoints": {
+              "hp": 4,
+              "atk": 0,
+              "def": 8,
+              "spa": 32,
+              "spd": 0,
+              "spe": 22
+            },
+            "ivs": {},
+            "level": 50,
+            "gender": "F"
+          }
+        ]
+      },
+      "request": {
+        "active": [
+          {
+            "moves": [
+              {
+                "move": "Close Combat",
+                "id": "closecombat",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Dire Claw",
+                "id": "direclaw",
+                "pp": 16,
+                "maxpp": 16,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Fake Out",
+                "id": "fakeout",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Feint",
+                "id": "feint",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              }
+            ]
+          },
+          {
+            "moves": [
+              {
+                "move": "Wave Crash",
+                "id": "wavecrash",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Last Respects",
+                "id": "lastrespects",
+                "pp": 12,
+                "maxpp": 12,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Aqua Jet",
+                "id": "aquajet",
+                "pp": 20,
+                "maxpp": 20,
+                "target": "normal",
+                "disabled": false
+              },
+              {
+                "move": "Protect",
+                "id": "protect",
+                "pp": 8,
+                "maxpp": 8,
+                "target": "self",
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "side": {
+          "name": "p2",
+          "id": "p2",
+          "pokemon": [
+            {
+              "ident": "p2: Sneasler",
+              "details": "Sneasler, L50, M",
+              "condition": "157/157",
+              "active": true,
+              "stats": {
+                "atk": 182,
+                "def": 80,
+                "spa": 54,
+                "spd": 100,
+                "spe": 189
+              },
+              "moves": [
+                "closecombat",
+                "direclaw",
+                "fakeout",
+                "feint"
+              ],
+              "baseAbility": "poisontouch",
+              "item": "focussash",
+              "pokeball": "pokeball",
+              "ability": "poisontouch",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Basculegion",
+              "details": "Basculegion, L50, M",
+              "condition": "199/199",
+              "active": true,
+              "stats": {
+                "atk": 165,
+                "def": 89,
+                "spa": 90,
+                "spd": 110,
+                "spe": 123
+              },
+              "moves": [
+                "wavecrash",
+                "lastrespects",
+                "aquajet",
+                "protect"
+              ],
+              "baseAbility": "adaptability",
+              "item": "lifeorb",
+              "pokeball": "pokeball",
+              "ability": "adaptability",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Garchomp",
+              "details": "Garchomp, L50, F",
+              "condition": "193/193",
+              "active": false,
+              "stats": {
+                "atk": 187,
+                "def": 124,
+                "spa": 90,
+                "spd": 105,
+                "spe": 149
+              },
+              "moves": [
+                "dragonclaw",
+                "stompingtantrum",
+                "earthquake",
+                "rockslide"
+              ],
+              "baseAbility": "roughskin",
+              "item": "choicescarf",
+              "pokeball": "pokeball",
+              "ability": "roughskin",
+              "commanding": false,
+              "reviving": false
+            },
+            {
+              "ident": "p2: Kingambit",
+              "details": "Kingambit, L50, M",
+              "condition": "207/207",
+              "active": false,
+              "stats": {
+                "atk": 187,
+                "def": 140,
+                "spa": 72,
+                "spd": 124,
+                "spe": 70
+              },
+              "moves": [
+                "suckerpunch",
+                "kowtowcleave",
+                "lowkick",
+                "ironhead"
+              ],
+              "baseAbility": "defiant",
+              "item": "chopleberry",
+              "pokeball": "pokeball",
+              "ability": "defiant",
+              "commanding": false,
+              "reviving": false
+            }
+          ]
+        }
+      },
+      "observations": [
+        "|gametype|doubles",
+        "|player|p1|p1||",
+        "|player|p2|p2||",
+        "|gen|9",
+        "|tier|[Gen 9 Champions] VGC 2026 Reg M-B",
+        "|rule|Species Clause: Limit one of each Pokémon",
+        "|rule|Item Clause: Limit 1 of each item",
+        "|clearpoke",
+        "|poke|p1|Staraptor, L50, M|",
+        "|poke|p1|Scizor, L50, M|",
+        "|poke|p1|Torkoal, L50, M|",
+        "|poke|p1|Banette, L50, F|",
+        "|poke|p1|Milotic, L50, F|",
+        "|poke|p1|Sneasler, L50, F|",
+        "|poke|p2|Dragonite, L50, F|",
+        "|poke|p2|Sneasler, L50, M|",
+        "|poke|p2|Basculegion, L50, M|",
+        "|poke|p2|Kingambit, L50, M|",
+        "|poke|p2|Garchomp, L50, F|",
+        "|poke|p2|Floette-Eternal, L50, F|",
+        "|teampreview|4",
+        "|uhtml|otsrequest|<button name=\"send\" value=\"/acceptopenteamsheets\" class=\"button\" style=\"margin-right: 10px;\"><strong>Accept Open Team Sheets</strong></button><button name=\"send\" value=\"/rejectopenteamsheets\" class=\"button\" style=\"margin-top: 10px\"><strong>Deny Open Team Sheets</strong></button>",
+        "|",
+        "|teamsize|p1|4",
+        "|teamsize|p2|4",
+        "|start",
+        "|uhtmlchange|otsrequest|",
+        "|switch|p1a: Staraptor|Staraptor, L50, M|100/100",
+        "|switch|p1b: Sneasler|Sneasler, L50, F|100/100",
+        "|switch|p2a: Sneasler|Sneasler, L50, M|157/157",
+        "|switch|p2b: Basculegion|Basculegion, L50, M|199/199",
+        "|-ability|p1a: Staraptor|Intimidate|boost",
+        "|-unboost|p2a: Sneasler|atk|1",
+        "|-unboost|p2b: Basculegion|atk|1",
+        "|turn|1"
+      ],
+      "legalCommands": [
+        "move 1 1, move 1 1",
+        "move 1 1, move 1 2",
+        "move 1 1, move 1 -1",
+        "move 1 1, move 2 1",
+        "move 1 1, move 2 2",
+        "move 1 1, move 2 -1",
+        "move 1 1, move 3 1",
+        "move 1 1, move 3 2",
+        "move 1 1, move 3 -1",
+        "move 1 1, move 4",
+        "move 1 1, switch 3",
+        "move 1 1, switch 4",
+        "move 1 2, move 1 1",
+        "move 1 2, move 1 2",
+        "move 1 2, move 1 -1",
+        "move 1 2, move 2 1",
+        "move 1 2, move 2 2",
+        "move 1 2, move 2 -1",
+        "move 1 2, move 3 1",
+        "move 1 2, move 3 2",
+        "move 1 2, move 3 -1",
+        "move 1 2, move 4",
+        "move 1 2, switch 3",
+        "move 1 2, switch 4",
+        "move 1 -2, move 1 1",
+        "move 1 -2, move 1 2",
+        "move 1 -2, move 1 -1",
+        "move 1 -2, move 2 1",
+        "move 1 -2, move 2 2",
+        "move 1 -2, move 2 -1",
+        "move 1 -2, move 3 1",
+        "move 1 -2, move 3 2",
+        "move 1 -2, move 3 -1",
+        "move 1 -2, move 4",
+        "move 1 -2, switch 3",
+        "move 1 -2, switch 4",
+        "move 2 1, move 1 1",
+        "move 2 1, move 1 2",
+        "move 2 1, move 1 -1",
+        "move 2 1, move 2 1",
+        "move 2 1, move 2 2",
+        "move 2 1, move 2 -1",
+        "move 2 1, move 3 1",
+        "move 2 1, move 3 2",
+        "move 2 1, move 3 -1",
+        "move 2 1, move 4",
+        "move 2 1, switch 3",
+        "move 2 1, switch 4",
+        "move 2 2, move 1 1",
+        "move 2 2, move 1 2",
+        "move 2 2, move 1 -1",
+        "move 2 2, move 2 1",
+        "move 2 2, move 2 2",
+        "move 2 2, move 2 -1",
+        "move 2 2, move 3 1",
+        "move 2 2, move 3 2",
+        "move 2 2, move 3 -1",
+        "move 2 2, move 4",
+        "move 2 2, switch 3",
+        "move 2 2, switch 4",
+        "move 2 -2, move 1 1",
+        "move 2 -2, move 1 2",
+        "move 2 -2, move 1 -1",
+        "move 2 -2, move 2 1",
+        "move 2 -2, move 2 2",
+        "move 2 -2, move 2 -1",
+        "move 2 -2, move 3 1",
+        "move 2 -2, move 3 2",
+        "move 2 -2, move 3 -1",
+        "move 2 -2, move 4",
+        "move 2 -2, switch 3",
+        "move 2 -2, switch 4",
+        "move 3 1, move 1 1",
+        "move 3 1, move 1 2",
+        "move 3 1, move 1 -1",
+        "move 3 1, move 2 1",
+        "move 3 1, move 2 2",
+        "move 3 1, move 2 -1",
+        "move 3 1, move 3 1",
+        "move 3 1, move 3 2",
+        "move 3 1, move 3 -1",
+        "move 3 1, move 4",
+        "move 3 1, switch 3",
+        "move 3 1, switch 4",
+        "move 3 2, move 1 1",
+        "move 3 2, move 1 2",
+        "move 3 2, move 1 -1",
+        "move 3 2, move 2 1",
+        "move 3 2, move 2 2",
+        "move 3 2, move 2 -1",
+        "move 3 2, move 3 1",
+        "move 3 2, move 3 2",
+        "move 3 2, move 3 -1",
+        "move 3 2, move 4",
+        "move 3 2, switch 3",
+        "move 3 2, switch 4",
+        "move 3 -2, move 1 1",
+        "move 3 -2, move 1 2",
+        "move 3 -2, move 1 -1",
+        "move 3 -2, move 2 1",
+        "move 3 -2, move 2 2",
+        "move 3 -2, move 2 -1",
+        "move 3 -2, move 3 1",
+        "move 3 -2, move 3 2",
+        "move 3 -2, move 3 -1",
+        "move 3 -2, move 4",
+        "move 3 -2, switch 3",
+        "move 3 -2, switch 4",
+        "move 4 1, move 1 1",
+        "move 4 1, move 1 2",
+        "move 4 1, move 1 -1",
+        "move 4 1, move 2 1",
+        "move 4 1, move 2 2",
+        "move 4 1, move 2 -1",
+        "move 4 1, move 3 1",
+        "move 4 1, move 3 2",
+        "move 4 1, move 3 -1",
+        "move 4 1, move 4",
+        "move 4 1, switch 3",
+        "move 4 1, switch 4",
+        "move 4 2, move 1 1",
+        "move 4 2, move 1 2",
+        "move 4 2, move 1 -1",
+        "move 4 2, move 2 1",
+        "move 4 2, move 2 2",
+        "move 4 2, move 2 -1",
+        "move 4 2, move 3 1",
+        "move 4 2, move 3 2",
+        "move 4 2, move 3 -1",
+        "move 4 2, move 4",
+        "move 4 2, switch 3",
+        "move 4 2, switch 4",
+        "move 4 -2, move 1 1",
+        "move 4 -2, move 1 2",
+        "move 4 -2, move 1 -1",
+        "move 4 -2, move 2 1",
+        "move 4 -2, move 2 2",
+        "move 4 -2, move 2 -1",
+        "move 4 -2, move 3 1",
+        "move 4 -2, move 3 2",
+        "move 4 -2, move 3 -1",
+        "move 4 -2, move 4",
+        "move 4 -2, switch 3",
+        "move 4 -2, switch 4",
+        "switch 3, move 1 1",
+        "switch 3, move 1 2",
+        "switch 3, move 1 -1",
+        "switch 3, move 2 1",
+        "switch 3, move 2 2",
+        "switch 3, move 2 -1",
+        "switch 3, move 3 1",
+        "switch 3, move 3 2",
+        "switch 3, move 3 -1",
+        "switch 3, move 4",
+        "switch 3, switch 4",
+        "switch 4, move 1 1",
+        "switch 4, move 1 2",
+        "switch 4, move 1 -1",
+        "switch 4, move 2 1",
+        "switch 4, move 2 2",
+        "switch 4, move 2 -1",
+        "switch 4, move 3 1",
+        "switch 4, move 3 2",
+        "switch 4, move 3 -1",
+        "switch 4, move 4",
+        "switch 4, switch 3"
+      ],
+      "ended": false,
+      "informationMode": "closed"
+    },
+    "belief": {
+      "version": "team-particles-v2",
+      "regulationId": "champions-vgc-2026-m-b",
+      "preview": [
+        "Staraptor",
+        "Scizor",
+        "Torkoal",
+        "Banette",
+        "Milotic",
+        "Sneasler"
+      ],
+      "known": [
+        {
+          "species": "Staraptor",
+          "ability": "Intimidate"
+        }
+      ],
+      "candidates": [
+        {
+          "id": "c121dfe4206d1602034a529202798d88d5612e7b993516c06cdd4ee5e62feb96",
+          "team": {
+            "pokemon": [
+              {
+                "species": "Staraptor",
+                "ability": "Intimidate",
+                "nature": "Adamant",
+                "moves": [
+                  "Brave Bird",
+                  "Double-Edge",
+                  "Sky Attack",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Scizor",
+                "ability": "Swarm",
+                "nature": "Adamant",
+                "moves": [
+                  "Iron Head",
+                  "Lunge",
+                  "X-Scissor",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Torkoal",
+                "ability": "White Smoke",
+                "nature": "Adamant",
+                "moves": [
+                  "Flare Blitz",
+                  "Temper Flare",
+                  "Double-Edge",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Banette",
+                "ability": "Insomnia",
+                "nature": "Adamant",
+                "moves": [
+                  "Phantom Force",
+                  "Poltergeist",
+                  "Shadow Claw",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Milotic",
+                "ability": "Marvel Scale",
+                "nature": "Modest",
+                "moves": [
+                  "Surf",
+                  "Hydro Pump",
+                  "Scald",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "spa": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              },
+              {
+                "species": "Sneasler",
+                "ability": "Pressure",
+                "nature": "Adamant",
+                "moves": [
+                  "Close Combat",
+                  "Focus Punch",
+                  "Dire Claw",
+                  "Protect"
+                ],
+                "skillPoints": {
+                  "atk": 32,
+                  "spe": 32,
+                  "hp": 2
+                },
+                "ivs": {},
+                "level": 50
+              }
+            ]
+          },
+          "source": {
+            "provider": "explicit-completion-library",
+            "retrievedAt": "input",
+            "regulationId": "champions-vgc-2026-m-b"
+          },
+          "assumptions": [
+            "Explicit completion prior; uniform conditional prior."
+          ],
+          "weight": 1,
+          "sourceTeamIds": [],
+          "sources": [
+            {
+              "provider": "explicit-completion-library",
+              "retrievedAt": "input",
+              "regulationId": "champions-vgc-2026-m-b"
+            }
+          ]
+        }
+      ],
+      "observations": [],
+      "status": "covered",
+      "effectiveSampleSize": 1,
+      "warnings": [
+        "Ignored usage rows without explicit verified matching regulation."
+      ],
+      "observedPrefix": {
+        "count": 35,
+        "hash": "b950c351bf45d98541ffd46b3c9f2efd639f38408938f9bd3feee39d614def81"
+      }
+    }
+  }
+]

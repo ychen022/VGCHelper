@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "vgc-player": {
+      "type": "local",
+      "command": "node",
+      "args": ["D:/absolute/path/to/VGCHelper/dist/index.js"],
+      "cwd": "D:/absolute/path/to/VGCHelper",
+      "env": {
+        "VGC_PLAYER_TOKEN": "$VGC_PLAYER_TOKEN",
+        "VGC_HELPER_DATABASE": "$VGC_HELPER_DATABASE"
+      },
+      "tools": ["vgc_player_view", "vgc_player_evaluate", "vgc_player_submit"],
+      "timeout": 180000,
+      "deferTools": "never"
+    }
+  }
+}

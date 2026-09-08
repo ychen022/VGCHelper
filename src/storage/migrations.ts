@@ -79,4 +79,32 @@ export const migrations = [
         ON analyses(replay_id, analysis_type, created_at DESC);
     `,
   },
+  {
+    version: 2,
+    sql: `
+      CREATE TABLE simulation_jobs (
+        id TEXT PRIMARY KEY, owner_pid INTEGER NOT NULL, owner_id TEXT NOT NULL,
+        status TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,
+        request_json TEXT NOT NULL, progress_json TEXT, result_json TEXT, error TEXT
+      );
+      CREATE INDEX simulation_jobs_status ON simulation_jobs(status, created_at);
+      CREATE TABLE simulation_traces (
+        job_id TEXT NOT NULL REFERENCES simulation_jobs(id) ON DELETE CASCADE,
+        trace_index INTEGER NOT NULL, payload_json TEXT NOT NULL,
+        PRIMARY KEY(job_id, trace_index)
+      );
+    `,
+  },
+  {
+    version: 3,
+    sql: `
+      CREATE TABLE reasoning_matches (
+        id TEXT PRIMARY KEY,
+        admin_hash TEXT NOT NULL UNIQUE,
+        p1_hash TEXT NOT NULL UNIQUE,
+        p2_hash TEXT NOT NULL UNIQUE,
+        payload_json TEXT NOT NULL
+      );
+    `,
+  },
 ] as const;

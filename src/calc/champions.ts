@@ -163,7 +163,9 @@ function positionedPokemon(set: PokemonSet, position?: PokemonPosition, move?: s
   const pokemon = new Pokemon(champions, species, options);
   if (position?.hpPercent !== undefined) {
     if (position.hpPercent <= 0 || position.hpPercent > 100) throw new Error('Calculation HP must be greater than zero and at most 100 percent');
-    pokemon.originalCurHP = Math.max(1, Math.floor(pokemon.maxHP() * position.hpPercent / 100));
+    const maximumHp = pokemon.maxHP();
+    // Preserve integer HP when its percentage has made a floating-point round trip.
+    pokemon.originalCurHP = Math.max(1, Math.floor(maximumHp * position.hpPercent / 100 + 8 * Number.EPSILON * maximumHp));
   }
   return pokemon;
 }

@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "smoke": "node scripts/smoke-mcp.mjs",
-    "validate:live": "node scripts/validate-live.mjs"
+    "validate:live": "node scripts/validate-live.mjs",
+    "postinstall": "node node_modules/pokemon-showdown/build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.30.0",
@@ -24,6 +25,7 @@
     "@smogon/calc": "file:vendor/damage-calc/calc",
     "better-sqlite3": "13.0.3",
     "csv-parse": "6.1.0",
+    "pokemon-showdown": "https://codeload.github.com/smogon/pokemon-showdown/tar.gz/6b4bc34e44cc2541929cc4b8fff96e756ab3f268",
     "zod": "4.5.4"
   },
   "devDependencies": {

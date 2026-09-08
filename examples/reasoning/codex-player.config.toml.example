@@ -1,0 +1,14 @@
+# Copy to config.toml in a clean, player-specific CODEX_HOME.
+# Replace the absolute paths. Set VGC_PLAYER_TOKEN and VGC_HELPER_DATABASE
+# in the environment of each Codex process; do not put their values here.
+
+[mcp_servers.vgc-player]
+command = "node"
+args = ["D:/absolute/path/to/VGCHelper/dist/index.js"]
+cwd = "D:/absolute/path/to/VGCHelper"
+env_vars = ["VGC_PLAYER_TOKEN", "VGC_HELPER_DATABASE"]
+enabled_tools = ["vgc_player_view", "vgc_player_evaluate", "vgc_player_submit"]
+required = true
+default_tools_approval_mode = "approve"
+startup_timeout_sec = 20
+tool_timeout_sec = 180
