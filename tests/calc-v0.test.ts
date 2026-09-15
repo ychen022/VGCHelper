@@ -6,6 +6,27 @@ const profile = loadRegulationProfile();
 const attacker = parsePartialShowdownTeam('Garchomp @ Life Orb\nAbility: Rough Skin\nEVs: 32 Atk / 32 Spe\nAdamant Nature\n- Dragon Claw', profile).pokemon[0]!;
 const defender = parsePartialShowdownTeam('Incineroar @ Sitrus Berry\nAbility: Blaze\nEVs: 32 HP / 32 Def\nImpish Nature\n- Protect', profile).pokemon[0]!;
 describe('state-aware damage', () => {
+  it.each([
+    ['Grassy', 'def', 'Dragon Claw', 'Dragon Pulse'],
+    ['Electric', 'def', 'Dragon Claw', 'Dragon Pulse'],
+    ['Misty', 'spd', 'Dragon Pulse', 'Dragon Claw'],
+    ['Psychic', 'spd', 'Dragon Pulse', 'Dragon Claw'],
+  ] as const)('attributes a consumed %s Seed only to its relevant defense', (terrain, stat, move, otherMove) => {
+    const item = `${terrain} Seed`, seeded = {...defender, item};
+    const unseeded = {...defender, item: ''};
+    const field = {terrain};
+    const result = calculateChampionsDamage({attacker, defender: seeded, move, field});
+    const baseline = calculateChampionsDamage({attacker, defender: unseeded, move, field});
+    const boosted = calculateChampionsDamage({attacker, defender: unseeded, move, field, defenderPosition: {boosts: {[stat]: 1}}});
+    expect(result.description).toContain(item);
+    expect(result.range).toEqual(boosted.range);
+    expect(result.range[1]).toBeLessThan(baseline.range[1]);
+    expect(calculateChampionsDamage({attacker, defender: seeded, move: otherMove, field}).description).not.toContain(item);
+    const inactive = calculateChampionsDamage({attacker, defender: seeded, move});
+    expect(inactive.description).not.toContain(item);
+    expect(inactive.range).toEqual(calculateChampionsDamage({attacker, defender: unseeded, move}).range);
+    expect(seeded.item).toBe(item);
+  });
   it('accepts Showdown Aegislash and distinguishes attacking Blade from defensive Shield', () => {
     const sword = parsePartialShowdownTeam('Aegislash @ Leftovers\nAbility: Stance Change\nModest Nature\n- Shadow Ball', profile).pokemon[0]!;
     const shield = calculateChampionsDamage({attacker, defender:sword, move:'Earthquake'});

@@ -2,15 +2,31 @@
 
 VGCHelper is a local MCP server for Pokemon Champions VGC doubles. It gives an MCP-capable chat host deterministic replay evidence, metagame snapshots, and Champions damage calculations while the host handles the conversational coaching.
 
-V0 targets **Pokemon Champions VGC 2026 Regulation M-B** through an explicit versioned profile.
+The default ruleset is **Pokemon Champions VGC 2026 Regulation M-C** for analysis, simulations, agent battles, replay import and corpus filtering.
 
-The probabilistic simulator adds full-game outcome sampling, player-specific hidden-information beliefs, information-set search, Featured Teams cohort experiments and replay counterfactuals. See [simulation usage and limits](docs/simulation.md) and the [stages 4–6 evaluation](docs/simulation-stages-4-6-evaluation.md). Rebuild and reconnect the MCP client to discover the six simulation tools.
+## Play against an agent
+
+The local **Champions M-C** battle mode lets you play against an isolated reasoning agent in a Showdown-style browser interface. Ask your conversation agent to start a battle with two assigned team exports/PokePaste links and an explicit open/closed team-sheet choice. The coordinator uses `vgc_battle_start` and launches a fresh player with the returned handoff. Select your four, choose doubles actions and targets, switch, Mega Evolve and review the live log in the browser.
+
+User clocks default to M-C's 90-second preview, 45-second selection and 7-minute player bank; agent clocks default to disabled. Either timer can be changed in the initial ask. Agent reasoning defaults to medium with a host-selected model. After a game, rematch with prior battle memory or a fresh isolated agent. Original team sheets and private player views prevent hidden stats, selected reserves and pending choices from crossing player boundaries. Human battles and agent simulations share the same pinned M-C Showdown engine. The Champions calculator is also updated for M-C species, items, abilities and mechanics.
+
+Battle rules and launch defaults are bundled in the MCP: start directly without a web rules lookup, or inspect `vgc_battle_rules` first. See [local human battles](docs/human-battles.md) for setup, the isolated-agent handoff, timers, rematch supervision and all eight battle MCP tools. Rebuild and reconnect your MCP server to load them.
+
+The battle interface includes:
+
+- A separate Mega Evolution toggle alongside move and target selection.
+- Six-member team sidebars with last-known HP, fainted markers and unknown-selection states; opponent HP is labeled with a percent sign.
+- Side-specific conditions beside the affected team, shared conditions below the scene, and remaining/max turn counters.
+- Terrain and weather log entries naming the triggering ability, Pokemon and side in engine order, plus explicit failed-move messages.
+- Showdown replay HTML downloads by default and a separate text-log button, named `<ShowdownFormatName>-sim-yyyy-mm-dd-hh-mm-ss.html/log`.
+
+The probabilistic simulator adds full-game outcome sampling, player-specific hidden-information beliefs, information-set search, Featured Teams cohort experiments and replay counterfactuals. See [simulation usage and limits](docs/simulation.md) and the [historical M-B stages 4–6 evaluation](docs/simulation-stages-4-6-evaluation.md). Rebuild and reconnect the MCP client to discover the six simulation tools.
 
 ## Requirements
 
-- Node.js 22 or newer
+- Node.js 22.18.0 or newer
 - An MCP client such as GitHub Copilot
-- Network access when refreshing metagame data
+- Network access for installation, metagame refreshes, PokePaste links and remote battle/replay visual assets; battle mechanics run locally
 
 ## Setup
 
@@ -60,6 +76,14 @@ Ask naturally, for example, "Use VGCHelper to show its status" or "Use `vgc_meta
 
 | Tool | Purpose |
 |---|---|
+| `vgc_battle_rules` | Read bundled M-C rules, supported formats, timers and launch defaults without a web search. |
+| `vgc_battle_start` | Create a local human-versus-agent battle from two assigned team pastes. |
+| `vgc_battle_open` | Retrieve the authenticated local browser URL. |
+| `vgc_battle_get` | Supervise progress and rematch requests as coordinator. |
+| `vgc_battle_rematch` | Start the requested rematch with actor-only memory or a fresh agent. |
+| `vgc_battle_cancel` | Cancel a human-versus-agent battle. |
+| `vgc_battle_agent_view` | Read the isolated player's permitted observations and legal choices. |
+| `vgc_battle_agent_submit` | Submit the isolated player's action and private plan. |
 | `vgc_status` | Show the regulation, calculator pin, database, and source freshness. |
 | `vgc_refresh_meta` | Validate and atomically activate VGC Pastes and Champions Battle Data snapshots. |
 | `vgc_replay_analyze` | Analyze a replay file/content with the user's exact Showdown team export. |
@@ -97,7 +121,7 @@ Provide:
 
 Replay logs do not reveal full private sets. The user's team is authoritative; opponent moves, items, abilities, and skill points remain confidence-ranked hypotheses until revealed.
 
-The importer accepts explicit `[Gen 9 Champions] VGC 2026 Reg M-B` and its Bo3 variant. The older broad `Champions VGC 2026` label is rejected as ambiguous; dataset category membership alone does not establish M-B. Each report records its team fingerprint, regulation fingerprint and calculator version. Open team sheets are read when present; they do not disclose skill points.
+The importer accepts explicit `[Gen 9 Champions] VGC 2026 Reg M-C` and its Bo3 variant. The older broad `Champions VGC 2026` label is rejected as ambiguous; dataset category membership alone does not establish M-C. Each report records its team fingerprint, regulation fingerprint and calculator version. Open team sheets are read when present; they do not disclose skill points.
 
 The initial report prioritizes up to five findings. A faint or failed move is a review prompt, not proof of a mistake. Alternatives cite pre-turn state and include a partner objective, plausible opposing responses and conditional damage. Inspect `vgc_replay_turn` for full evidence and use only `beforeEvents` when judging the decision. Switching alternatives use previously revealed bench Pokémon, not arbitrary members of the six. Filter trends with `team_version` to compare the same team; repeated analyses of one game count once.
 
@@ -142,7 +166,7 @@ Control effects in those V0 menus are conditional. Fake Out action denial, redir
 
 ## Source integrity
 
-Published team fields retain field-level provenance; an absent spread is unknown. Champions Battle Data's `Current` label does not establish M-B membership. Unverified usage remains queryable as context but is excluded from set hydration and matchup scoring. An optional `sources.championsBattleData.binding` with `regulationId`, `season`, `validFrom`, and `validTo` can admit explicitly verified dated snapshots. Do not infer a regulation window from download time.
+Published team fields retain field-level provenance; an absent spread is unknown. Champions Battle Data's `Current` label does not establish M-C membership. Unverified usage remains queryable as context but is excluded from set hydration and matchup scoring. An optional `sources.championsBattleData.binding` with `regulationId`, `season`, `validFrom`, and `validTo` can admit explicitly verified dated snapshots. Do not infer a regulation window from download time.
 
 Provider failures preserve the previously active snapshot. Missing usage coverage is reported explicitly. Dates, hashes and source versions make saved reports reproducible; featured-team representation is not a ladder usage estimate.
 
@@ -153,18 +177,19 @@ Profiles live in `config\regulations`. `config\active-regulation.json` selects t
 When a season changes:
 
 1. Add a new immutable profile with accepted Showdown formats, rules, source mappings, and evaluation bounds.
-2. Change the active profile pointer.
-3. Run `vgc_refresh_meta` for the new profile.
+2. Update and verify the Showdown engine pin, calculator coverage, simulation/corpus format gates and source bindings.
+3. Change the active profile pointer and run the regression suite.
+4. Run `vgc_refresh_meta` for the new profile.
 
-Historical analyses retain their original regulation and source versions.
+Historical analyses retain their original regulation and source versions. The M-B profile remains available explicitly for historical replay import, and committed M-B replays and evaluation reports retain their original labels. M-B caches, learned priors and engine checkpoints are not reused as M-C evidence. Refresh meta data for M-C after updating; existing M-B results do not establish M-C playing strength. New experiment scripts use `.vgc-helper/experiments/m-c` and require fresh M-C input.
 
 ## Data sources
 
 - [Pokemon Showdown replay protocol and API](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
 - [Pokemon Showdown battle event protocol](https://github.com/smogon/pokemon-showdown/blob/master/sim/SIM-PROTOCOL.md)
 - [HolidayOugi Pokemon Showdown replays](https://huggingface.co/datasets/HolidayOugi/pokemon-showdown-replays), used as an optional parser-compatibility corpus rather than a runtime dependency
-- [VGC Pastes Regulation M-B repository](https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit?gid=1774271567#gid=1774271567)
-- [Smogon damage calculator](https://github.com/smogon/damage-calc), pinned to Champions-capable commit `2c50a89d9e369289965b1448a6f5c1b7d41520c7`
+- [VGC Pastes Regulation M-C repository](https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit?gid=2001945654#gid=2001945654)
+- [Smogon damage calculator](https://github.com/smogon/damage-calc), pinned to Champions-capable commit `e7fd7e59f3eef7ea42fba3c8b83261cb4a14109d`
 
 Battle data provided by [Pokemon Champions Battle Data](https://championsbattledata.com/).
 
@@ -183,12 +208,12 @@ npm run build
 npm run smoke
 ```
 
-`npm run smoke` tests the compiled stdio MCP workflow against a separate `.vgc-helper/smoke` database. `node scripts/smoke-mcp.mjs --refresh` also refreshes public data and evaluates the example team. `npm run validate:live` downloads up to ten public M-B replay JSON files and writes an import summary under `examples/public-replays`. These two network checks are manual, not part of ordinary tests.
+`npm run smoke` tests the compiled stdio MCP workflow against a separate `.vgc-helper/smoke` database. `node scripts/smoke-mcp.mjs --refresh` also refreshes public data and evaluates the example team. `npm run validate:live` downloads up to ten public M-C replay JSON files and writes an import summary under `examples/public-replays`. These two network checks are manual, not part of ordinary tests.
 
 After a successful smoke refresh, `node scripts/smoke-mcp.mjs --team` repeats the team evaluation using that cached snapshot without network access. It writes the example output locally to `examples/reports/team-smoke.json`. Connect your MCP client using the setup above; the smoke database is separate from your normal coaching history.
 
 Local databases, machine-specific agent settings, analysis output, downloaded replay samples, and generated reports are excluded from Git. The fabricated sample inputs, two pinned public replay regression fixtures, and the pinned calculator's compiled package are included so a fresh checkout can run the offline workflow and tests.
 
-See [validation notes](docs/validation.md) for the evidence and limits of the current checks.
+See [validation notes](docs/validation.md) for historical evidence and its limits. Run the checks above for the current M-C implementation.
 
 The calculator source and compiled package are vendored under `vendor\damage-calc` because the current npm release does not yet include the repository's Pokemon Champions mechanics. Its upstream MIT license is preserved in `vendor\damage-calc\LICENSE`.

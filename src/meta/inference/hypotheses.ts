@@ -19,7 +19,7 @@ function normalize(value?: string): string {
 
 function normalizeSpecies(value?: string): string {
   return normalize(value)
-    .replace(/mega(?:x|y)?$/, '')
+    .replace(/mega(?:x|y|z)?$/, '')
     .replace(/eternalmega$/, 'eternal');
 }
 

@@ -60,7 +60,7 @@ function projectionsMatch(expected:NormalizedEvent[],actual:NormalizedEvent[]):b
 export function assertPreviewMatches(expected:NormalizedEvent[],actual:NormalizedEvent[]):void {
   const normalize=(events:NormalizedEvent[])=>events.filter(e=>e.type!=='showteam').map(e=>e.type==='tier'?{...e,args:e.args.map(arg=>arg.replace(/ \(Bo3\)$/,''))}:e);
   const tiers=expected.filter(e=>e.type==='tier').map(e=>id(e.args[0]??''));
-  if(!tiers.length||new Set(tiers).size!==1||tiers.some(t=>![ENGINE_PROFILE.format,ENGINE_PROFILE.format+'bo3'].includes(t)))unsupported('Preview format must be explicit, consistent Champions M-B');
+  if(!tiers.length||new Set(tiers).size!==1||tiers.some(t=>![ENGINE_PROFILE.format,ENGINE_PROFILE.format+'bo3'].includes(t)))unsupported('Preview format must be explicit, consistent Champions M-C');
   if(!projectionsMatch(normalize(expected),normalize(actual)))unsupported('Preview mechanical history conflicts with a fresh sampled world');
 }
 export function constrainReplayTeam(team:PokemonTeam,side:PlayerSide,prefix:NormalizedEvent[]):PokemonTeam {
@@ -162,7 +162,7 @@ export function reconstructReplayStart(replay:ParsedReplay,userTeam:PokemonTeam,
   const prefix=replay.events.slice(0,boundary+1);
   const tiers=prefix.filter(e=>e.type==='tier').map(e=>id(e.args[0] || ''));
   if(replay.document.metadata.formatId)tiers.push(id(replay.document.metadata.formatId));
-  if(!tiers.length || tiers.some(tier=>![ENGINE_PROFILE.format,ENGINE_PROFILE.format+'bo3'].includes(tier)))unsupported('An explicit Champions VGC 2026 Reg M-B format is required; conflicting tiers are unsupported');
+  if(!tiers.length || tiers.some(tier=>![ENGINE_PROFILE.format,ENGINE_PROFILE.format+'bo3'].includes(tier)))unsupported('An explicit Champions VGC 2026 Reg M-C format is required; conflicting tiers are unsupported');
   const bo3=tiers.includes(ENGINE_PROFILE.format+'bo3');
   const teams={p1:constrainReplayTeam(playerSide==='p1'?userTeam:opponentTeam,'p1',prefix),p2:constrainReplayTeam(playerSide==='p2'?userTeam:opponentTeam,'p2',prefix)};
   for(const team of Object.values(teams)) {const errors=validateEngineTeam(team);if(errors.length)unsupported('Candidate is illegal under the pinned engine: '+errors.join('; '));}
@@ -240,7 +240,7 @@ export function reconstructReplayStart(replay:ParsedReplay,userTeam:PokemonTeam,
   let draw=parseInt(sha256(`${seed.join(',')}:particle`).slice(0,8),16)/0x100000000*total;
   const chosen=particles.find(p=>{draw-=p.weight;return draw<=0;})??particles[particles.length-1]!;
   return {...chosen.session.snapshot(),reconstruction:{kind:'public-prefix-sampled',decisionTurn:turn,publicPrefixHash:sha256(prefix.map(e=>e.raw).join('\n')),conditioningAttempts:attempts,transitionAcceptances:acceptances,retainedParticles:particles.length,weighting:'uniform-legal-command-prior-with-transition-rejection',warnings:[
-    ...(bo3?['M-B Bo3 is normalized to equivalent single-game battle rules; disclosures from prior games are unavailable in this isolated public prefix.']:[]),
+    ...(bo3?['M-C Bo3 is normalized to equivalent single-game battle rules; disclosures from prior games are unavailable in this isolated public prefix.']:[]),
     'Unrevealed selected reserves are sampled from the six-species preview; known own selection and prefix switches constrain them, never future switches.',
     'Bounded event-constrained legal-command prior and transition acceptance particles are heuristic weights, not a calibrated replay posterior.',
     'HP, PP and hidden counters belong to a prefix-consistent sampled world; this is not the exact historical state.',

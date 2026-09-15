@@ -1,6 +1,6 @@
 {
   "name": "@smogon/calc",
-  "version": "0.11.0-champions.2c50a89",
+  "version": "0.11.0-champions.e7fd7e5.seed-description.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "unpkg": "dist/production.min.js",
@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/smogon/damage-calc.git",
-    "commit": "2c50a89d9e369289965b1448a6f5c1b7d41520c7"
+    "commit": "e7fd7e59f3eef7ea42fba3c8b83261cb4a14109d"
   },
   "contributors": [
     "Austin Couturier <austincouturier@icloud.com>"

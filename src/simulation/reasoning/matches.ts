@@ -50,7 +50,7 @@ export class ReasoningMatches {
   private now(){return this.options.now?.()??Date.now();}
   start(request:ReasoningRequest) {
     if(this.closed)throw invalid('Reasoning match manager is closed');
-    if(request.regulationId!=='champions-vgc-2026-m-b')throw invalid('The pinned engine supports Champions M-B only');
+    if(request.regulationId!=='champions-vgc-2026-m-c')throw invalid('The pinned engine supports Champions M-C only');
     if(!Number.isInteger(request.maxTurns)||request.maxTurns<1||request.maxTurns>200)throw invalid('maxTurns must be 1–200');
     if(!Number.isInteger(request.budgetMs)||request.budgetMs<1000||request.budgetMs>3600000)throw invalid('budgetMs must be 1000–3600000');
     const sources={regulationId:request.regulationId,metaTeams:request.metaTeams,usageRows:request.usageRows};

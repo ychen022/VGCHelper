@@ -24,6 +24,7 @@ import {sha256} from '../util/hash.js';
 import {registerSimulationTools} from './simulation.js';
 import {registerReplayExportTool} from './replay-export.js';
 import {registerReasoningTools,registerPlayerTools} from './reasoning.js';
+import {registerHumanBattleTools,registerBattleAgentTools} from './human-battle.js';
 
 const outputSchema = {result: z.unknown()};
 const boost = z.number().int().min(-6).max(6);
@@ -84,17 +85,23 @@ function boundedReplayAnalysis(
   };
 }
 
-export function createMcpServer(context: AppContext,options:{playerToken?:string}={}): McpServer {
+export function createMcpServer(context: AppContext,options:{playerToken?:string;battleAgentToken?:string}={}): McpServer {
   const server = new McpServer({
     name: 'vgc-helper',
     version: '0.1.0',
   });
   const playerToken=options.playerToken??process.env['VGC_PLAYER_TOKEN'];
+  const battleAgentToken=options.battleAgentToken??process.env['VGC_BATTLE_AGENT_TOKEN'];
+  if(battleAgentToken!==undefined){
+    if(playerToken!==undefined || !battleAgentToken.trim())throw new VgcError('INVALID_INPUT','Set exactly one nonempty player credential.');
+    registerBattleAgentTools(server,context,battleAgentToken);return server;
+  }
   if(playerToken!==undefined){
     if(!playerToken.trim())throw new VgcError('INVALID_INPUT','VGC_PLAYER_TOKEN must not be empty');
     registerPlayerTools(server,context,playerToken);return server;
   }
   registerReasoningTools(server,context);
+  registerHumanBattleTools(server,context);
   registerSimulationTools(server,context);
   registerReplayExportTool(server,context);
 
@@ -302,7 +309,7 @@ export function createMcpServer(context: AppContext,options:{playerToken?:string
       return {regulationId:profile.id,
         teams:context.repository.listMetaTeams(profile.id).filter(t=>t.roster.some(s=>key(s)===key(pokemon))).slice(0,limit),
         usage:context.activeUsage(profile.id).filter(r=>key(r.pokemon)===key(pokemon)).slice(0,limit),
-        note:'Published-team representation is not ladder usage. Only usage with regulationVerified=true and a matching regulationId may inform M-B calculations.'};
+        note:'Published-team representation is not ladder usage. Only usage with regulationVerified=true and a matching regulationId may inform M-C calculations.'};
     }),
   );
 

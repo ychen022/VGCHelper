@@ -38,7 +38,7 @@ function sources(context:AppContext,regulationId:string){return {metaTeams:conte
 
 export function registerSimulationTools(server:McpServer,context:AppContext):void {
   server.registerTool('vgc_simulate_battle',{
-    title:'Simulate uncertain VGC battles',description:'Start an asynchronous Champions M-B full-game simulation. Each side knows its own team, with only preview/sheet/revealed opponent information. Exact supplied opponents stay hidden from policies. Preview-only sets are sampled from cached legal priors. Poll the returned job ID; rates are conditional model estimates. Optional candidate replaces p1 for paired team comparison.',
+    title:'Simulate uncertain VGC battles',description:'Start an asynchronous Champions M-C full-game simulation. Each side knows its own team, with only preview/sheet/revealed opponent information. Exact supplied opponents stay hidden from policies. Preview-only sets are sampled from cached legal priors. Poll the returned job ID; rates are conditional model estimates. Optional candidate replaces p1 for paired team comparison.',
     inputSchema:{p1:teamSchema,p2:teamSchema,...settings,information_mode:z.enum(['closed','open_sheet']).default('closed'),p1_policy:policy.default('tactical'),p2_policy:policy.default('tactical'),search:searchSchema.optional(),p1_fixed_plan:fixedPlan.optional(),p2_fixed_plan:fixedPlan.optional(),compare_reselected_plan:z.boolean().default(false),comparison_team_export:z.string().min(1).max(20000).optional(),checkpoint_turns:z.array(z.number().int().min(1).max(200)).max(8).optional(),opponent_action_prior_path:z.string().min(1).max(4096).optional()},
     outputSchema,annotations:{destructiveHint:false},
   },async input=>executeTool(()=>{
@@ -49,13 +49,13 @@ export function registerSimulationTools(server:McpServer,context:AppContext):voi
     if(input.opponent_action_prior_path){
       if(statSync(input.opponent_action_prior_path).size>2*1024*1024)throw new VgcError('INVALID_INPUT','Replay action-prior artifact exceeds 2 MiB.');
       const artifact:unknown=JSON.parse(readFileSync(input.opponent_action_prior_path,'utf8'));
-      if(!isActionPriorAdoptable(artifact))throw new VgcError('INVALID_INPUT','Replay action-prior artifact did not pass the explicit M-B coverage and held-out adoption gate.');
+      if(!isActionPriorAdoptable(artifact))throw new VgcError('INVALID_INPUT','Replay action-prior artifact did not pass the explicit M-C coverage and held-out adoption gate.');
       request.opponentActionPrior=artifact;
     }
     return context.simulations.start(request);
   }));
   server.registerTool('vgc_simulate_cohort',{
-    title:'Evaluate a team against a Featured Teams cohort',description:'Start a bounded asynchronous multi-opponent experiment using cached M-B Featured Teams. Select exact team IDs or automatically choose distinct high-placing rosters. Reports individual matchups and policy sensitivity with equal cohort weighting, not population usage. Omitted published spreads remain inferred scenarios.',
+    title:'Evaluate a team against a Featured Teams cohort',description:'Start a bounded asynchronous multi-opponent experiment using cached M-C Featured Teams. Select exact team IDs or automatically choose distinct high-placing rosters. Reports individual matchups and policy sensitivity with equal cohort weighting, not population usage. Omitted published spreads remain inferred scenarios.',
     inputSchema:{team_export:z.string().min(1).max(20000),opponent_ids:z.array(z.string().min(1)).min(1).max(8).optional(),cohort_size:z.number().int().min(1).max(8).default(4),policy_profiles:z.array(policy).min(1).max(3).default(['tactical','damage']),player_policy:policy.default('tactical'),search:searchSchema.optional(),fixed_plan:fixedPlan.optional(),compare_reselected_plan:z.boolean().default(false),comparison_team_export:z.string().min(1).max(20000).optional(),information_mode:z.enum(['closed','open_sheet']).default('closed'),...settings},outputSchema,annotations:{destructiveHint:false},
   },async input=>executeTool(()=>{
     const profile=loadRegulationProfile(),cached=sources(context,profile.id);

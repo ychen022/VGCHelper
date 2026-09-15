@@ -7,7 +7,7 @@ import {buildTeamBelief} from '../src/simulation/beliefs.js';
 import {actionDistribution,scoreActions,chooseAction,publicBattleState,ownSet} from '../src/simulation/policy.js';
 const team=parseShowdownTeam(readFileSync('examples/sample-team.txt','utf8'),loadRegulationProfile());
 const preview=team.pokemon.map(p=>p.species);
-const belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-b',preview,completionTeams:[completePreviewTeam(preview)]});
+const belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-c',preview,completionTeams:[completePreviewTeam(preview)]});
 function session(){return EngineSession.create({teams:{p1:team,p2:team},seed:[1,2,3,4]});}
 describe('view-only action policies',()=>{
   it('keeps Eternal Floette identity when Showdown names its Mega form Floette-Mega',()=>{

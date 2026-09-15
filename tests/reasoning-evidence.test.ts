@@ -11,7 +11,7 @@ function fixture() {
   team.pokemon[1]!.moves=['Earthquake','Protect'];
   const game=EngineSession.create({teams:{p1:team,p2:team},seed:[1,2,3,4]});
   game.step({p1:'team 1234',p2:'team 1234'});
-  const belief=buildTeamBelief({regulationId:'champions-m-b',preview:names,completionTeams:[team]});
+  const belief=buildTeamBelief({regulationId:'champions-m-c',preview:names,completionTeams:[team]});
   return {game,belief};
 }
 

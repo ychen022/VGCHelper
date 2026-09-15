@@ -1,5 +1,7 @@
 # Staraptor / Banette team evaluation — September 7, 2026
 
+> Historical M-B evidence. These results and pinned sources predate the M-C default and do not validate M-C outcomes. Reproducing them requires the original code/dependency revisions; current scripts target M-C.
+
 These historical results predate the pre-publication fixes to damage-evidence HP handling and replay opening-sheet validation. The experiment has not been rerun on the corrected implementation.
 
 The supplied team passed the pinned Champions M-B legality check. Across **384 completed simulated games**, it won **140 (36.5%)**. Within this model, MB778 was the hardest opponent, MB763 was intermediate, and MB684 was the closest matchup. These results describe the current automated policies; they are not calibrated predictions of your tournament win rate.

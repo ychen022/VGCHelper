@@ -105,7 +105,7 @@ function summarize(row:OutcomeSummary):OutcomeSummary {
 }
 
 export function runSimulation(request:SimulationRequest,callbacks:Callbacks={}):SimulationReport {
-  if(request.regulationId!=='champions-vgc-2026-m-b')throw new Error('The pinned simulator supports Champions M-B only.');
+  if(request.regulationId!=='champions-vgc-2026-m-c')throw new Error('The pinned simulator supports Champions M-C only.');
   if(!Number.isInteger(request.samples)||request.samples<1||request.samples>10000)throw new Error('Samples must be 1–10000');
   if(!Number.isInteger(request.maxTurns)||request.maxTurns<1||request.maxTurns>200)throw new Error('Turn limit must be 1–200');
   if(!Number.isInteger(request.budgetMs)||request.budgetMs<1||request.budgetMs>900000)throw new Error('Budget must be 1–900000 ms');

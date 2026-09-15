@@ -6,7 +6,7 @@ import type {RegulationProfile} from '../../regulation/profile.js';
 import {newId, sha256} from '../../util/hash.js';
 import {knownBefore, replayAlternatives} from './scenarios.js';
 
-const speciesId = (value?: string) => toID(value ?? '').replace(/mega(?:x|y)?$/, '');
+const speciesId = (value?: string) => toID(value ?? '').replace(/mega(?:x|y|z)?$/, '');
 const nickname = (ident?: string) => ident?.split(':').slice(1).join(':').trim().toLowerCase();
 
 export function identifyPlayerSide(replay: ParsedReplay, team: PokemonTeam, playerName?: string): 'p1' | 'p2' {

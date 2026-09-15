@@ -1,5 +1,7 @@
 # V0 validation
 
+> Historical M-B evidence. These results and pinned sources predate the M-C default and do not validate M-C outcomes. Reproducing them requires the original code/dependency revisions; current scripts target M-C.
+
 Paths under `examples/reports` and `examples/public-replays` below refer to locally generated artifacts. Only the pinned public replays `gen9championsvgc2026regmb-2675724766.json` and `gen9championsvgc2026regmb-2675725887.json` needed by the regression tests are committed; use the reproduction commands to generate the remaining artifacts.
 
 ## Contextual-v1 evaluation update — 2026-09-04

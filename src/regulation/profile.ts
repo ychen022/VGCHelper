@@ -32,6 +32,7 @@ const profileSchema = z.object({
     vgcPastes: z.object({
       spreadsheetId: z.string().min(1),
       gid: z.string().min(1),
+      teamIdPrefix: z.string().min(1).optional(),
     }),
     holidayOugi: z.object({
       dataset: z.string().min(1),

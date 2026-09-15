@@ -4,7 +4,7 @@ import {runSimulation,type EpisodeTrace,type SimulationReport,type SimulationReq
 import type {InformationMode} from './engine.js';
 import type {ActionSelectionOptions} from './policy.js';
 
-const key=(text:string)=>text.toLowerCase().replace(/[^a-z0-9]/g,'').replace(/mega[xy]?$/,'');
+const key=(text:string)=>text.toLowerCase().replace(/[^a-z0-9]/g,'').replace(/mega[xyz]?$/,'');
 function placement(value:string|undefined):number {
   if(/^champion$/i.test(value??''))return 1;
   if(/^runner[ -]?up$/i.test(value??''))return 2;
@@ -13,7 +13,7 @@ function placement(value:string|undefined):number {
 }
 export function selectFeaturedCohort(teams:MetaTeam[],limit=4):{teams:MetaTeam[];selection:string;excluded:number} {
   if(!Number.isInteger(limit)||limit<1||limit>8)throw new Error('Cohort size must be 1–8');
-  const eligible=teams.filter(t=>t.regulationId==='champions-vgc-2026-m-b'&&t.roster.length===6&&t.pokemon.length===6&&Number.isFinite(placement(t.placement)));
+  const eligible=teams.filter(t=>t.regulationId==='champions-vgc-2026-m-c'&&t.roster.length===6&&t.pokemon.length===6&&Number.isFinite(placement(t.placement)));
   eligible.sort((a,b)=>placement(a.placement)-placement(b.placement)||(Date.parse(b.date??'')||0)-(Date.parse(a.date??'')||0)||a.id.localeCompare(b.id));
   const selected:MetaTeam[]=[];const rosters=new Set<string>();
   for(const team of eligible){const roster=team.roster.map(key).sort().join('|');if(rosters.has(roster))continue;selected.push(structuredClone(team));rosters.add(roster);if(selected.length===limit)break;}

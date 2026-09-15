@@ -1,5 +1,7 @@
 # Simulation verification — September 7, 2026
 
+> Historical M-B evidence. These results and pinned sources predate the M-C default and do not validate M-C outcomes. Reproducing them requires the original code/dependency revisions; current scripts target M-C.
+
 The counts and experiments below are historical snapshots. Pre-publication review subsequently corrected exact-HP floating-point rejection, included pre-hit HP in damage likelihoods, rejected incomplete or invalid-side opening sheets, made job transitions atomic, released remotely cancelled queue slots, and stopped workers on stdio closure. The required public replay fixtures are now explicitly included in Git so the tests do not depend on a local replay download.
 
 The corrected source passed type checking, **354 tests across 38 files** with two workers and a 30-second timeout, the production build, and all three compiled MCP smoke workflows. The numerical policy experiments below were not rerun.

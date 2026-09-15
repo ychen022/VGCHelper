@@ -9,7 +9,7 @@ const LOG = `|player|p1|Alice|
 |teamsize|p2|6
 |gametype|doubles
 |gen|9
-|tier|[Gen 9 Champions] VGC 2026 Reg M-B
+|tier|[Gen 9 Champions] VGC 2026 Reg M-C
 |poke|p1|Garchomp|
 |poke|p2|Kingambit|
 |start
@@ -40,16 +40,16 @@ describe('replay ingestion and reduction', () => {
   it('extracts the same log from JSON and downloaded HTML', () => {
     const json = loadReplay({
       content: JSON.stringify({
-        id: 'gen9championsvgc2026regmb-1',
-        format: '[Gen 9 Champions] VGC 2026 Reg M-B',
-        formatid: 'gen9championsvgc2026regmb',
+        id: 'gen9championsvgc2026regmc-1',
+        format: '[Gen 9 Champions] VGC 2026 Reg M-C',
+        formatid: 'gen9championsvgc2026regmc',
         players: ['Alice', 'Bob'],
         log: LOG,
       }),
     });
     const html = loadReplay({
       content: `<script type="text/plain" class="battle-log-data">${LOG.replaceAll('/', '\\/')}</script>
-<script type="application/json" class="data">{"id":"gen9championsvgc2026regmb-1","formatid":"gen9championsvgc2026regmb","players":["Alice","Bob"]}</script>`,
+<script type="application/json" class="data">{"id":"gen9championsvgc2026regmc-1","formatid":"gen9championsvgc2026regmc","players":["Alice","Bob"]}</script>`,
     });
     expect(html.log).toBe(json.log);
     expect(html.metadata.players).toEqual(['Alice', 'Bob']);
@@ -84,9 +84,9 @@ describe('replay ingestion and reduction', () => {
     expect(() =>
       loadReplay({
         content: JSON.stringify({
-          formatid: 'gen9championsvgc2026regmb',
+          formatid: 'gen9championsvgc2026regmc',
           log: LOG.replace(
-            '[Gen 9 Champions] VGC 2026 Reg M-B',
+            '[Gen 9 Champions] VGC 2026 Reg M-C',
             '[Gen 9] Doubles OU',
           ),
         }),
@@ -115,7 +115,7 @@ describe('replay ingestion and reduction', () => {
         content: `|player|p1|Alice|
 |player|p2|Bob|
 |gametype|doubles
-|tier|[Gen 9 Champions] VGC 2026 Reg M-B
+|tier|[Gen 9 Champions] VGC 2026 Reg M-C
 |switch|p1a: Chomp|Garchomp|100/100
 |switch|p1b: Cotton|Whimsicott|100/100
 |turn|1

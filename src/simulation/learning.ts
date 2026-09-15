@@ -1,8 +1,8 @@
 import {createHash} from 'node:crypto';
 import {speciesIdentity} from './identity.js';
 
-export const M_B_FORMAT_ID = 'gen9championsvgc2026regmb';
-export const M_B_FORMAT_NAME = '[Gen 9 Champions] VGC 2026 Reg M-B';
+export const M_C_FORMAT_ID = 'gen9championsvgc2026regmc';
+export const M_C_FORMAT_NAME = '[Gen 9 Champions] VGC 2026 Reg M-C';
 
 export interface ReplayCorpusRecord {
   id: string;
@@ -89,11 +89,11 @@ function clean(value: string | undefined): string | undefined {
   return value?.toLowerCase().replace(/[^a-z0-9]/g, '') || undefined;
 }
 
-export function isExplicitMB(record: ReplayCorpusRecord): boolean {
+export function isExplicitMC(record: ReplayCorpusRecord): boolean {
   const id = clean(record.formatId);
   const name = clean(record.format);
   const tier=clean(record.log.split('\n').find(line=>line.startsWith('|tier|'))?.slice(6));
-  const allowed=new Set([M_B_FORMAT_ID,`${M_B_FORMAT_ID}bo3`]);
+  const allowed=new Set([M_C_FORMAT_ID,`${M_C_FORMAT_ID}bo3`]);
   if (!id && !name) return false;
   if(id&&!allowed.has(id))return false;
   if(tier&&!allowed.has(tier))return false;
@@ -244,7 +244,7 @@ export function auditReplayRecords(records: ReplayCorpusRecord[]): CorpusAudit {
       exclusions.format_missing = (exclusions.format_missing ?? 0) + 1;
       continue;
     }
-    if (!isExplicitMB(record)) {
+    if (!isExplicitMC(record)) {
       exclusions.format_mismatch = (exclusions.format_mismatch ?? 0) + 1;
       continue;
     }
@@ -268,7 +268,7 @@ export function auditReplayRecords(records: ReplayCorpusRecord[]): CorpusAudit {
   return {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
-    formatFilter: {formatId: M_B_FORMAT_ID, formatName: M_B_FORMAT_NAME, policy: 'explicit_exact_match'},
+    formatFilter: {formatId: M_C_FORMAT_ID, formatName: M_C_FORMAT_NAME, policy: 'explicit_exact_match'},
     sourceVersions: [...sourceVersions].sort(),
     records: {seen: records.length, accepted, duplicates, excluded: records.length - accepted - duplicates},
     exclusions,
@@ -347,7 +347,7 @@ export function trainContextualActionPrior(
   const artifact: ContextualActionPriorArtifact = {
     schemaVersion: 1,
     kind: 'empirical-contextual-action-prior',
-    formatId: M_B_FORMAT_ID,
+    formatId: M_C_FORMAT_ID,
     sourceVersion: options.sourceVersion,
     sourceHash: options.sourceHash ?? createHash('sha256').update(options.sourceVersion).digest('hex'),
     createdAt: new Date().toISOString(),
@@ -393,7 +393,7 @@ export function isActionPriorAdoptable(
   const improvement = options.minimumLogLossImprovement ?? 0.01;
   if (artifact.schemaVersion !== 1
     || artifact.kind !== 'empirical-contextual-action-prior'
-    || artifact.formatId !== M_B_FORMAT_ID
+    || artifact.formatId !== M_C_FORMAT_ID
     || typeof artifact.sourceVersion !== 'string'
     || artifact.sourceVersion.length === 0
     || typeof artifact.sourceHash !== 'string'

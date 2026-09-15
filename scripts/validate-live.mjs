@@ -3,7 +3,7 @@ import {ingestReplay} from '../dist/replay/index.js';
 import {loadRegulationProfile} from '../dist/regulation/profile.js';
 
 const profile=loadRegulationProfile();
-const endpoint='https://replay.pokemonshowdown.com/search.json?format=gen9championsvgc2026regmb';
+const endpoint='https://replay.pokemonshowdown.com/search.json?format=gen9championsvgc2026regmc';
 async function get(url) {
   const response=await fetch(url,{signal:AbortSignal.timeout(20000)});
   if(!response.ok) throw new Error(`${response.status}: ${url}`);
@@ -23,4 +23,4 @@ for(const entry of listing.slice(0,10)) {
   console.log(JSON.stringify(summary));
 }
 await writeFile('examples/public-replays/validation.json',JSON.stringify({retrievedAt:new Date().toISOString(),endpoint,results},null,2));
-if(!results.length) throw new Error('No current M-B public replays found');
+if(!results.length) throw new Error('No current M-C public replays found');

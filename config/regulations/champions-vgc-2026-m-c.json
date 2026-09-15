@@ -1,0 +1,40 @@
+{
+  "id": "champions-vgc-2026-m-c",
+  "name": "Pokemon Champions VGC 2026 Regulation M-C",
+  "game": "champions",
+  "generation": 0,
+  "level": 50,
+  "gameType": "Doubles",
+  "teamSize": 6,
+  "battleTeamSize": 4,
+  "acceptedFormats": [
+    "[Gen 9 Champions] VGC 2026 Reg M-C",
+    "[Gen 9 Champions] VGC 2026 Reg M-C (Bo3)"
+  ],
+  "sources": {
+    "championsBattleData": {
+      "baseUrl": "https://championsbattledata.com",
+      "format": "Doubles",
+      "season": "Current",
+      "days": 7
+    },
+    "vgcPastes": {
+      "spreadsheetId": "1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw",
+      "gid": "2001945654",
+      "teamIdPrefix": "MC"
+    },
+    "holidayOugi": {
+      "dataset": "HolidayOugi/pokemon-showdown-replays",
+      "files": [
+        "[Gen 9] CHAMPIONS VGC 2026_part1.parquet",
+        "[Gen 9] CHAMPIONS VGC 2026_part2.parquet",
+        "[Gen 9] CHAMPIONS VGC 2026_part3.parquet",
+        "[Gen 9] CHAMPIONS VGC 2026_part4.parquet"
+      ]
+    }
+  },
+  "evaluation": {
+    "maxMetaTeams": 12,
+    "maxReturnedFindings": 8
+  }
+}

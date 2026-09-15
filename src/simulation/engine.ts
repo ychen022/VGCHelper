@@ -7,9 +7,9 @@ const require = createRequire(import.meta.url);
 const {Battle, Dex, TeamValidator, PRNG} = require('pokemon-showdown');
 const {extractChannelMessages} = require('pokemon-showdown/dist/sim/battle.js');
 export const ENGINE_PROFILE = Object.freeze({
-  revision:'6b4bc34e44cc2541929cc4b8fff96e756ab3f268',
-  format:'gen9championsvgc2026regmb', mod:'champions', generation:9,
-  calculatorGeneration:0, version:'showdown-champions-mb-v1',
+  revision:'b1156ff19204e48089e2384eb2c9c1a8004f57ce',
+  format:'gen9championsvgc2026regmc', mod:'champions', generation:9,
+  calculatorGeneration:0, version:'showdown-champions-mc-v1',
 });
 export type PlayerSide = 'p1'|'p2';
 export type InformationMode = 'closed'|'open_sheet'|'replay_observed';

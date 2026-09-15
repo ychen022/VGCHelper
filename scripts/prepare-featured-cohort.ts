@@ -7,7 +7,7 @@ import {buildTeamBelief} from '../src/simulation/beliefs.js';
 import {validateEngineTeam} from '../src/simulation/engine.js';
 import {sha256} from '../src/util/hash.js';
 
-const directory='.vgc-helper/experiments/stages-4-6';
+const directory='.vgc-helper/experiments/m-c';
 mkdirSync(directory,{recursive:true});
 const csv=readFileSync(`${directory}/featured-teams.csv`,'utf8');
 const rows=parse(csv,{relax_column_count:true,skip_empty_lines:true}) as string[][];

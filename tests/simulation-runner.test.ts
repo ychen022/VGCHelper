@@ -5,7 +5,7 @@ import {loadRegulationProfile} from '../src/regulation/profile.js';
 import {runSimulation,actorPriorFactory,type SimulationRequest} from '../src/simulation/runner.js';
 import {EngineSession} from '../src/simulation/engine.js';
 const team=parseShowdownTeam(readFileSync('examples/sample-team.txt','utf8'),loadRegulationProfile());
-const request:SimulationRequest={kind:'battle',regulationId:'champions-vgc-2026-m-b',teams:{p1:{team,preview:team.pokemon.map(p=>p.species)},p2:{preview:team.pokemon.map(p=>p.species)}},metaTeams:[],usageRows:[],samples:2,maxTurns:35,budgetMs:30000,seed:'runner-test',informationMode:'closed',policies:{p1:'tactical',p2:'damage'}};
+const request:SimulationRequest={kind:'battle',regulationId:'champions-vgc-2026-m-c',teams:{p1:{team,preview:team.pokemon.map(p=>p.species)},p2:{preview:team.pokemon.map(p=>p.species)}},metaTeams:[],usageRows:[],samples:2,maxTurns:35,budgetMs:30000,seed:'runner-test',informationMode:'closed',policies:{p1:'tactical',p2:'damage'}};
 describe('probabilistic battle runner',()=>{
   it('persists the configured credible-action cutoff and exposes chosen action evidence',()=>{
     const traces:any[]=[];
@@ -52,7 +52,7 @@ describe('probabilistic battle runner',()=>{
     expect(first.variants[0]!.unresolved).toBe(0);
     expect(first.variants[0]!.wins+first.variants[0]!.losses+first.variants[0]!.draws+first.variants[0]!.unresolved+first.variants[0]!.invalid).toBe(2);
     expect(first.assumptions.join(' ')).toContain('synthetic');
-    expect(first.versions.engine).toContain('6b4bc');
+    expect(first.versions.engine).toBe('b1156ff19204e48089e2384eb2c9c1a8004f57ce');
   },30000);
   it('does not score a turn cap as a loss or draw',()=>{
     const result=runSimulation({...request,samples:1,maxTurns:1});

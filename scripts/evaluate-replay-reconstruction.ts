@@ -12,8 +12,8 @@ import {actionDistribution} from '../src/simulation/policy.js';
 import {speciesIdentity} from '../src/simulation/identity.js';
 import type {PokemonTeam,PokemonSet} from '../src/domain/contracts.js';
 
-const output=resolve(process.argv[2]??'.vgc-helper/experiments/stages-4-6');mkdirSync(output,{recursive:true});
-const content=readFileSync(join(output,'holidayougi-mb.jsonl'),'utf8');
+const output=resolve(process.argv[2]??'.vgc-helper/experiments/m-c');mkdirSync(output,{recursive:true});
+const content=readFileSync(join(output,'holidayougi-mc.jsonl'),'utf8');
 const split=JSON.parse(readFileSync(join(output,'corpus-split-freeze.json'),'utf8')) as {splitHash:string;splits:{validation:string[]}};
 const development=new Set(split.splits.validation);
 const all=content.split(/\r?\n/).filter(Boolean).map(line=>normalizeCorpusRecord(JSON.parse(line)));
@@ -50,7 +50,7 @@ function scenarioBelief(sets:PokemonSet[],recordId:string,side:PlayerSide):TeamB
     const offensive=physical>special?'atk':'spa';
     return {...structuredClone(set),skillPoints:{[offensive]:32,hp:bulky?32:2,spe:bulky?2:32},ivs:{}};
   })}));
-  return buildTeamBelief({regulationId:'champions-vgc-2026-m-b',preview:canonical.map(set=>set.species),known:canonical.map(({species,item,ability,moves,nature})=>({species,item:item??'',ability:ability??'',moves,...(nature?{nature}:{})})),completionTeams:completions,completionSourceLabel:`Hypothetical spreads derived from public sheet ${recordId} ${side}; not actual private investments`,validateTeam:validateEngineTeam,maxCandidates:2});
+  return buildTeamBelief({regulationId:'champions-vgc-2026-m-c',preview:canonical.map(set=>set.species),known:canonical.map(({species,item,ability,moves,nature})=>({species,item:item??'',ability:ability??'',moves,...(nature?{nature}:{})})),completionTeams:completions,completionSourceLabel:`Hypothetical spreads derived from public sheet ${recordId} ${side}; not actual private investments`,validateTeam:validateEngineTeam,maxCandidates:2});
 }
 const results:Array<unknown>=[];
 let supported:undefined|{record:typeof selected[number];teams:Record<PlayerSide,PokemonTeam>;beliefs:Record<PlayerSide,TeamBelief>;checkpoint:ReplayStartCheckpoint;pair:number};
@@ -87,7 +87,7 @@ if(supported){
   if(alternatives.length===2){
     const traces:EpisodeTrace[]=[],games:Array<{episode:number;variant:string;log:string;ended:boolean}>=[];
     try{
-      const report=runSimulation({kind:'branch',regulationId:'champions-vgc-2026-m-b',teams:{p1:{preview:choice.teams.p1.pokemon.map(p=>p.species),team:choice.teams.p1,publicKnown:sheets(choice.record.log).p1},p2:{preview:choice.teams.p2.pokemon.map(p=>p.species),team:choice.teams.p2,publicKnown:sheets(choice.record.log).p2}},metaTeams:[],usageRows:[],samples:4,maxTurns:60,budgetMs:20000,seed:`${choice.record.id}:bounded-counterfactual`,informationMode:'open_sheet',policies:{p1:'tactical',p2:'tactical'},actor:'p1',checkpoint:choice.checkpoint,branches:alternatives.map((action,index)=>({label:`alternative_${index+1}: ${action.command}`,command:action.command}))},{trace:trace=>traces.push(trace),game:game=>games.push(game)});
+      const report=runSimulation({kind:'branch',regulationId:'champions-vgc-2026-m-c',teams:{p1:{preview:choice.teams.p1.pokemon.map(p=>p.species),team:choice.teams.p1,publicKnown:sheets(choice.record.log).p1},p2:{preview:choice.teams.p2.pokemon.map(p=>p.species),team:choice.teams.p2,publicKnown:sheets(choice.record.log).p2}},metaTeams:[],usageRows:[],samples:4,maxTurns:60,budgetMs:20000,seed:`${choice.record.id}:bounded-counterfactual`,informationMode:'open_sheet',policies:{p1:'tactical',p2:'tactical'},actor:'p1',checkpoint:choice.checkpoint,branches:alternatives.map((action,index)=>({label:`alternative_${index+1}: ${action.command}`,command:action.command}))},{trace:trace=>traces.push(trace),game:game=>games.push(game)});
       counterfactual={status:'executed',replayId:choice.record.id,decisionTurn:1,pair:choice.pair,checkpointOrigin:'Mechanically reconstructed from the real public prefix; conditioning on this one hypothetical sheet-derived spread/selection scenario.',alternatives:alternatives.map(({command,score,probability})=>({command,score,probability})),report,traces,games};
     }catch(error){counterfactual={status:'failed',replayId:choice.record.id,reason:error instanceof Error?error.message:String(error)};}
   }else counterfactual={status:'unavailable',replayId:choice.record.id,reason:'Fewer than two distinct legal move-only joint actions at the supported root.'};

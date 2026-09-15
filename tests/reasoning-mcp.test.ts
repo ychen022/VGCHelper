@@ -35,7 +35,7 @@ it('starts external players from a saved replay prefix and excludes future event
   game.step({p1:'team 1234',p2:'team 1234'});
   const replay=parseReplay(loadReplay({content:game.view('p1').observations.join('\n')+'\n|turn|2\n|-message|FUTURE_SENTINEL'}));
   const saved=context.repository.saveReplay(replay),analysis=context.repository.saveAnalysis({type:'replay',replayId:saved.id,
-    analysis:{replayId:saved.id,userTeam:team,playerSide:'p1',regulationId:'champions-vgc-2026-m-b'}});
+    analysis:{replayId:saved.id,userTeam:team,playerSide:'p1',regulationId:'champions-vgc-2026-m-c'}});
   const response=await client.callTool({name:'vgc_reasoning_battle_continue',arguments:{analysis_id:analysis.id,turn:1,max_turns:2,seed:'prefix-test'}});
   expect(response.isError,JSON.stringify(response.content)).not.toBe(true);
   const start=(response.structuredContent as {result:unknown}).result as {players:{p1:{playerToken:string}}};

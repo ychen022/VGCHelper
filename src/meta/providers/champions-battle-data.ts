@@ -216,7 +216,7 @@ function resolveIndexEntry(
   const normalized = normalizeIdentifier(requested);
   const aliases = new Set([
     normalized,
-    normalized.replace(/mega(?:x|y)?$/, ''),
+    normalized.replace(/mega(?:x|y|z)?$/, ''),
   ]);
   // Cosmetic forms share battle characteristics in the pinned calculator.
   // These exact source names were checked against the live index on 2026-09-04.
@@ -388,7 +388,7 @@ export class ChampionsBattleDataProvider {
           normalizeIdentifier(name) === normalizeIdentifier(row.pokemon)))) {
           throw new VgcError('SOURCE_SCHEMA_CHANGED', 'Usage CSV species does not match its index entry', {url});
         }
-        const baseIdentity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y)?$/, '');
+        const baseIdentity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y|z)?$/, '');
         const identities = selection.requestedPokemon.filter((name, index, all) =>
           all.findIndex(candidate => baseIdentity(candidate) === baseIdentity(name)) === index);
         return {

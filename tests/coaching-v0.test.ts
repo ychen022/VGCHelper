@@ -9,7 +9,7 @@ import type {MetaTeam} from '../src/domain/contracts.js';
 const profile = loadRegulationProfile();
 const team = parseShowdownTeam(readFileSync('examples/sample-team.txt', 'utf8'), profile);
 const meta: MetaTeam = {id: 'm', name: 'sample', regulationId: profile.id, roster: team.pokemon.map(p=>p.species), pokemon: team.pokemon, exactSets: true, source: {provider: 'test', retrievedAt: '2026-09-04T00:00:00Z'}};
-const start = `|player|p1|Alice|\n|player|p2|Bob|\n|gametype|doubles\n|tier|[Gen 9 Champions] VGC 2026 Reg M-B\n|switch|p1a: Chomp|Garchomp|100/100\n|switch|p1b: Cotton|Whimsicott|100/100\n|switch|p2a: Gambit|Kingambit|100/100\n|switch|p2b: Sneasler|Sneasler|100/100\n`;
+const start = `|player|p1|Alice|\n|player|p2|Bob|\n|gametype|doubles\n|tier|[Gen 9 Champions] VGC 2026 Reg M-C\n|switch|p1a: Chomp|Garchomp|100/100\n|switch|p1b: Cotton|Whimsicott|100/100\n|switch|p2a: Gambit|Kingambit|100/100\n|switch|p2b: Sneasler|Sneasler|100/100\n`;
 function report(log: string) {return analyzeReplay(ingestReplay({content: log}, profile), team, [meta], profile, 'Alice');}
 describe('evidence-aware coaching', () => {
   it('does not praise failed Tailwind', () => {

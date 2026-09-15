@@ -107,4 +107,12 @@ export const migrations = [
       );
     `,
   },
+  {
+    version: 4,
+    sql: `CREATE TABLE human_battles (
+      id TEXT PRIMARY KEY, admin_hash TEXT NOT NULL UNIQUE,
+      user_hash TEXT NOT NULL UNIQUE, agent_hash TEXT NOT NULL UNIQUE,
+      payload_json TEXT NOT NULL
+    );`,
+  },
 ] as const;

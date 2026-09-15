@@ -12,10 +12,10 @@ function fixture() {
   own.pokemon[1]!.moves=['Earthquake','Protect'];
   const game=EngineSession.create({teams:{p1:own,p2:opponent},seed:[1,2,3,4]});
   game.step({p1:'team 1234',p2:'team 1234'});
-  const source={provider:'test-published',retrievedAt:'input',regulationId:'champions-m-b'};
-  const metaTeams:MetaTeam[]=[own,opponent].map((team,i)=>({id:`published-${i}`,name:'Published fixture',regulationId:'champions-m-b',pokemon:team.pokemon,roster:names,exactSets:true,source}));
-  const belief=buildTeamBelief({regulationId:'champions-m-b',preview:names,publishedTeams:[metaTeams[1]!]});
-  return {game,view:game.view('p1'),belief,sources:{regulationId:'champions-m-b',metaTeams,usageRows:[]}};
+  const source={provider:'test-published',retrievedAt:'input',regulationId:'champions-m-c'};
+  const metaTeams:MetaTeam[]=[own,opponent].map((team,i)=>({id:`published-${i}`,name:'Published fixture',regulationId:'champions-m-c',pokemon:team.pokemon,roster:names,exactSets:true,source}));
+  const belief=buildTeamBelief({regulationId:'champions-m-c',preview:names,publishedTeams:[metaTeams[1]!]});
+  return {game,view:game.view('p1'),belief,sources:{regulationId:'champions-m-c',metaTeams,usageRows:[]}};
 }
 const baseOptions={samples:1,maxTurns:1,budgetMs:10_000,seed:'reasoning-test'};
 
@@ -134,10 +134,10 @@ describe('actor-only reasoning scenarios',()=>{
     for(const set of team.pokemon){set.moves=['Explosion'];set.gender=set.species==='Metagross'?'N':'M';}
     const game=EngineSession.create({teams:{p1:team,p2:team},seed:[1,2,3,4]});
     game.step({p1:'team 1234',p2:'team 1234'});
-    const source={provider:'test-published',retrievedAt:'input',regulationId:'champions-m-b'};
-    const published:MetaTeam={id:'explosion',name:'Explosion fixture',regulationId:'champions-m-b',pokemon:team.pokemon,roster:names,exactSets:true,source};
-    const belief=buildTeamBelief({regulationId:'champions-m-b',preview:names,publishedTeams:[published]});
-    const result=evaluatePlayerPlans(game.view('p1'),belief,{regulationId:'champions-m-b',metaTeams:[published],usageRows:[]},
+    const source={provider:'test-published',retrievedAt:'input',regulationId:'champions-m-c'};
+    const published:MetaTeam={id:'explosion',name:'Explosion fixture',regulationId:'champions-m-c',pokemon:team.pokemon,roster:names,exactSets:true,source};
+    const belief=buildTeamBelief({regulationId:'champions-m-c',preview:names,publishedTeams:[published]});
+    const result=evaluatePlayerPlans(game.view('p1'),belief,{regulationId:'champions-m-c',metaTeams:[published],usageRows:[]},
       {...baseOptions,maxTurns:3,plans:[{label:'boom',command:'move 1, move 1'}]});
     expect(result.evaluations[0]!.counts).toMatchObject({terminal:1,capped:0,invalid:0,unsupported:0});
     const consequence=result.evaluations[0]!.consequences[0]!;

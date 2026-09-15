@@ -36,6 +36,14 @@ describe('MCP server', () => {
   it('advertises the complete V0 MCP surface', async () => {
     const tools = await client.listTools();
     expect(tools.tools.map((tool) => tool.name).sort()).toEqual([
+      'vgc_battle_agent_submit',
+      'vgc_battle_agent_view',
+      'vgc_battle_cancel',
+      'vgc_battle_get',
+      'vgc_battle_open',
+      'vgc_battle_rematch',
+      'vgc_battle_rules',
+      'vgc_battle_start',
       'vgc_damage_calculate',
       'vgc_matchup_detail',
       'vgc_meta_query',
@@ -81,7 +89,7 @@ describe('MCP server', () => {
     expect(status.isError).not.toBe(true);
     expect(status.structuredContent).toMatchObject({
       result: {
-        regulation: {id: 'champions-vgc-2026-m-b'},
+        regulation: {id: 'champions-vgc-2026-m-c'},
         ready: false,
       },
     });
@@ -106,7 +114,7 @@ Adamant Nature
     expect(damage.structuredContent).toMatchObject({
       result: {
         move: 'Earthquake',
-        calculatorVersion: 'smogon/damage-calc@2c50a89',
+        calculatorVersion: 'smogon/damage-calc@e7fd7e5+seed-description.1',
       },
     });
   });
@@ -121,7 +129,7 @@ Adamant Nature
     });
     const content = resource.contents[0];
     expect(content && 'text' in content ? content.text : '').toContain(
-      'champions-vgc-2026-m-b',
+      'champions-vgc-2026-m-c',
     );
   });
 

@@ -9,7 +9,7 @@ function fixture() {
   const own=completePreviewTeam(names),enemy=completePreviewTeam(names);
   for(const team of [own,enemy])for(const set of team.pokemon){set.moves=['Protect'];set.gender='M';}
   own.pokemon[0]!.nickname='My dragon';
-  const belief=buildTeamBelief({regulationId:'champions-m-b',preview:names,exactTeam:enemy});
+  const belief=buildTeamBelief({regulationId:'champions-m-c',preview:names,exactTeam:enemy});
   const source=EngineSession.create({teams:{p1:own,p2:enemy},seed:[12,34,56,78]});
   return {source,belief,own,enemy};
 }
@@ -64,14 +64,14 @@ describe('world boundary validation',()=>{
   it('uses publicly observed genders when a known team leaves gender unspecified',()=>{
     const own=completePreviewTeam(names),enemy=completePreviewTeam(names);
     const source=EngineSession.create({teams:{p1:own,p2:enemy},seed:[12,34,56,78]});
-    const belief=buildTeamBelief({regulationId:'champions-m-b',preview:names,exactTeam:enemy});
+    const belief=buildTeamBelief({regulationId:'champions-m-c',preview:names,exactTeam:enemy});
     const root=source.view('p1');
     expect(informationSetKey(sampleActorWorld(root,belief,'different seed').view('p1'))).toBe(informationSetKey(root));
   });
   it('rejects an opponent prior whose roster contradicts the visible preview',()=>{
     const {source}=fixture();
     const enemy=completePreviewTeam(['Incineroar',...names.slice(1)]);
-    const belief=buildTeamBelief({regulationId:'champions-m-b',preview:enemy.pokemon.map(p=>p.species),exactTeam:enemy});
+    const belief=buildTeamBelief({regulationId:'champions-m-c',preview:enemy.pokemon.map(p=>p.species),exactTeam:enemy});
     expect(()=>sampleActorWorld(source.view('p1'),belief,'roster')).toThrow(/preview/);
   });
 });
