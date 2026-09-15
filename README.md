@@ -4,24 +4,6 @@ VGCHelper is a local MCP server for Pokemon Champions VGC doubles. It gives an M
 
 The default ruleset is **Pokemon Champions VGC 2026 Regulation M-C** for analysis, simulations, agent battles, replay import and corpus filtering.
 
-## Play against an agent
-
-The local **Champions M-C** battle mode lets you play against an isolated reasoning agent in a Showdown-style browser interface. Ask your conversation agent to start a battle with two assigned team exports/PokePaste links and an explicit open/closed team-sheet choice. The coordinator uses `vgc_battle_start` and launches a fresh player with the returned handoff. Select your four, choose doubles actions and targets, switch, Mega Evolve and review the live log in the browser.
-
-User clocks default to M-C's 90-second preview, 45-second selection and 7-minute player bank; agent clocks default to disabled. Either timer can be changed in the initial ask. Agent reasoning defaults to medium with a host-selected model. After a game, rematch with prior battle memory or a fresh isolated agent. Original team sheets and private player views prevent hidden stats, selected reserves and pending choices from crossing player boundaries. Human battles and agent simulations share the same pinned M-C Showdown engine. The Champions calculator is also updated for M-C species, items, abilities and mechanics.
-
-Battle rules and launch defaults are bundled in the MCP: start directly without a web rules lookup, or inspect `vgc_battle_rules` first. See [local human battles](docs/human-battles.md) for setup, the isolated-agent handoff, timers, rematch supervision and all eight battle MCP tools. Rebuild and reconnect your MCP server to load them.
-
-The battle interface includes:
-
-- A separate Mega Evolution toggle alongside move and target selection.
-- Six-member team sidebars with last-known HP, fainted markers and unknown-selection states; opponent HP is labeled with a percent sign.
-- Side-specific conditions beside the affected team, shared conditions below the scene, and remaining/max turn counters.
-- Terrain and weather log entries naming the triggering ability, Pokemon and side in engine order, plus explicit failed-move messages.
-- Showdown replay HTML downloads by default and a separate text-log button, named `<ShowdownFormatName>-sim-yyyy-mm-dd-hh-mm-ss.html/log`.
-
-The probabilistic simulator adds full-game outcome sampling, player-specific hidden-information beliefs, information-set search, Featured Teams cohort experiments and replay counterfactuals. See [simulation usage and limits](docs/simulation.md) and the [historical M-B stages 4–6 evaluation](docs/simulation-stages-4-6-evaluation.md). Rebuild and reconnect the MCP client to discover the six simulation tools.
-
 ## Requirements
 
 - Node.js 22.18.0 or newer
@@ -164,6 +146,30 @@ The report adds per-opponent fixed mode plans, opening menus with both partners'
 
 Control effects in those V0 menus are conditional. Fake Out action denial, redirection, same-turn speed-control resolution, competing weather ties, residual damage, and many other interactions are not a complete turn simulation. The screen still uses a static control bonus. Multi-hit damage uses a weighted total-damage distribution conditional on the calculator's selected hit count. Those heuristic reports apply structural/stat validation; the separate simulation tools use the bundled Showdown learnset/format validator and full battle engine.
 
+## Simulations
+
+The probabilistic simulator adds full-game outcome sampling, player-specific hidden-information beliefs, information-set search, Featured Teams cohort experiments and replay counterfactuals. See [simulation usage and limits](docs/simulation.md) and the [historical M-B stages 4–6 evaluation](docs/simulation-stages-4-6-evaluation.md). Rebuild and reconnect the MCP client to discover the six simulation tools.
+
+## Agent-versus-agent battles
+
+For battles played by separate Codex or GitHub Copilot agents, use `vgc_reasoning_battle_start` and the [external reasoning player guide](docs/reasoning-players.md). Each player receives a private MCP view, can compare bounded joint-action scenarios, and submits its own action. The server persists the match and resolves simultaneous choices; it does not invoke a model API or replace missing agent choices with heuristic moves. Saved checkpoints and supported replay prefixes can start at a particular turn through `vgc_reasoning_battle_continue`.
+
+## Play against an agent
+
+The local **Champions M-C** battle mode lets you play against an isolated reasoning agent in a Showdown-style browser interface. Ask your conversation agent to start a battle with two assigned team exports/PokePaste links and an explicit open/closed team-sheet choice. The coordinator uses `vgc_battle_start` and launches a fresh player with the returned handoff. Select your four, choose doubles actions and targets, switch, Mega Evolve and review the live log in the browser.
+
+User clocks default to M-C's 90-second preview, 45-second selection and 7-minute player bank; agent clocks default to disabled. Either timer can be changed in the initial ask. Agent reasoning defaults to medium with a host-selected model. After a game, rematch with prior battle memory or a fresh isolated agent. Original team sheets and private player views prevent hidden stats, selected reserves and pending choices from crossing player boundaries. Battles run on the pinned M-C Showdown engine.
+
+Battle rules and launch defaults are bundled in the MCP: start directly without a web rules lookup, or inspect `vgc_battle_rules` first. See [local human battles](docs/human-battles.md) for setup, the isolated-agent handoff, timers, rematch supervision and all eight battle MCP tools. Rebuild and reconnect your MCP server to load them.
+
+The battle interface includes:
+
+- A separate Mega Evolution toggle alongside move and target selection.
+- Six-member team sidebars with last-known HP, fainted markers and unknown-selection states; opponent HP is labeled with a percent sign.
+- Side-specific conditions beside the affected team, shared conditions below the scene, and remaining/max turn counters.
+- Terrain and weather log entries naming the triggering ability, Pokemon and side in engine order, plus explicit failed-move messages.
+- Showdown replay HTML downloads by default and a separate text-log button, named `<ShowdownFormatName>-sim-yyyy-mm-dd-hh-mm-ss.html/log`.
+
 ## Source integrity
 
 Published team fields retain field-level provenance; an absent spread is unknown. Champions Battle Data's `Current` label does not establish M-C membership. Unverified usage remains queryable as context but is excluded from set hydration and matchup scoring. An optional `sources.championsBattleData.binding` with `regulationId`, `season`, `validFrom`, and `validTo` can admit explicitly verified dated snapshots. Do not infer a regulation window from download time.
@@ -196,8 +202,6 @@ Battle data provided by [Pokemon Champions Battle Data](https://championsbattled
 Cached source data is for analysis, not redistribution as a standalone mirror or data service.
 
 ## Development
-
-For battles played by separate Codex or GitHub Copilot agents, use `vgc_reasoning_battle_start` and the [external reasoning player guide](docs/reasoning-players.md). Each player receives a private MCP view, can compare bounded joint-action scenarios, and submits its own action. The server persists the match and resolves simultaneous choices; it does not invoke a model API or replace missing agent choices with heuristic moves. Saved checkpoints and supported replay prefixes can start at a particular turn through `vgc_reasoning_battle_continue`.
 
 After building, `node scripts/smoke-reasoning.mjs` verifies separate player MCP processes, credential scope, scenario evaluation, final logs and the bridge. This scripted protocol check does not measure LLM playing strength.
 
