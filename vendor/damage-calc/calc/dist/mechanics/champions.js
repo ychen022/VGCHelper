@@ -14,6 +14,7 @@ function calculateChampions(gen, attacker, defender, move, field) {
     (0, util_2.checkItem)(defender, field.isMagicRoom);
     (0, util_2.checkRawStatChanges)(attacker, field.attackerSide.isPowerTrick, field.isWonderRoom);
     (0, util_2.checkRawStatChanges)(defender, field.defenderSide.isPowerTrick, field.isWonderRoom);
+    var defenderSeed = hasTerrainSeed(defender) ? defender.item : undefined;
     (0, util_2.checkSeedBoost)(attacker, field);
     (0, util_2.checkSeedBoost)(defender, field);
     (0, util_2.computeFinalStats)(gen, attacker, defender, field, 'def', 'spd', 'spe');
@@ -226,10 +227,10 @@ function calculateChampions(gen, attacker, defender, move, field) {
         move.priority = 1;
         desc.attackerAbility = attacker.ability;
     }
-    if (hasTerrainSeed(defender) &&
-        field.hasTerrain(defender.item.substring(0, defender.item.indexOf(' '))) &&
-        items_1.SEED_BOOSTED_STAT[defender.item] === defenseStat) {
-        desc.defenderItem = defender.item;
+    if (defenderSeed &&
+        field.hasTerrain(defenderSeed.substring(0, defenderSeed.indexOf(' '))) &&
+        items_1.SEED_BOOSTED_STAT[defenderSeed] === defenseStat) {
+        desc.defenderItem = defenderSeed;
     }
     var stabMod = (0, util_2.getStabMod)(attacker, move, desc);
     var applyBurn = attacker.hasStatus('brn') &&

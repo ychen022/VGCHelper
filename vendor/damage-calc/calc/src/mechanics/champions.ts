@@ -54,6 +54,8 @@ export function calculateChampions(
   checkItem(defender, field.isMagicRoom);
   checkRawStatChanges(attacker, field.attackerSide.isPowerTrick, field.isWonderRoom);
   checkRawStatChanges(defender, field.defenderSide.isPowerTrick, field.isWonderRoom);
+  // Keep the item's identity for the description; checkSeedBoost consumes it.
+  const defenderSeed = hasTerrainSeed(defender) ? defender.item : undefined;
   checkSeedBoost(attacker, field);
   checkSeedBoost(defender, field);
 
@@ -371,12 +373,12 @@ export function calculateChampions(
     desc.attackerAbility = attacker.ability;
   }
 
-  if (hasTerrainSeed(defender) &&
-    field.hasTerrain(defender.item!.substring(0, defender.item!.indexOf(' ')) as Terrain) &&
-    SEED_BOOSTED_STAT[defender.item!] === defenseStat) {
+  if (defenderSeed &&
+    field.hasTerrain(defenderSeed.substring(0, defenderSeed.indexOf(' ')) as Terrain) &&
+    SEED_BOOSTED_STAT[defenderSeed] === defenseStat) {
     // Last condition applies so the calc doesn't show a seed where it wouldn't affect the outcome
     // (like Grassy Seed when being hit by a special move)
-    desc.defenderItem = defender.item;
+    desc.defenderItem = defenderSeed;
   }
 
   // the random factor is applied between the crit mod and the stab mod, so don't apply anything

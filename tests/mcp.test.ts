@@ -114,7 +114,7 @@ Adamant Nature
     expect(damage.structuredContent).toMatchObject({
       result: {
         move: 'Earthquake',
-        calculatorVersion: 'smogon/damage-calc@e7fd7e5',
+        calculatorVersion: 'smogon/damage-calc@e7fd7e5+seed-description.1',
       },
     });
   });

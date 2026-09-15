@@ -166,7 +166,8 @@ export class HumanBattles {
   forfeit(userToken:string) {return this.access(userToken,'user',(m,e) => {if(m.status==='active'||m.status==='lobby'){e.forfeitUser();m.status='completed';}return {status:m.status};});}
   status(adminToken:string) {return this.access(adminToken,'admin',(m,e) => ({matchId:m.id,status:m.status,turn:e.turn,ready:m.ready,game:m.game,settings:m.settings,
     stateId:`${m.game}:${m.revision}:${m.status}:${m.rematch?.id??''}`,...(m.rematch?{rematch:m.rematch}:{}),
-    results:m.games.map(g=>({game:g.game,winner:g.winner}))}));}
+    results:[...m.games.map(g=>({game:g.game,winner:g.winner})),
+      ...(m.status==='completed'?[{game:m.game,winner:e.view('p1',m.mode).winner??'draw'}]:[])]}));}
   requestRematch(userToken:string,id:string,mode:RematchMode) {
     return this.access(userToken,'user',(m) => {
       if(m.status!=='completed'||id!==decisionId(m))throw new Error('Rematches are available only after the current game ends.');

@@ -128,11 +128,38 @@ describe('human battle referee',()=>{
     context.repository.database.prepare("UPDATE human_battles SET payload_json=json_set(payload_json,'$.remaining.player',1000,'$.agentRemaining.player',1000) WHERE id=?").run(battle.matchId);
     advance(1000);matches.tick();
     expect(matches.view(battle.userToken,'user')).toMatchObject({status:'completed',winner:'draw'});
+    expect(matches.status(battle.adminToken).results).toEqual([{game:1,winner:'draw'}]);
   });
   it('restores pre-settings saved games with the new defaults',()=>{
     const {context,matches}=setup(),battle=start(matches);
     context.repository.database.prepare("UPDATE human_battles SET payload_json=json_remove(payload_json,'$.settings','$.agentRemaining','$.game','$.memorySince','$.games') WHERE id=?").run(battle.matchId);
     expect(matches.view(battle.userToken,'user')).toMatchObject({game:1,settings:{userTimer:true,agentTimer:false,reasoningEffort:'medium'}});
+  });
+  it.each(['remember','fresh'] as const)('reports each completed result once across %s rematches',mode=>{
+    const {context,matches}=setup(),battle=start(matches);
+    expect(matches.status(battle.adminToken).results).toEqual([]);
+    begin(matches,battle);
+    expect(matches.status(battle.adminToken).results).toEqual([]);
+    matches.forfeit(battle.userToken);
+    const first=[{game:1,winner:'Agent'}];
+    expect(matches.status(battle.adminToken).results).toEqual(first);
+    expect(matches.status(battle.adminToken).results).toEqual(first);
+    const stored=()=>JSON.parse((context.repository.database.prepare('SELECT payload_json FROM human_battles WHERE id=?').get(battle.matchId) as {payload_json:string}).payload_json);
+    expect(stored().games).toHaveLength(0);
+    const request=matches.requestRematch(battle.userToken,matches.view(battle.userToken,'user').decisionId,mode);
+    expect(matches.status(battle.adminToken).results).toEqual(first);
+    const next=matches.rematch(battle.adminToken,request.id);
+    matches.rematch(battle.adminToken,request.id);
+    expect(matches.status(battle.adminToken).results).toEqual(first);
+    expect(stored().games).toHaveLength(1);
+    begin(matches,{...battle,agentToken:next.agent.token});
+    matches.forfeit(battle.userToken);
+    expect(matches.status(battle.adminToken).results).toEqual([...first,{game:2,winner:'Agent'}]);
+    expect(stored().games).toHaveLength(1);
+    const third=matches.requestRematch(battle.userToken,matches.view(battle.userToken,'user').decisionId,mode);
+    matches.rematch(battle.adminToken,third.id);
+    matches.cancel(battle.adminToken);
+    expect(matches.status(battle.adminToken).results).toEqual([...first,{game:2,winner:'Agent'}]);
   });
   it('rematches with actor-only history, fresh memory epochs, rotated credentials and reset games',()=>{
     const {context,matches,advance}=setup();
@@ -332,7 +359,7 @@ describe('human browser and MCP boundary',()=>{
       const response=await fetch(url.origin+'/api/rematch',{method:'POST',headers,body});
       expect(response.status).toBe(200);const request=await response.json() as {id:string;mode:string;game:number};
       expect(Object.keys(request).sort()).toEqual(['game','id','mode']);
-      expect((await poll).structuredContent).toMatchObject({result:{rematch:request}});
+      expect((await poll).structuredContent).toMatchObject({result:{rematch:request,results:[{game:1,winner:'Agent'}]}});
       expect(second.matches.status(battle.adminToken).rematch).toEqual(request);
       const args={admin_token:battle.adminToken,request_id:request.id};
       const next=await client.callTool({name:'vgc_battle_rematch',arguments:args});

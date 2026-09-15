@@ -24,7 +24,7 @@ The probabilistic simulator adds full-game outcome sampling, player-specific hid
 
 ## Requirements
 
-- Node.js 22 or newer
+- Node.js 22.18.0 or newer
 - An MCP client such as GitHub Copilot
 - Network access for installation, metagame refreshes, PokePaste links and remote battle/replay visual assets; battle mechanics run locally
 
