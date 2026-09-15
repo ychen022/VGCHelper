@@ -2,7 +2,7 @@ import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {resolve,dirname,join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {prepareReplayCorpus,evaluateFrozenCorpus} from '../src/simulation/corpus.js';
-const input=resolve(process.argv[2]??'.vgc-helper/experiments/stages-4-6/holidayougi-mb.jsonl');
+const input=resolve(process.argv[2]??'.vgc-helper/experiments/m-c/holidayougi-mc.jsonl');
 const output=resolve(process.argv[3]??dirname(input));
 mkdirSync(output,{recursive:true});
 const implementationHashes=Object.fromEntries(['src/simulation/learning.ts','src/simulation/corpus.ts','src/simulation/identity.ts','scripts/evaluate-replay-corpus.ts'].map(path=>[path,createHash('sha256').update(readFileSync(resolve(path))).digest('hex')]));

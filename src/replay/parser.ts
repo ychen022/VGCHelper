@@ -390,7 +390,7 @@ export function applyEvent(state: BattleState, event: NormalizedEvent): void {
     case '-formechange':
       if (pokemon) {
         pokemon.species = speciesFromDetails(second) ?? normalizeEffect(second);
-        if (/-Mega(?:-[XY])?$/.test(pokemon.species)) {
+        if (/-Mega(?:-[XYZ])?$/.test(pokemon.species)) {
           const ability = Generations.get(0).species.get(toID(pokemon.species))?.abilities?.[0];
           if (ability) pokemon.ability = ability;
           else delete pokemon.ability;

@@ -30,7 +30,7 @@ export interface CohortCoverage {
 interface Candidate {team: MetaTeam; features: Set<string>; aliases: Set<string>}
 const champions = Generations.get(0);
 const id = (value: string): string => value.toLowerCase().replace(/[^a-z0-9]/g, '');
-const base = (value: string): string => id(value).replace(/mega(?:x|y)?$/, '');
+const base = (value: string): string => id(value).replace(/mega(?:x|y|z)?$/, '');
 const controlMoves = new Set(['tailwind', 'trickroom', 'fakeout', 'followme', 'ragepowder', 'wideguard',
   'encore', 'taunt', 'icywind', 'electroweb', 'thunderwave', 'haze', 'quash']);
 const weatherEffects: Record<string, string> = {drizzle: 'rain', raindance: 'rain', drought: 'sun', sunnyday: 'sun',

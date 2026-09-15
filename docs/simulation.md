@@ -1,6 +1,6 @@
 # Probabilistic Champions battle simulation
 
-The simulator runs complete Champions M-B doubles games with a pinned Showdown engine. Both players choose independently from their own requests, public observations and uncertain opponent-set beliefs. Reports measure outcomes under these policies and priors; they are not calibrated ladder or tournament win rates.
+The simulator runs complete Champions M-C doubles games with a pinned Showdown engine. Both players choose independently from their own requests, public observations and uncertain opponent-set beliefs. Reports measure outcomes under these policies and priors; they are not calibrated ladder or tournament win rates.
 
 ## Start a report
 
@@ -90,7 +90,7 @@ For a saved replay coaching analysis, substitute `analysis_id` for `job_id`. Onl
 
 Public reconstruction supports complete turn boundaries through turn 200, subject to a bounded event-constrained particle search. Supported transitions include voluntary switches, pivots, forced replacements, faints, flinches and uncertain targets. Censored commands remain latent hypotheses with different possible PP/counters. Every retained transition must reproduce the observed mechanical events and HP projection; guessed HP/PP is never injected. Illusion, partial-turn forced-switch roots, partial/late sheet exchange, budget exhaustion and projection mismatches remain explicit failures. Public root switch alternatives are rejected because an unknown selected reserve could change what `switch 3` means between samples. Exact saved checkpoints support legal switching.
 
-Exact M-B and M-B Bo3 battle tiers are recognized. A single Bo3 game does not restore disclosures or adaptations from earlier games in its series. Format M-A is not pooled into M-B inference.
+Exact M-C and M-C Bo3 battle tiers are recognized. A single Bo3 game does not restore disclosures or adaptations from earlier games in its series. Format M-A is not pooled into M-C inference.
 
 Up to 16 candidate worlds are attempted for a supported public start, with bounded conditional transition sampling inside each reconstruction. These form an approximate prefix-consistent mixture: full prefix likelihoods are not integrated into team weights. Rejection counts and reconstruction assumptions are reported. Some valid real replays will therefore remain unsupported until their public mechanics and prior coverage are added.
 
@@ -120,7 +120,7 @@ Call `vgc_replay_export_html` with a retained simulation trace:
 {"job_id":"sim_...","trace_index":0,"perspective":"p1"}
 ```
 
-Alternatively, pass `battle_log` as the `battleLog` object returned by `vgc_simulation_trace`, an array of protocol lines, or newline-separated protocol text. Export supports Showdown formats beyond M-B; it does not re-simulate or require a saved job for direct input. Supply exactly one of `job_id` and `battle_log`.
+Alternatively, pass `battle_log` as the `battleLog` object returned by `vgc_simulation_trace`, an array of protocol lines, or newline-separated protocol text. Export supports Showdown formats beyond M-C; it does not re-simulate or require a saved job for direct input. Supply exactly one of `job_id` and `battle_log`.
 
 The result includes an absolute `path`, `mimeType`, byte count, log hash, and complete/partial status. Open the HTML file in a browser. Optional `title` sets its heading; optional `output_path` selects a new `.html` file. Otherwise a unique file is written under the configured data directory's `replays` folder. Existing files are never overwritten. Logs are limited to 4 MiB; unavailable legacy logs cannot be exported, and incomplete logs remain visibly labeled partial.
 
@@ -134,19 +134,19 @@ After building, audit local JSON or JSONL records without ingesting other format
 node scripts/audit-simulation-corpus.mjs --input examples/public-replays --max-records 100 --max-bytes 10485760
 ```
 
-The audit accepts explicit M-B only, records provenance/duplicates/rating coverage, labels censored actions and splits grouped games chronologically. Features exclude later reveals and earlier resolutions from the same simultaneous turn. Unknown original targets are not fabricated. The optional `--hf-metadata --revision <commit>` path records Hugging Face metadata; the script does not download the entire replay dataset or directly ingest Parquet. Export a bounded M-B JSONL subset before training from the HolidayOugi corpus.
+The audit accepts explicit M-C only, records provenance/duplicates/rating coverage, labels censored actions and splits grouped games chronologically. Features exclude later reveals and earlier resolutions from the same simultaneous turn. Unknown original targets are not fabricated. The optional `--hf-metadata --revision <commit>` path records Hugging Face metadata; the script does not download the entire replay dataset or directly ingest Parquet. Export a bounded M-C JSONL subset before training from the HolidayOugi corpus.
 
-The stages 4–6 evaluation acquired a pinned 2,500-game M-B sample from two relevant HolidayOugi Parquet shards. The broad CHAMPIONS category is accepted only with matching explicit M-B IDs and log tiers. Match-series and exact disclosed-team groups cannot cross chronological train/development/test boundaries. Source bytes, IDs, model settings and implementation hashes are frozen before evaluation. The current artifact is **not adopted** because it fails the species-frequency baseline. See the [empirical report](simulation-stages-4-6-evaluation.md), including its explicit holdout-reuse limitation after correctness review.
+The historical stages 4–6 evaluation acquired a pinned 2,500-game M-B sample from two relevant HolidayOugi Parquet shards. Current M-C ingestion accepts the broad CHAMPIONS category only with matching explicit M-C IDs and log tiers. Match-series and exact disclosed-team groups cannot cross chronological train/development/test boundaries. Source bytes, IDs, model settings and implementation hashes are frozen before evaluation. That historical M-B artifact was **not adopted** because it failed the species-frequency baseline and cannot pass the current M-C format gate. No M-C learned prior is supplied. See the [empirical report](simulation-stages-4-6-evaluation.md), including its explicit holdout-reuse limitation after correctness review.
 
-An optional `opponent_action_prior_path` can load a standalone artifact for an explicit 15% p2 tactical/fallback move-prior mixture. Loading rechecks M-B identity, source hash, shaped finite counts, at least 500 training examples, at least 50 held-out examples and consistent log-loss improvement over both global and species-frequency baselines. Search's tree policy does not use this mixture. Rejected artifacts cannot silently become active. Preview/switch probability mass is preserved.
+An optional `opponent_action_prior_path` can load a standalone artifact for an explicit 15% p2 tactical/fallback move-prior mixture. Loading rechecks M-C identity, source hash, shaped finite counts, at least 500 training examples, at least 50 held-out examples and consistent log-loss improvement over both global and species-frequency baselines. Search's tree policy does not use this mixture. Rejected artifacts cannot silently become active. Preview/switch probability mass is preserved.
 
 This gate is a minimum evidence check, not a claim of calibrated human prediction or improvement over the tactical battle policy. Learned lead/switch/target selection, persistent posterior particles, stronger continuation policies, broader replay coverage and independent human-outcome calibration remain future work.
 
-Reproduce source acquisition/evaluation with `scripts/fetch-simulation-corpus.py`, `scripts/prepare-featured-cohort.ts`, `scripts/evaluate-replay-corpus.ts`, `scripts/evaluate-simulation.ts`, `scripts/evaluate-replay-reconstruction.ts` and `scripts/summarize-simulation-evaluation.ts`. Commands and pinned sources are in the empirical report. Network acquisition is separate from normal MCP jobs; experiments write under `.vgc-helper/experiments/stages-4-6`.
+Reproduce source acquisition/evaluation with `scripts/fetch-simulation-corpus.py`, `scripts/prepare-featured-cohort.ts`, `scripts/evaluate-replay-corpus.ts`, `scripts/evaluate-simulation.ts`, `scripts/evaluate-replay-reconstruction.ts` and `scripts/summarize-simulation-evaluation.ts`. Historical commands and pins in the empirical report describe the M-B evaluation. Current runs write under `.vgc-helper/experiments/m-c`; acquisition requires an explicit `--revision <full-dataset-commit>` containing M-C records and writes `holidayougi-mc.jsonl`. Refresh M-C sources and prepare a new cohort before evaluating. Network acquisition is separate from normal MCP jobs.
 
 ## Reproducibility and verification
 
-Mechanics use [Showdown revision 6b4bc34](https://github.com/smogon/pokemon-showdown/tree/6b4bc34e44cc2541929cc4b8fff96e756ab3f268), format `gen9championsvgc2026regmb`, mod `champions`. The Showdown engine uses generation 9; the existing Champions damage-calculator adapter uses generation 0. These are intentionally distinct conventions. `npm install` builds the pinned engine archive through `postinstall`.
+Mechanics use [Showdown revision b1156ff](https://github.com/smogon/pokemon-showdown/tree/b1156ff19204e48089e2384eb2c9c1a8004f57ce), format `gen9championsvgc2026regmc`, mod `champions`. The Showdown engine uses generation 9; the existing Champions damage-calculator adapter uses generation 0. These are intentionally distinct conventions. `npm install` builds the pinned engine archive through `postinstall`.
 
 ```powershell
 npm run typecheck

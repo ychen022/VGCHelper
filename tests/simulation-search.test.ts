@@ -5,7 +5,7 @@ import {actionDistribution,planningActions} from '../src/simulation/policy.js';
 import {informationSetKey,searchDecision,type SearchOptions,type SearchWorld} from '../src/simulation/search.js';
 
 const team={pokemon:[{species:'Garchomp',ability:'Rough Skin',nature:'Adamant',moves:['Earthquake','Protect'],skillPoints:{atk:32,spe:32,hp:2},ivs:{},level:50}]};
-const belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-b',preview:['Garchomp'],exactTeam:team});
+const belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-c',preview:['Garchomp'],exactTeam:team});
 function view(side:PlayerSide='p1'):PlayerView {
   return {side,turn:1,ownTeam:structuredClone(team),request:{side:{id:side,name:side,pokemon:[{ident:`${side}: Garchomp`,details:'Garchomp, L50',condition:'180/180',active:true,stats:{atk:180},moves:['earthquake','protect'],baseAbility:'roughskin',item:''}]},active:[{moves:[{move:'Earthquake',id:'earthquake',target:'allAdjacent'},{move:'Protect',id:'protect',target:'self'}]}]},observations:['|turn|1'],legalCommands:['move 1','move 2'],ended:false,informationMode:'closed'};
 }

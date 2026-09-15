@@ -4,11 +4,11 @@ import {readOpenSheet} from '../src/replay/sheets.js';
 import {speciesIdentity} from '../src/simulation/identity.js';
 import type {MetaTeam} from '../src/domain/contracts.js';
 import type {CohortReport} from '../src/simulation/experiment.js';
-const dir='.vgc-helper/experiments/stages-4-6';
+const dir='.vgc-helper/experiments/m-c';
 const read=(name:string)=>JSON.parse(readFileSync(`${dir}/${name}`,'utf8'));
 const cohort=read('featured-cohort.json') as {teams:MetaTeam[]};
 const corpus=read('corrected-corpus/corpus-evaluation.json');
-const records=readFileSync(`${dir}/holidayougi-mb.jsonl`,'utf8').trim().split('\n').map(line=>normalizeCorpusRecord(JSON.parse(line)));
+const records=readFileSync(`${dir}/holidayougi-mc.jsonl`,'utf8').trim().split('\n').map(line=>normalizeCorpusRecord(JSON.parse(line)));
 const modes:Record<string,unknown>={};
 for(const mode of ['baseline','search','search-detailed','plans','spreads']){
   if(!existsSync(`${dir}/${mode}-evaluation.json`))continue;

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGCHelper · Battle</title><link rel="stylesheet" href="/style.css"><script src="/presentation.js" defer></script><script src="/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">VGCHelper <span>LOCAL BATTLE</span></a><span class="format">Champions · Regulation M-C</span><span id="mode" class="badge"></span></header>
+<main>
+  <section class="play">
+    <div class="matchbar"><strong>You <span class="versus">vs.</span> Agent</strong><span id="turn">Team preview</span></div>
+    <div class="battle-layout">
+      <section class="team-rail" aria-label="Your roster"><h2>You</h2><div id="user-roster"></div></section>
+      <div id="field" class="field" aria-label="Battlefield"><div class="arena far"></div><div class="arena near"></div><div id="foes" class="board foes"></div><div id="allies" class="board allies"></div><div id="foe-effects" class="side-effects foe-effects" aria-label="Agent side conditions"></div><div id="ally-effects" class="side-effects ally-effects" aria-label="Your side conditions"></div><span class="field-label">CHAMPIONS / DOUBLES</span></div>
+      <section class="team-rail" aria-label="Agent roster"><h2>Agent</h2><div id="agent-roster"></div></section>
+    </div>
+    <div id="field-effects" class="field-effects" aria-label="Field conditions"></div>
+    <div class="clockbar"><div>Your time <strong id="player-clock">7:00</strong></div><div id="phase-label">Your selection <strong id="phase-clock">1:30</strong></div><div>Battle <strong id="battle-clock">20:00</strong></div><div>Agent time <strong id="agent-clock">∞</strong></div><div>Agent selection <strong id="agent-phase-clock">∞</strong></div></div>
+    <p id="status" class="status" role="status">Connecting to your battle…</p>
+    <p id="error" role="alert" hidden></p>
+    <section id="controls" class="controls" aria-label="Battle choices"></section>
+    <p id="timer-note" class="timer-note"></p>
+    <div class="toolbar"><button id="sheet-toggle">Team sheets</button><button id="download" title="Showdown replay HTML; playback loads Showdown assets over the internet">Download replay (.html)</button><button id="download-text">Text log (.log)</button><button id="forfeit" class="danger">Forfeit</button></div>
+  </section>
+  <aside><div class="logheading"><h2>Battle log</h2><span id="connection" class="connected">● Local</span></div><div id="log" class="log" aria-live="polite" aria-relevant="additions"></div><details class="protocol"><summary>Showdown protocol</summary><pre id="raw-log"></pre></details></aside>
+  <section id="sheets" class="sheets" hidden><h2>Team sheets</h2><p id="sheet-note"></p><div id="sheet-content"></div></section>
+</main><footer>Local practice powered by Pokémon Showdown · Sprites by Pokémon Showdown (internet required for artwork)</footer>
+</body></html>

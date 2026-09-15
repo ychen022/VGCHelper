@@ -7,7 +7,7 @@ import {completePreviewTeam,EngineSession} from '../src/simulation/engine.js';
 import {ReasoningMatches, type ReasoningRequest} from '../src/simulation/reasoning/matches.js';
 
 const preview=['Dragonite','Garchomp','Whimsicott','Kingambit','Sneasler','Basculegion'];
-const request=():ReasoningRequest=>({regulationId:'champions-vgc-2026-m-b',metaTeams:[],usageRows:[],
+const request=():ReasoningRequest=>({regulationId:'champions-vgc-2026-m-c',metaTeams:[],usageRows:[],
   teams:{p1:{preview,team:completePreviewTeam(preview)},p2:{preview,team:completePreviewTeam(preview)}},
   seed:'isolated-test',maxTurns:3,budgetMs:180000,informationMode:'closed'});
 const cleanup:Array<()=>void>=[];

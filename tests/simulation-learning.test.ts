@@ -5,7 +5,7 @@ import {
   buildReplayExamples,
   contextualActionWeights,
   evaluateActionPrior,
-  isExplicitMB,
+  isExplicitMC,
   isActionPriorAdoptable,
   splitReplayGroupsByTime,
   trainContextualActionPrior,
@@ -15,7 +15,7 @@ import {
 import {mixLearnedActionPrior} from '../src/simulation/learned-policy.js';
 import type {PlayerView} from '../src/simulation/engine.js';
 
-const baseLog = `|tier|[Gen 9 Champions] VGC 2026 Reg M-B
+const baseLog = `|tier|[Gen 9 Champions] VGC 2026 Reg M-C
 |gametype|doubles
 |player|p1|Alice
 |player|p2|Bob
@@ -34,8 +34,8 @@ const baseLog = `|tier|[Gen 9 Champions] VGC 2026 Reg M-B
 function record(overrides: Partial<ReplayCorpusRecord> = {}): ReplayCorpusRecord {
   return {
     id: 'battle-1',
-    formatId: 'gen9championsvgc2026regmb',
-    format: '[Gen 9 Champions] VGC 2026 Reg M-B',
+    formatId: 'gen9championsvgc2026regmc',
+    format: '[Gen 9 Champions] VGC 2026 Reg M-C',
     uploadTime: '2026-09-01T00:00:00.000Z',
     log: baseLog,
     source: {provider: 'fixture', sourceVersion: 'fixture-r1'},
@@ -44,14 +44,14 @@ function record(overrides: Partial<ReplayCorpusRecord> = {}): ReplayCorpusRecord
 }
 
 describe('simulation replay learning', () => {
-  it('recognizes HolidayOugi category labels only with explicit matching M-B IDs and log tiers',()=>{
-    const bo3=record({formatId:'gen9championsvgc2026regmbbo3',format:'[Gen 9] CHAMPIONS VGC 2026',log:baseLog.replace('Reg M-B','Reg M-B (Bo3)')});
-    expect(isExplicitMB(bo3)).toBe(true);
-    expect(isExplicitMB({...bo3,log:baseLog})).toBe(false);
-    expect(isExplicitMB({...bo3,formatId:'gen9championsvgc2026regma'})).toBe(false);
-    expect(isExplicitMB({...bo3,formatId:undefined} as unknown as ReplayCorpusRecord)).toBe(false);
+  it('recognizes HolidayOugi category labels only with explicit matching M-C IDs and log tiers',()=>{
+    const bo3=record({formatId:'gen9championsvgc2026regmcbo3',format:'[Gen 9] CHAMPIONS VGC 2026',log:baseLog.replace('Reg M-C','Reg M-C (Bo3)')});
+    expect(isExplicitMC(bo3)).toBe(true);
+    expect(isExplicitMC({...bo3,log:baseLog})).toBe(false);
+    expect(isExplicitMC({...bo3,formatId:'gen9championsvgc2026regma'})).toBe(false);
+    expect(isExplicitMC({...bo3,formatId:undefined} as unknown as ReplayCorpusRecord)).toBe(false);
   });
-  it('accepts only explicit M-B records and reports coverage and duplicates', () => {
+  it('accepts only explicit M-C records and reports coverage and duplicates', () => {
     const audit = auditReplayRecords([
       record(),
       record({id: 'duplicate'}),
@@ -119,7 +119,7 @@ describe('simulation replay learning', () => {
     });
     expect(artifact.adopted).toBe(false);
     expect(artifact.adoptionReasons).toContain('insufficient_training_examples');
-    expect(artifact.formatId).toBe('gen9championsvgc2026regmb');
+    expect(artifact.formatId).toBe('gen9championsvgc2026regmc');
     expect(artifact.sourceHash).toMatch(/^[a-f0-9]{64}$/);
     expect(isActionPriorAdoptable(artifact)).toBe(false);
 
@@ -138,6 +138,7 @@ describe('simulation replay learning', () => {
     expect(isActionPriorAdoptable(qualified)).toBe(true);
     expect(isActionPriorAdoptable({...qualified,metrics:{...qualified.metrics,speciesBaseline:{...qualified.metrics.speciesBaseline,logLoss:0.9},speciesLogLossImprovement:-0.1}})).toBe(false);
     expect(isActionPriorAdoptable({...qualified, formatId: 'gen9vgc2026regm'})).toBe(false);
+    expect(isActionPriorAdoptable({...qualified, formatId: 'gen9championsvgc2026regmb'})).toBe(false);
     expect(isActionPriorAdoptable({...qualified, metrics: {}})).toBe(false);
     expect(isActionPriorAdoptable({...qualified, counts: {}})).toBe(false);
     expect(isActionPriorAdoptable({...qualified, smoothing: Number.NaN})).toBe(false);
@@ -180,7 +181,7 @@ describe('simulation replay learning', () => {
       {command:'switch 3, move 2',score:1,probability:0.2,reasons:[]},
     ];
     const artifact = {
-      schemaVersion:1,kind:'empirical-contextual-action-prior',formatId:'gen9championsvgc2026regmb',sourceVersion:'fixture',sourceHash:'a'.repeat(64),createdAt:'2026-09-07',trainingExamples:500,smoothing:0.5,
+      schemaVersion:1,kind:'empirical-contextual-action-prior',formatId:'gen9championsvgc2026regmc',sourceVersion:'fixture',sourceHash:'a'.repeat(64),createdAt:'2026-09-07',trainingExamples:500,smoothing:0.5,
       counts:{global:{'move:Fake Out':10,'move:Trick Room':10,'move:Protect':1},bySpecies:{Incineroar:{'move:Fake Out':10,'move:Protect':1},Farigiraf:{'move:Trick Room':10,'move:Protect':1}},byContext:{}},
       metrics:{heldout:{examples:50,logLoss:1,topKRecall:{1:0.5,3:0.8},calibrationError:0.1},baseline:{examples:50,logLoss:1.2,topKRecall:{1:0.4,3:0.7},calibrationError:0.2},logLossImprovement:0.2,speciesBaseline:{examples:50,logLoss:1.1,topKRecall:{1:0.4,3:0.7},calibrationError:0.2},speciesLogLossImprovement:0.1},adopted:true,adoptionReasons:[],
     } satisfies ContextualActionPriorArtifact;

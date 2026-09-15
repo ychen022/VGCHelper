@@ -10,7 +10,7 @@ import {runSimulation,type SimulationRequest,type EpisodeTrace} from '../src/sim
 
 const team=parseShowdownTeam(readFileSync('examples/sample-team.txt','utf8'),loadRegulationProfile());
 const preview=team.pokemon.map(p=>p.species);
-const request:SimulationRequest={kind:'branch',regulationId:'champions-vgc-2026-m-b',teams:{p1:{team,preview},p2:{team,preview}},metaTeams:[],usageRows:[],samples:1,maxTurns:40,budgetMs:15000,seed:'branch-regression',informationMode:'closed',policies:{p1:'tactical',p2:'damage'}};
+const request:SimulationRequest={kind:'branch',regulationId:'champions-vgc-2026-m-c',teams:{p1:{team,preview},p2:{team,preview}},metaTeams:[],usageRows:[],samples:1,maxTurns:40,budgetMs:15000,seed:'branch-regression',informationMode:'closed',policies:{p1:'tactical',p2:'damage'}};
 function rootGame(){const game=EngineSession.create({teams:{p1:team,p2:team},seed:[10,20,30,40]});game.step({p1:'team 1234',p2:'team 1234'});return game;}
 
 describe('real branch continuations',()=>{

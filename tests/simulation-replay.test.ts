@@ -17,14 +17,10 @@ function fixture() {
 }
 const parse=(log:string)=>parseReplay(loadReplay({content:log}));
 describe('public replay prefix reconstruction',()=>{
-  it('accepts turn1 of cached public M-B replay 2675725887 and rejects its censored next turn',()=>{
+  it('rejects a historical M-B replay under the current M-C engine',()=>{
     const replay=parseReplay(loadReplay({content:readFileSync('examples/public-replays/gen9championsvgc2026regmb-2675725887.json','utf8')}));
-    const own=completePreviewTeam(['Ampharos','Aurorus','Farigiraf','Incineroar','Sneasler','Vivillon']);
-    const opponent=completePreviewTeam(['Venusaur','Primarina','Kingambit','Farigiraf','Torkoal','Blaziken']);
-    own.pokemon[4]!.ability='Unburden';
-    const checkpoint=reconstructReplayStart(replay,own,'p1',1,opponent,seed);
-    expect(EngineSession.restore(checkpoint).view('p1').request.side.pokemon.slice(0,2).map(p=>p.details.split(',')[0])).toEqual(['Sneasler','Farigiraf']);
-    expect(()=>reconstructReplayStart(replay,own,'p1',2,opponent,seed)).toThrow(UnsupportedReplayError);
+    const {team}=fixture();
+    expect(()=>reconstructReplayStart(replay,team,'p1',1,team,seed)).toThrow(/format/i);
   });
   it('reconstructs a consistent turn1 state with sampled hidden selected reserves',()=>{
     const {team,first}=fixture();
@@ -174,23 +170,6 @@ describe('multi-phase and censored turns',()=>{
   });
 });
 
-it('conditions a real public replay through its turn-1 faint and replacement using explicit synthetic candidate sets',()=>{
-  const replay=parseReplay(loadReplay({content:readFileSync('examples/public-replays/gen9championsvgc2026regmb-2675725887.json','utf8')}));
-  const own=completePreviewTeam(['Ampharos','Aurorus','Farigiraf','Incineroar','Sneasler','Vivillon']);
-  const enemy=completePreviewTeam(['Venusaur','Primarina','Kingambit','Farigiraf','Torkoal','Blaziken']);
-  // These are conditional candidates, not claims about either real player's sets.
-  Object.assign(own.pokemon[4]!,{ability:'Unburden',item:'Iron Ball',nature:'Quiet',skillPoints:{},moves:['Close Combat']});
-  Object.assign(own.pokemon[2]!,{nature:'Quiet',skillPoints:{hp:31,spa:32},moves:['Trick Room']});
-  Object.assign(enemy.pokemon[3]!,{nature:'Timid',skillPoints:{spa:32,spe:32},moves:['Psychic']});
-  Object.assign(enemy.pokemon[1]!,{nature:'Modest',skillPoints:{spa:32,spe:32},ability:'Liquid Voice',item:'Life Orb',moves:['Hyper Voice']});
-  const cp=reconstructReplayStart(replay,own,'p1',2,enemy,seed,{maxAttempts:2048});
-  const view=EngineSession.restore(cp).view('p1');
-  expect(view.turn).toBe(2);
-  expect(view.request.side.pokemon[0]!.details).toContain('Ampharos');
-  const hp=view.request.side.pokemon[1]!.condition.split('/').map(Number);
-  expect(Math.ceil(hp[0]!*100/hp[1]!)).toBe(29);
-});
-
 it('allows redirected targets as latent legal commands',()=>{
   const {team}=fixture();const own=structuredClone(team),enemy=structuredClone(team);
   own.pokemon[0]!.moves=['Thunder Wave'];enemy.pokemon[0]!.moves=['Rain Dance'];
@@ -204,9 +183,9 @@ it('allows redirected targets as latent legal commands',()=>{
 });
 
 describe('explicit battle-equivalent format normalization',()=>{
-  it('accepts the M-B Bo3 single-game rules with a prior-game disclosure limitation',()=>{
+  it('accepts the M-C Bo3 single-game rules with a prior-game disclosure limitation',()=>{
     const {team,first}=fixture();
-    const replay=parse(first.replace('VGC 2026 Reg M-B','VGC 2026 Reg M-B (Bo3)'));
+    const replay=parse(first.replace('VGC 2026 Reg M-C','VGC 2026 Reg M-C (Bo3)'));
     const cp=reconstructReplayStart(replay,team,'p1',1,team,seed);
     expect(cp.reconstruction.warnings.join(' ')).toContain('prior games');
   });

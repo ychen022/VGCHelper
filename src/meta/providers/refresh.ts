@@ -29,7 +29,7 @@ function usageWarnings(usage: MetaUsageRow[], teams: MetaTeam[]): string[] {
   const warnings = usage.some(row => row.source.regulationVerified === false)
     ? ['Usage season-to-regulation mapping is unverified; these rows are contextual only and excluded from regulation-specific set hydration.']
     : [];
-  const identity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y)?$/, '');
+  const identity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y|z)?$/, '');
   const covered = new Set(usage.map(row => identity(row.pokemon)));
   const missing = [...new Set(teams.flatMap(team => team.roster))].filter(species => !covered.has(identity(species)));
   if (missing.length) warnings.push(`Usage data is unavailable for ${missing.join(', ')}; published teams are retained and no usage fields are invented for these species.`);

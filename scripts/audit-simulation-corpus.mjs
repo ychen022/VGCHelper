@@ -143,7 +143,7 @@ async function fetchDatasetMetadata() {
       status: metadata.cardData?.license ? 'declared' : 'not_declared_in_metadata',
       artifactDistributionApproved: false,
     },
-    limitation: 'Repository metadata does not verify the number of explicit Champions VGC 2026 Regulation M-B rows.',
+    limitation: 'Repository metadata does not verify the number of explicit Champions VGC 2026 Regulation M-C rows.',
   };
 }
 

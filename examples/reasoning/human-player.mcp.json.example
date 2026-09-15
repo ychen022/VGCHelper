@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "vgc-battle-player": {
+      "type": "local",
+      "command": "node",
+      "args": ["D:/absolute/path/to/VGCHelper/dist/index.js"],
+      "cwd": "D:/absolute/path/to/VGCHelper",
+      "env": {
+        "VGC_BATTLE_AGENT_TOKEN": "$VGC_BATTLE_AGENT_TOKEN",
+        "VGC_HELPER_DATABASE": "$VGC_HELPER_DATABASE"
+      },
+      "tools": ["vgc_battle_agent_view", "vgc_battle_agent_submit"],
+      "timeout": 30000,
+      "deferTools": "never"
+    }
+  }
+}

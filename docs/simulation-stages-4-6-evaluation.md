@@ -1,5 +1,7 @@
 # Stages 4–6: implementation and empirical evaluation
 
+> Historical M-B evidence. These results and pinned sources predate the M-C default and do not validate M-C outcomes. Reproducing them requires the original code/dependency revisions; current scripts target M-C.
+
 September 7, 2026. The search, replay-world reconstruction, cohort experiments and frozen corpus pipeline are implemented. The measurements support execution correctness and expose substantial policy/coverage limits. They do **not** establish calibrated human battle-outcome prediction.
 
 These are historical measurements, collected before the pre-publication corrections to damage-evidence HP handling and opening-sheet validation. The numerical experiments have not been rerun after those corrections and should not be treated as measurements of the corrected implementation.

@@ -109,7 +109,7 @@ function forms(set: PokemonSet): Form[] {
       {species: mega, ability: megaAbility, megaRequired: true},
     ];
   }
-  const isMega = /-Mega(?:-[XY])?$/.test(set.species);
+  const isMega = /-Mega(?:-[XYZ])?$/.test(set.species);
   return [{species: set.species, ability: isMega ? champions.species.get(toID(set.species))?.abilities?.[0] ?? '' : set.ability ?? champions.species.get(toID(set.species))?.abilities?.[0] ?? '', megaRequired: isMega}];
 }
 

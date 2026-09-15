@@ -2,7 +2,7 @@ import {calculateChampionsDamage, hitsAllAdjacent, isDamagingMove, isSpreadMove}
 import type {BattleState, DamageRequest, MetaTeam, PokemonBattleState, PokemonPosition, PokemonSet, PokemonTeam, ReplayFinding} from '../../domain/contracts.js';
 import {buildOpponentHypotheses} from '../../meta/inference/hypotheses.js';
 
-const base = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/mega(?:x|y)?$/, '');
+const base = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/mega(?:x|y|z)?$/, '');
 export function position(pokemon: PokemonBattleState, state: BattleState): PokemonPosition {
   const boosts = Object.fromEntries(Object.entries(pokemon.boosts).filter(([key]) => key !== 'accuracy' && key !== 'evasion'));
   return {

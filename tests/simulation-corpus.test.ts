@@ -1,6 +1,6 @@
 import {describe,expect,it} from 'vitest';
 import {prepareReplayCorpus,evaluateFrozenCorpus,normalizeCorpusRecord,behaviorSummary} from '../src/simulation/corpus.js';
-const row=(id:string,time:number,extra='')=>({id,formatid:'gen9championsvgc2026regmb',format:'[Gen 9] CHAMPIONS VGC 2026',uploadtime:time,log:`|tier|[Gen 9 Champions] VGC 2026 Reg M-B\n|poke|p1|Incineroar, L50|\n|poke|p2|Dragonite, L50|\n|switch|p1a: Cat|Incineroar, L50|100/100\n|switch|p2a: Dragon|Dragonite, L50|100/100\n${extra}\n|turn|1\n|move|p1a: Cat|Fake Out|p2a: Dragon\n|move|p2a: Dragon|Protect|p2a: Dragon\n|win|${id}`,source:{provider:'test',revision:'pinned'}});
+const row=(id:string,time:number,extra='')=>({id,formatid:'gen9championsvgc2026regmc',format:'[Gen 9] CHAMPIONS VGC 2026',uploadtime:time,log:`|tier|[Gen 9 Champions] VGC 2026 Reg M-C\n|poke|p1|Incineroar, L50|\n|poke|p2|Dragonite, L50|\n|switch|p1a: Cat|Incineroar, L50|100/100\n|switch|p2a: Dragon|Dragonite, L50|100/100\n${extra}\n|turn|1\n|move|p1a: Cat|Fake Out|p2a: Dragon\n|move|p2a: Dragon|Protect|p2a: Dragon\n|win|${id}`,source:{provider:'test',revision:'pinned'}});
 describe('strict frozen replay corpus',()=>{
   it('normalizes UNIX upload seconds and rejects mixed or missing tiers',()=>{
     expect(normalizeCorpusRecord(row('one',1782935051)).uploadTime).toBe('2026-07-01T19:44:11.000Z');
@@ -9,8 +9,8 @@ describe('strict frozen replay corpus',()=>{
   });
   it('deduplicates by both ID and log and purges a series that crosses a time boundary',()=>{
     const rows=Array.from({length:10},(_,i)=>row(`r${i}`,1782935051+i));
-    rows[1]=row('r1',1782935052,'|uhtml|bestof|<a href="/game-bestof3-gen9championsvgc2026regmb-series">Game 1</a>');
-    rows[8]=row('r8',1782935059,'|uhtml|bestof|<a href="/game-bestof3-gen9championsvgc2026regmb-series">Game 2</a>');
+    rows[1]=row('r1',1782935052,'|uhtml|bestof|<a href="/game-bestof3-gen9championsvgc2026regmc-series">Game 1</a>');
+    rows[8]=row('r8',1782935059,'|uhtml|bestof|<a href="/game-bestof3-gen9championsvgc2026regmc-series">Game 2</a>');
     const prepared=prepareReplayCorpus([...rows,{...rows[0]!,log:rows[0]!.log+'\n|message|same id different payload'},{...rows[2]!,id:'log-duplicate'}]);
     expect(prepared.audit.duplicates).toBe(2);
     expect(prepared.audit.boundaryPurged).toBe(2);

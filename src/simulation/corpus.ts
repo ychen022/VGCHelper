@@ -1,10 +1,10 @@
 import {createHash} from 'node:crypto';
-import {isExplicitMB,buildReplayExamples,trainContextualActionPrior,evaluateActionPrior,type ReplayCorpusRecord,type ReplayActionExample,type ContextualActionPriorArtifact,type PriorMetrics} from './learning.js';
+import {isExplicitMC,buildReplayExamples,trainContextualActionPrior,evaluateActionPrior,type ReplayCorpusRecord,type ReplayActionExample,type ContextualActionPriorArtifact,type PriorMetrics} from './learning.js';
 
 const hash=(text:string)=>createHash('sha256').update(text).digest('hex');
 const id=(text:string)=>text.toLowerCase().replace(/[^a-z0-9]/g,'');
 const count=(counts:Record<string,number>,key:string)=>{counts[key]=(counts[key]??0)+1;};
-export const CORPUS_PROTOCOL=Object.freeze({version:'strict-mb-corpus-v2',trainFraction:0.7,validationFraction:0.15,smoothingGrid:[0.05,0.5,2],minimumTrainingExamples:500,minimumTestExamples:50,minimumLogLossImprovement:0.01});
+export const CORPUS_PROTOCOL=Object.freeze({version:'strict-mc-corpus-v2',trainFraction:0.7,validationFraction:0.15,smoothingGrid:[0.05,0.5,2],minimumTrainingExamples:500,minimumTestExamples:50,minimumLogLossImprovement:0.01});
 export function normalizeCorpusRecord(input:unknown):ReplayCorpusRecord {
   if(!input || typeof input!=='object')throw new Error('malformed_record');
   const row=input as Record<string,unknown>;
@@ -20,7 +20,7 @@ export function normalizeCorpusRecord(input:unknown):ReplayCorpusRecord {
     ...(typeof row.format==='string'?{format:row.format}:{}),...(typeof row.rating==='number'&&Number.isFinite(row.rating)?{rating:row.rating}:{})};
   const tiers=record.log.split('\n').filter(line=>line.startsWith('|tier|')).map(line=>id(line.slice(6)));
   if(!tiers.length)throw new Error('missing_log_tier');
-  if(!isExplicitMB(record)||new Set(tiers).size!==1)throw new Error('format_or_tier_mismatch');
+  if(!isExplicitMC(record)||new Set(tiers).size!==1)throw new Error('format_or_tier_mismatch');
   return record;
 }
 function series(record:ReplayCorpusRecord):string|undefined {return record.log.match(/\/game-(bestof3-[a-z0-9-]+)/i)?.[1];}

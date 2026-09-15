@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {expect,it} from 'vitest';
 import {ingestReplay} from '../src/replay/index.js';
 import {loadRegulationProfile} from '../src/regulation/profile.js';
-const replay = () => ingestReplay({content:readFileSync('examples/public-replays/gen9championsvgc2026regmb-2675724766.json','utf8')},loadRegulationProfile());
+const replay = () => ingestReplay({content:readFileSync('examples/public-replays/gen9championsvgc2026regmb-2675724766.json','utf8')},loadRegulationProfile('champions-vgc-2026-m-b'));
 it('reconstructs a manually inspected six-turn public M-B battle',()=>{
   const parsed=replay();
   expect(parsed.turns).toHaveLength(6);

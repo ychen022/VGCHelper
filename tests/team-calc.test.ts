@@ -89,7 +89,7 @@ describe('Showdown team and Champions calculator', () => {
       move: 'Earthquake',
     });
 
-    expect(result.calculatorVersion).toContain('2c50a89');
+    expect(result.calculatorVersion).toContain('e7fd7e5');
     expect(result.damage).toHaveLength(16);
     expect(result.range[0]).toBeGreaterThan(0);
     expect(result.percentRange[1]).toBeGreaterThan(result.percentRange[0]);

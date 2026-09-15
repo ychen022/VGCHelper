@@ -68,7 +68,7 @@ Adamant Nature
 const LOG = `|player|p1|Alice|
 |player|p2|Bob|
 |gametype|doubles
-|tier|[Gen 9 Champions] VGC 2026 Reg M-B
+|tier|[Gen 9 Champions] VGC 2026 Reg M-C
 |switch|p1a: Chomp|Garchomp|100/100
 |switch|p1b: Cotton|Whimsicott|100/100
 |switch|p2a: Gambit|Kingambit|100/100

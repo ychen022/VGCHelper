@@ -14,6 +14,8 @@ function calculateChampions(gen, attacker, defender, move, field) {
     (0, util_2.checkItem)(defender, field.isMagicRoom);
     (0, util_2.checkRawStatChanges)(attacker, field.attackerSide.isPowerTrick, field.isWonderRoom);
     (0, util_2.checkRawStatChanges)(defender, field.defenderSide.isPowerTrick, field.isWonderRoom);
+    (0, util_2.checkSeedBoost)(attacker, field);
+    (0, util_2.checkSeedBoost)(defender, field);
     (0, util_2.computeFinalStats)(gen, attacker, defender, field, 'def', 'spd', 'spe');
     (0, util_2.checkIntimidate)(gen, attacker, defender);
     (0, util_2.checkIntimidate)(gen, defender, attacker);
@@ -51,7 +53,7 @@ function calculateChampions(gen, attacker, defender, move, field) {
         result.damage = damage_1;
         return result;
     }
-    var defenderAbilityIgnored = defender.hasAbility('Armor Tail', 'Aroma Veil', 'Battle Armor', 'Big Pecks', 'Bulletproof', 'Clear Body', 'Contrary', 'Damp', 'Disguise', 'Dry Skin', 'Earth Eater', 'Eelevate', 'Filter', 'Flash Fire', 'Flower Veil', 'Fluffy', 'Friend Guard', 'Fur Coat', 'Heatproof', 'Heavy Metal', 'Hyper Cutter', 'Illuminate', 'Immunity', 'Inner Focus', 'Insomnia', 'Keen Eye', 'Leaf Guard', 'Levitate', 'Light Metal', 'Lightning Rod', 'Limber', 'Magic Bounce', 'Magma Armor', 'Marvel Scale', 'Mirror Armor', 'Motor Drive', 'Multiscale', 'Oblivious', 'Overcoat', 'Own Tempo', 'Purifying Salt', 'Queenly Majesty', 'Sand Veil', 'Sap Sipper', 'Shell Armor', 'Shield Dust', 'Snow Cloak', 'Solid Rock', 'Soundproof', 'Sticky Hold', 'Storm Drain', 'Sturdy', 'Sweet Veil', 'Tangled Feet', 'Telepathy', 'Thick Fat', 'Unaware', 'Vital Spirit', 'Volt Absorb', 'Water Absorb', 'Water Bubble', 'Water Veil', 'White Smoke');
+    var defenderAbilityIgnored = defender.hasAbility('Aura Guard', 'Armor Tail', 'Aroma Veil', 'Battle Armor', 'Big Pecks', 'Bulletproof', 'Clear Body', 'Contrary', 'Damp', 'Disguise', 'Dry Skin', 'Earth Eater', 'Eelevate', 'Filter', 'Flash Fire', 'Flower Veil', 'Fluffy', 'Friend Guard', 'Fur Coat', 'Grass Pelt', 'Guard Dog', 'Heatproof', 'Heavy Metal', 'Hyper Cutter', 'Illuminate', 'Immunity', 'Inner Focus', 'Insomnia', 'Keen Eye', 'Leaf Guard', 'Levitate', 'Light Metal', 'Lightning Rod', 'Limber', 'Magic Bounce', 'Magma Armor', 'Marvel Scale', 'Mirror Armor', 'Motor Drive', 'Multiscale', 'Oblivious', 'Overcoat', 'Own Tempo', 'Punk Rock', 'Purifying Salt', 'Queenly Majesty', 'Sand Veil', 'Sap Sipper', 'Shell Armor', 'Shield Dust', 'Snow Cloak', 'Solid Rock', 'Soundproof', 'Sticky Hold', 'Storm Drain', 'Sturdy', 'Sweet Veil', 'Tangled Feet', 'Telepathy', 'Thermal Exchange', 'Thick Fat', 'Unaware', 'Vital Spirit', 'Volt Absorb', 'Water Absorb', 'Water Bubble', 'Water Veil', 'White Smoke');
     var attackerIgnoresAbility = attacker.hasAbility('Mold Breaker');
     if (defenderAbilityIgnored && attackerIgnoresAbility) {
         if (attackerIgnoresAbility)
@@ -181,6 +183,10 @@ function calculateChampions(gen, attacker, defender, move, field) {
         desc.defenderAbility = defender.ability;
         return result;
     }
+    if (move.hasType('Ground') && !field.isGravity && defender.hasItem('Air Balloon')) {
+        desc.defenderItem = defender.item;
+        return result;
+    }
     if (move.priority > 0 && field.hasTerrain('Psychic') && (0, util_2.isGrounded)(defender, field)) {
         desc.terrain = field.terrain;
         return result;
@@ -219,6 +225,11 @@ function calculateChampions(gen, attacker, defender, move, field) {
         attacker.curHP() === attacker.maxHP())) {
         move.priority = 1;
         desc.attackerAbility = attacker.ability;
+    }
+    if (hasTerrainSeed(defender) &&
+        field.hasTerrain(defender.item.substring(0, defender.item.indexOf(' '))) &&
+        items_1.SEED_BOOSTED_STAT[defender.item] === defenseStat) {
+        desc.defenderItem = defender.item;
     }
     var stabMod = (0, util_2.getStabMod)(attacker, move, desc);
     var applyBurn = attacker.hasStatus('brn') &&
@@ -461,6 +472,7 @@ function calculateBPModsChampions(gen, attacker, defender, move, field, desc, ba
     if ((attacker.hasAbility('Technician') && basePower <= 60) ||
         (attacker.hasAbility('Mega Launcher') && move.flags.pulse) ||
         (attacker.hasAbility('Strong Jaw') && move.flags.bite) ||
+        (attacker.hasAbility('Steely Spirit') && move.hasType('Steel')) ||
         (attacker.hasAbility('Sharpness') && move.flags.slicing)) {
         bpMods.push(6144);
         desc.attackerAbility = attacker.ability;
@@ -488,7 +500,8 @@ function calculateBPModsChampions(gen, attacker, defender, move, field, desc, ba
             field.hasWeather('Sand') && move.hasType('Rock', 'Ground', 'Steel')) ||
         (attacker.hasAbility('Analytic') &&
             (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out' || attacker.abilityOn)) ||
-        (attacker.hasAbility('Tough Claws') && move.flags.contact))) {
+        (attacker.hasAbility('Tough Claws') && move.flags.contact)) ||
+        (attacker.hasAbility('Punk Rock') && move.flags.sound)) {
         bpMods.push(5325);
         desc.attackerAbility = attacker.ability;
     }
@@ -521,7 +534,11 @@ function calculateBPModsChampions(gen, attacker, defender, move, field, desc, ba
         desc.attackerAbility = attacker.ability;
         desc.alliesFainted = attacker.alliesFainted;
     }
-    if (attacker.item && move.hasType((0, items_1.getItemBoostType)(attacker.item))) {
+    if (attacker.hasItem("".concat(move.type, " Gem"))) {
+        bpMods.push(5325);
+        desc.attackerItem = attacker.item;
+    }
+    else if (attacker.item && move.hasType((0, items_1.getItemBoostType)(attacker.item))) {
         bpMods.push(4915);
         desc.attackerItem = attacker.item;
     }
@@ -602,6 +619,10 @@ function calculateAtModsChampions(gen, attacker, defender, move, field, desc) {
         atMods.push(8192);
         desc.attackerAbility = attacker.ability;
     }
+    else if (attacker.hasAbility('Stakeout') && attacker.abilityOn) {
+        atMods.push(8192);
+        desc.attackerAbility = attacker.ability;
+    }
     if ((defender.hasAbility('Thick Fat') && move.hasType('Fire', 'Ice')) ||
         (defender.hasAbility('Water Bubble') && move.hasType('Fire')) ||
         (defender.hasAbility('Purifying Salt') && move.hasType('Ghost'))) {
@@ -661,6 +682,12 @@ function calculateDfModsChampions(gen, attacker, defender, move, field, desc, is
     if (hitsPhysical === void 0) { hitsPhysical = false; }
     var dfMods = [];
     if (defender.hasAbility('Marvel Scale') && defender.status && hitsPhysical) {
+        dfMods.push(6144);
+        desc.defenderAbility = defender.ability;
+    }
+    else if (defender.hasAbility('Grass Pelt') &&
+        field.hasTerrain('Grassy') &&
+        hitsPhysical) {
         dfMods.push(6144);
         desc.defenderAbility = defender.ability;
     }
@@ -729,7 +756,12 @@ function calculateFinalModsChampions(gen, attacker, defender, move, field, desc,
         finalMods.push(2048);
         desc.defenderAbility = defender.ability;
     }
-    if (defender.hasAbility('Fluffy') && move.flags.contact && !attacker.hasAbility('Long Reach')) {
+    var halveContactMoveDmg = defender.hasAbility('Fluffy') || defender.hasAbility('Aura Guard');
+    if (halveContactMoveDmg && move.flags.contact && !attacker.hasAbility('Long Reach')) {
+        finalMods.push(2048);
+        desc.defenderAbility = defender.ability;
+    }
+    else if (defender.hasAbility('Punk Rock') && move.flags.sound) {
         finalMods.push(2048);
         desc.defenderAbility = defender.ability;
     }
@@ -778,4 +810,7 @@ function calculateFinalModsChampions(gen, attacker, defender, move, field, desc,
     return finalMods;
 }
 exports.calculateFinalModsChampions = calculateFinalModsChampions;
+function hasTerrainSeed(pokemon) {
+    return pokemon.hasItem('Electric Seed', 'Misty Seed', 'Grassy Seed', 'Psychic Seed');
+}
 //# sourceMappingURL=champions.js.map

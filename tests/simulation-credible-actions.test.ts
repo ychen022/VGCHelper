@@ -14,7 +14,7 @@ describe('credible action selection',()=>{
     team.pokemon[0]!.moves=['Heal Pulse','Psychic','Protect'];team.pokemon[1]!.moves=['Dragon Claw','Protect'];
     const game=EngineSession.create({teams:{p1:team,p2:team},seed:[1,2,3,4]});game.step({p1:'team 1234',p2:'team 1234'});
     game.step({p1:'move 3, move 1 1',p2:'move 3, move 1 2'});
-    const view=game.view('p1'),belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-b',preview:team.pokemon.map(p=>p.species),exactTeam:team});
+    const view=game.view('p1'),belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-c',preview:team.pokemon.map(p=>p.species),exactTeam:team});
     const command='move 1 -2, switch 3';expect(view.legalCommands).toContain(command);
     const hurtReserve=structuredClone(view);hurtReserve.request.side.pokemon[2]!.condition='68/137';
     const full=policy.scoreActions(view,belief).find(a=>a.command===command)!.score;
@@ -38,7 +38,7 @@ describe('credible action selection',()=>{
     team.pokemon[0]!.moves=['Sleep Powder'];team.pokemon[1]!.moves=['Dragon Claw'];
     const game=EngineSession.create({teams:{p1:team,p2:team},seed:[1,2,3,4]});
     game.step({p1:'team 1234',p2:'team 1234'});
-    const view=game.view('p1'),belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-b',preview:team.pokemon.map(p=>p.species),exactTeam:team});
+    const view=game.view('p1'),belief=buildTeamBelief({regulationId:'champions-vgc-2026-m-c',preview:team.pokemon.map(p=>p.species),exactTeam:team});
     expect(view.legalCommands).toContain('move 1 -2, move 1 2');
     expect(policy.actionDistribution(view,belief).some(a=>a.command.includes('move 1 -2'))).toBe(false);
     expect(policy.planningActions(view,belief,512).some(a=>a.command.includes('move 1 -2'))).toBe(false);

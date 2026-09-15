@@ -719,10 +719,12 @@ function getEndOfTurn(
     (gen.num === 0 || gen.num > 1)
   ) {
     if (attacker.hasItem('Binding Band')) {
-      damage -= gen.num > 5 ? Math.floor(defender.maxHP() / 6) : Math.floor(defender.maxHP() / 8);
+      damage -= gen.num === 0 || gen.num > 5
+        ? Math.floor(defender.maxHP() / 6) : Math.floor(defender.maxHP() / 8);
       texts.push('trapping damage');
     } else {
-      damage -= gen.num > 5 ? Math.floor(defender.maxHP() / 8) : Math.floor(defender.maxHP() / 16);
+      damage -= gen.num === 0 || gen.num > 5
+        ? Math.floor(defender.maxHP() / 8) : Math.floor(defender.maxHP() / 16);
       texts.push('trapping damage');
     }
   }

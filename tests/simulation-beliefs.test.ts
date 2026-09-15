@@ -3,8 +3,8 @@ import type {MetaTeam, PokemonSet} from '../src/domain/contracts.js';
 import {buildTeamBelief, sampleBeliefTeam, updateTeamBelief, damageObservation, calculateDamageLikelihoods, applyKnownToCompletion} from '../src/simulation/beliefs.js';
 
 const set = (item: string, spe = 32): PokemonSet => ({species:'Pikachu', item, ability:'Static', nature:'Timid', moves:['Thunderbolt','Protect'],skillPoints:{spa:32,spe},ivs:{},level:50});
-const published = (id:string,item:string,spe=32): MetaTeam => ({id,name:id,regulationId:'champions-m-b',roster:['Pikachu'],pokemon:[set(item,spe)],exactSets:true,source:{provider:'fixture',retrievedAt:'2026-09-07',regulationId:'champions-m-b'}});
-const input = {regulationId:'champions-m-b',preview:['Pikachu'],publishedTeams:[published('a','Life Orb'),published('b','Focus Sash',0)]};
+const published = (id:string,item:string,spe=32): MetaTeam => ({id,name:id,regulationId:'champions-m-c',roster:['Pikachu'],pokemon:[set(item,spe)],exactSets:true,source:{provider:'fixture',retrievedAt:'2026-09-07',regulationId:'champions-m-c'}});
+const input = {regulationId:'champions-m-c',preview:['Pikachu'],publishedTeams:[published('a','Life Orb'),published('b','Focus Sash',0)]};
 
 describe('probabilistic team beliefs',()=>{
   it('preserves joint published sets and known investments without declaring samples known',()=>{

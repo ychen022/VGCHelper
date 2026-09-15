@@ -18,7 +18,7 @@ import type {
 import {VgcError} from '../errors.js';
 import {errorMessage} from '../errors.js';
 
-const CALCULATOR_VERSION = 'smogon/damage-calc@2c50a89';
+const CALCULATOR_VERSION = 'smogon/damage-calc@e7fd7e5';
 const champions = Generations.get(0);
 const megaTargets = new Set(
   [...champions.items].flatMap((item) =>

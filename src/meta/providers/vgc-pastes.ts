@@ -18,6 +18,7 @@ interface VgcPastesRequest {
   spreadsheetId: string;
   gid: string;
   regulationId: string;
+  teamIdPrefix?: string | undefined;
   level?: number;
 }
 
@@ -318,6 +319,12 @@ export class VgcPastesProvider {
       encodeURIComponent(request.gid);
     const csv = await fetchText(this.fetcher, csvUrl, PROVIDER);
     const seeds = parseSeeds(csv);
+    const expectedPrefix = request.teamIdPrefix;
+    if (expectedPrefix && seeds.some(seed => !seed.id.startsWith(expectedPrefix))) {
+      throw new VgcError('SOURCE_SCHEMA_CHANGED', 'VGC Pastes team IDs do not match the configured regulation', {
+        regulationId: request.regulationId, expectedPrefix: request.teamIdPrefix,
+      });
+    }
     const retrievedAt = this.now().toISOString();
     const csvHash = sha256(csv);
     const teams = await mapBounded(
@@ -344,7 +351,7 @@ export class VgcPastesProvider {
           const parsed = pasteText
             ? parseTeam(pasteText, request.level ?? 50, `${PROVIDER}:${seed.pasteUrl}#${sha256(pasteText)}`)
             : undefined;
-          const identity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y)?$/, '');
+          const identity = (name: string) => normalizeIdentifier(name).replace(/mega(?:x|y|z)?$/, '');
           const expected = seed.roster.map(identity).sort();
           const actual = parsed?.map(set => identity(set.species)).sort();
           if (parsed?.length === seed.roster.length && JSON.stringify(expected) === JSON.stringify(actual)) {

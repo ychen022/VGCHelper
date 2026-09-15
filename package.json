@@ -8,7 +8,7 @@
     "vgc-helper": "./dist/index.js"
   },
   "scripts": {
-    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && node scripts/copy-battle-assets.mjs",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest run",
@@ -25,7 +25,7 @@
     "@smogon/calc": "file:vendor/damage-calc/calc",
     "better-sqlite3": "13.0.3",
     "csv-parse": "6.1.0",
-    "pokemon-showdown": "https://codeload.github.com/smogon/pokemon-showdown/tar.gz/6b4bc34e44cc2541929cc4b8fff96e756ab3f268",
+    "pokemon-showdown": "https://codeload.github.com/smogon/pokemon-showdown/tar.gz/b1156ff19204e48089e2384eb2c9c1a8004f57ce",
     "zod": "4.5.4"
   },
   "devDependencies": {

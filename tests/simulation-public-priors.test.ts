@@ -4,7 +4,7 @@ import {actorPriorFactory} from '../src/simulation/runner.js';
 import {completePreviewTeam,EngineSession,validateEngineTeam} from '../src/simulation/engine.js';
 import {buildPublicTeamBelief} from '../src/simulation/public-priors.js';
 
-const regulationId='champions-vgc-2026-m-b';
+const regulationId='champions-vgc-2026-m-c';
 const preview=['Torkoal','Garchomp','Whimsicott','Kingambit','Sneasler','Dragonite'];
 const torkoal:PokemonSet={species:'Torkoal',item:'Charcoal',ability:'Drought',nature:'Quiet',moves:['Eruption','Heat Wave','Earth Power','Protect'],skillPoints:{hp:32,spa:32,spd:2},ivs:{},level:50};
 const base=completePreviewTeam(preview);

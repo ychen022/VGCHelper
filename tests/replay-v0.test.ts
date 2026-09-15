@@ -3,14 +3,14 @@ import {ingestReplay, loadReplay, parseReplay} from '../src/replay/index.js';
 import {loadRegulationProfile} from '../src/regulation/profile.js';
 
 const profile = loadRegulationProfile();
-const prefix = `|player|p1|Alice|\n|player|p2|Bob|\n|gametype|doubles\n|tier|[Gen 9 Champions] VGC 2026 Reg M-B\n`;
+const prefix = `|player|p1|Alice|\n|player|p2|Bob|\n|gametype|doubles\n|tier|[Gen 9 Champions] VGC 2026 Reg M-C\n`;
 const active = `|poke|p1|Charizard, L50|\n|switch|p1a: Zard|Charizard, L50|100/100\n|switch|p2a: Chomp|Garchomp, L50|100/100\n`;
 
 describe('V0 replay fidelity', () => {
-  it('accepts explicit M-B formats and rejects ambiguous legacy and M-A formats', () => {
+  it('accepts explicit M-C formats and rejects ambiguous legacy and M-A formats', () => {
     expect(() => ingestReplay({content: prefix + active + '|turn|1'}, profile)).not.toThrow();
     for (const format of ['[Gen 9] Champions VGC 2026', '[Gen 9 Champions] VGC 2026 Reg M-A']) {
-      expect(() => ingestReplay({content: prefix.replace('[Gen 9 Champions] VGC 2026 Reg M-B', format) + active}, profile)).toThrow(/format/i);
+      expect(() => ingestReplay({content: prefix.replace('[Gen 9 Champions] VGC 2026 Reg M-C', format) + active}, profile)).toThrow(/format/i);
     }
   });
   it('extracts downloaded HTML regardless of script attribute order', () => {
